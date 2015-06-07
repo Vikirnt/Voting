@@ -14,10 +14,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
-import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
 import main.Main;
 import core.DB;
@@ -35,8 +33,6 @@ public class InitTable extends JTable implements ActionListener {
 
 	public TableModel contentTableModel = new MainTableModel();
 	
-	private TableRowSorter <TableModel> sorter = new TableRowSorter <TableModel> (contentTableModel);
-
 	public InitTable() {
 
 		// Properties.
@@ -47,9 +43,6 @@ public class InitTable extends JTable implements ActionListener {
 		setOpaque(true);
 		setAutoCreateRowSorter(true);
 		getTableHeader().setReorderingAllowed(false);
-		
-		// Filter.
-		setRowSorter(sorter);
 		
 		// Popup menu.
 		JPopupMenu popup = new JPopupMenu();
@@ -93,11 +86,7 @@ public class InitTable extends JTable implements ActionListener {
 	}
 
 	private Object [][] rowData() {
-		return DB.getFields().tableData ();
-	}
-	
-	public void changeSorter (String reg) {
-		sorter.setRowFilter(RowFilter.regexFilter("(?i)" + reg));
+		return DB.getFields().contentTableData ();
 	}
 
 	public class MainTableModel extends DefaultTableModel {

@@ -1,13 +1,11 @@
-package gui.main;
+package gui.fin;
 
-import gui.core.Action;
-import gui.core.Command;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JTable;
-import javax.swing.RowFilter;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -15,18 +13,18 @@ import javax.swing.table.TableRowSorter;
 import core.DB;
 
 /**
- * The main content table.
+ * The main content table for votes.
  * 
  * @author admin
  *
  */
 
-public class MainTable extends JTable {
+public class ResultsTable extends JTable {
 
-	private String[] columnData = { "Name", "Surname", "Post", "Class" };
+	private String[] columnData = { "Name", "Surname", "Post", "Class", "Votes" };
 	private Object [][] getRowData() {
 		DB.getFields().load();
-		return DB.getFields().contentTableData ();
+		return DB.getFields().resultsTableData();
 	}
 
 	private MainTableModel tableModel = new MainTableModel();
@@ -36,12 +34,10 @@ public class MainTable extends JTable {
 		return tableModel;
 	}
 	
-	public TableRowSorter <TableModel> sorter;
 
-	public MainTable() {
+	public ResultsTable() {
 		// Properties.
 		setModel(tableModel);
-		addMouseListener(new TableMouseListener());
 		setToolTipText("Candidates.");
 		setShowGrid(false);
 		setName("Candidates.");
@@ -49,8 +45,14 @@ public class MainTable extends JTable {
 		setAutoCreateRowSorter(true);
 		getTableHeader().setReorderingAllowed(false);
 		
-		// Filter.
-		sorter = new TableRowSorter <TableModel> (getModel());
+		// Filter ny votes.
+		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(getModel());
+		List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+		 
+		sortKeys.add(new RowSorter.SortKey(4, SortOrder.DESCENDING));
+		sorter.setSortKeys(sortKeys);
+		sorter.sort();
+		 
 		setRowSorter(sorter);
 	}
 	
@@ -80,25 +82,6 @@ public class MainTable extends JTable {
 	    	super.setValueAt(value, row, col);
 	    	fireTableDataChanged();
 	    }
-	}
-	
-	public void changeSorter (String reg) {
-		sorter.setRowFilter(RowFilter.regexFilter("(?i)" + reg));
-	}
-
-	private class TableMouseListener extends MouseAdapter {
-		@Override
-		public void mouseClicked(MouseEvent e) {
-
-			switch (e.getClickCount()) {
-
-			case 2:
-				if (isEnabled()) {
-					Action.execute(Command.VOTE);
-				}
-			}
-
-		}
 	}
 
 }

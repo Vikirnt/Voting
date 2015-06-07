@@ -141,19 +141,19 @@ public class Fields {
 	
 	// Interactions.
 	
-	public ArrayList <String> getName () {
+	public ArrayList <String> 	getName () {
 		return name;
 	}
-	public ArrayList <String> getSurname () {
+	public ArrayList <String> 	getSurname () {
 		return surname;
 	}
-	public ArrayList <String> getPost () {
+	public ArrayList <String> 	getPost () {
 		return post;
 	}
-	public ArrayList <String> getStdDiv () {
+	public ArrayList <String> 	getStdDiv () {
 		return stddiv;
 	}
-	public ArrayList <Integer> getVoteCount () {
+	public ArrayList <Integer> 	getVoteCount () {
 		return votecount;
 	}
 	
@@ -227,9 +227,9 @@ public class Fields {
 	}
 
 	/**
-	 * @return data for table.
+	 * @return data for normal table.
 	 */
-	public Object [][] tableData () {
+	public Object [][] contentTableData () {
 
 		Object [][] temp = new Object [DB.getFields().getItemsCount()][4];
 		for (int i = 0; i < DB.getFields().getItemsCount(); i++) {
@@ -238,6 +238,25 @@ public class Fields {
 			temp[i][1] = surname.get(i);
 			temp[i][2] = post.get(i);
 			temp[i][3] = stddiv.get(i);
+
+		}
+		return temp;
+
+	}
+	
+	/**
+	 * @return data for results table.
+	 */
+	public Object [][] resultsTableData () {
+
+		Object [][] temp = new Object [DB.getFields().getItemsCount()][5];
+		for (int i = 0; i < DB.getFields().getItemsCount(); i++) {
+
+			temp[i][0] = name.get(i);
+			temp[i][1] = surname.get(i);
+			temp[i][2] = post.get(i);
+			temp[i][3] = stddiv.get(i);
+			temp[i][4] = votecount.get(i);
 
 		}
 		return temp;

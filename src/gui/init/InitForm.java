@@ -9,9 +9,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -103,13 +100,6 @@ public class InitForm extends JPanel implements ActionListener {
 		
 		JLabel lblSchoolLogo = new JLabel(imageIcon);
 		lblSchoolLogo.setBounds(10, 213, 190, 190);
-		lblSchoolLogo.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				super.mouseClicked(e);
-				Main.initf.dispatchEvent(new WindowEvent(Main.initf, WindowEvent.WINDOW_CLOSING));
-			}
-		});
 		add(lblSchoolLogo);
 	}
 

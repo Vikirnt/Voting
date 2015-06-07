@@ -5,8 +5,6 @@ import gui.main.MainFrame;
 
 import java.awt.Font;
 import java.awt.SplashScreen;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.Enumeration;
 
 import javax.swing.JFrame;
@@ -28,11 +26,6 @@ public class Main {
 	 * The primary frame.
 	 */
 	public static JFrame f = null;
-	
-	/**
-	 * Initialise Database if no items.
-	 */
-	public static JFrame initf = null;
 
 	/**
 	 * Main method to start the program.
@@ -60,7 +53,6 @@ public class Main {
 					"Oops!", JOptionPane.INFORMATION_MESSAGE);
 		}
 
-		initf = new InitFrame ();
 		f = new MainFrame ();
 
 		// Splash screen!
@@ -86,15 +78,11 @@ public class Main {
 			}
 		}
 		
-		if (true) {
+		if (DB.getFields().getItemsCount() < 0) {
+			JFrame initf = new InitFrame();
 			initf.setVisible(true);
-			initf.addWindowListener(new WindowAdapter() {
-				@Override
-				public void windowClosing(WindowEvent e) {
-					super.windowClosing(e);
-					((MainFrame) f).setVisible(true);
-				}
-			});
+		} else {
+			f.setVisible(true);
 		}
 		
 	}

@@ -1,5 +1,8 @@
 package gui.main;
 
+import gui.fin.ResultsFrame;
+import gui.init.InitFrame;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
@@ -27,6 +30,8 @@ public class MainFrame extends JFrame {
 	
 	private JTextField searcher;
 	private static JTable contentTable;
+	
+	private JFrame initf;
 
 	/**
 	 * Create the frame.
@@ -62,8 +67,9 @@ public class MainFrame extends JFrame {
 		
 		// Search field.
 		
-		searcher = new JTextField ();
+		initf = new InitFrame();
 		
+		searcher = new JTextField ();
 		searcher.setToolTipText("Search");
 		searcher.addKeyListener(new KeyAdapter() {
 			@Override
@@ -82,26 +88,22 @@ public class MainFrame extends JFrame {
 				
 				// Commands.
 				
-				if (text.startsWith("$>") && e.getKeyChar() == KeyEvent.VK_ENTER) {
+				if (text.startsWith("$>")) {
 					searcher.setForeground(new Color(2, 132, 130));
 					
-					// Commands now:
-					
-					if (text.equalsIgnoreCase ("$>results")) {
-						System.err.println ("PRINTING RESULTS, I GUESS.");
+					if (text.equalsIgnoreCase ("$>results") && e.getKeyChar() == KeyEvent.VK_ENTER) {
+						//setVisible(false);
+						new ResultsFrame ();
 					}
 					
-					if (text.equalsIgnoreCase ("$>edit")) {
+					if (text.equalsIgnoreCase ("$>edit") && e.getKeyChar() == KeyEvent.VK_ENTER) {
 						setVisible(false);
 						((MainTable) contentTable).changeSorter ("");
-						Main.initf.setVisible(true);
+						initf.setVisible(true);
 					}
 					
 				} else {
 					searcher.setForeground(new Color(0, 0, 0));
-				}
-				if (text.length () > 10) {
-					text.setText ("");
 				}
 				
 			}
