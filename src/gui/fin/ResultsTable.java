@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.table.AbstractTableModel;
@@ -42,7 +43,8 @@ public class ResultsTable extends JTable {
 		setName("Candidates.");
 		setOpaque(true);
 		setAutoCreateRowSorter(true);
-		getTableHeader().setReorderingAllowed(false);
+		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		getTableHeader().setReorderingAllowed(true);
 		
 		// Filter ny votes.
 		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(getModel());

@@ -1,6 +1,8 @@
 package gui.init;
 
 import java.awt.BorderLayout;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -55,17 +57,24 @@ public class InitFrame extends JFrame {
 		contentPane.setLayout(new BorderLayout (5, 5));
 		setContentPane(contentPane);
 		
-		// Table.
-		
-		contentTable = new InitTable ();
-		JScrollPane tablePane = new JScrollPane(contentTable);
-		
-		contentPane.add(tablePane, BorderLayout.WEST);
-		
 		// Form.
 		
 		formPane = new InitForm ();
 		contentPane.add(formPane, BorderLayout.CENTER);
+		
+		// Table.
+		
+		contentTable = new InitTable ();
+		contentTable.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				InitForm.getNameField().requestFocus();
+				InitForm.getNameField().setText(InitForm.getNameField().getText() + e.getKeyChar());
+			}
+		});
+		
+		JScrollPane tablePane = new JScrollPane(contentTable);
+		contentPane.add(tablePane, BorderLayout.WEST);
 		
 	}
 	

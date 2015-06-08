@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -42,7 +43,8 @@ public class InitTable extends JTable implements ActionListener {
 		setName("Candidates.");
 		setOpaque(true);
 		setAutoCreateRowSorter(true);
-		getTableHeader().setReorderingAllowed(false);
+		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		getTableHeader().setReorderingAllowed(true);
 		
 		// Popup menu.
 		JPopupMenu popup = new JPopupMenu();
