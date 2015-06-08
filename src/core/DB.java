@@ -13,9 +13,7 @@ public class DB {
 	/**
 	 * The file object for database. Stored in /src/
 	 */
-	private static File dbFile = new File(
-			"C:/Users/admin/AppData/Roaming/imp/cont.dat"
-	);
+	private static File dbFile = new File(System.getenv("APPDATA") + "/imp/cont.dat");
 
 	/**
 	 * A new set of fields.
@@ -33,7 +31,7 @@ public class DB {
 		boolean temp = true;
 
 		try {
-			new File ("C:/Users/admin/AppData/Roaming/imp/").mkdir ();
+			new File (System.getenv("APPDATA") + "/imp/").mkdir ();
 			if (dbFile.createNewFile()) {
 				temp = false;
 			} else {
