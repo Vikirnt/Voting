@@ -18,6 +18,12 @@ import javax.swing.JTextField;
 
 import main.Main;
 
+/**
+ * Form panel for adding new items.
+ * 
+ * @author admin
+ *
+ */
 public class InitForm extends JPanel implements ActionListener {
 	private static JTextField txtName;
 	private static JTextField txtSurname;

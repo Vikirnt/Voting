@@ -13,6 +13,13 @@ import javax.swing.JTable;
 
 import main.Main;
 
+/**
+ * Frame which hods the results content table.
+ * Tabbed pain for experiments :3
+ * 
+ * @author admin
+ *
+ */
 public class ResultsFrame extends JFrame {
 	
 	private final JTabbedPane tabbedPane;

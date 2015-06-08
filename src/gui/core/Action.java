@@ -37,7 +37,7 @@ public class Action {
 						Main.getFrame().setResizable(false);
 						Thread.sleep(3200);
 						Main.getFrame().setResizable(true);
-						((MainFrame) Main.getFrame()).getSearchField ().setText("");;
+						((MainFrame) Main.getFrame()).getSearchField ().setText("");
 					} catch (Exception e) {
 						System.err.println("WE HAVE AN INTERRUPTION!");
 					}

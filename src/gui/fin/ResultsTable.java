@@ -13,12 +13,11 @@ import javax.swing.table.TableRowSorter;
 import core.DB;
 
 /**
- * The main content table for votes.
+ * The results content table for votes.
  * 
  * @author admin
  *
  */
-
 public class ResultsTable extends JTable {
 
 	private String[] columnData = { "Name", "Surname", "Post", "Class", "Votes" };
