@@ -64,10 +64,19 @@ public class MainFrame extends JFrame {
 		// Table of candidates.
 		
 		JScrollPane scrollPane = new JScrollPane();
-		contentPane.add(scrollPane);
+		
 		
 		contentTable = new MainTable();
+		contentTable.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				searcher.requestFocus();
+				searcher.setText(searcher.getText() + e.getKeyChar());
+			}
+		});
 		scrollPane.setViewportView(contentTable);
+		
+		contentPane.add(scrollPane);
 		
 		// Search field.
 		
