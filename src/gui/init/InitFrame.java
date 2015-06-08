@@ -31,13 +31,14 @@ public class InitFrame extends JFrame {
 		
 		setIconImage(new ImageIcon (Main.class.getResource("assets/file-exe-icon.png")).getImage());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 688, 455);
+		setSize(688, 455);
+		setLocationRelativeTo(null);
 		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				super.windowClosing(e);
-				Main.f.setVisible(true);
+				Main.getFrame().setVisible (true);
 			}
 		});
 		

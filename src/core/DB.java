@@ -94,5 +94,9 @@ public class DB {
 		}
 
 	}
+	
+	public static String getPassword () {
+		return "cs15";
+	}
 
 }

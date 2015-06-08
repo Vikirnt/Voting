@@ -25,14 +25,13 @@ public class Main {
 	/**
 	 * The primary frame.
 	 */
-	public static JFrame f = null;
+	private static JFrame frame = null;
 
 	/**
 	 * Main method to start the program.
 	 * 
 	 * @param args Startup arguments.
-	 * 
-	 *            -nosplash = No splash screen.
+	 * 			-nosplash = No splash screen.
 	 */
 	public static void main(String[] args) {
 
@@ -53,36 +52,30 @@ public class Main {
 					"Oops!", JOptionPane.INFORMATION_MESSAGE);
 		}
 
-		f = new MainFrame ();
+		frame = new MainFrame ();
 
 		// Splash screen!
+		
 		final SplashScreen splash = SplashScreen.getSplashScreen();
 		if (splash == null) {
-			try {
-				if (args[0].equals("-nosplash")) {
-					JOptionPane.showMessageDialog(
-									null,
-									"SplashScreen could not be found :( I worked hard on it.",
-									"Y U DO DIS TO ME?",
-									JOptionPane.QUESTION_MESSAGE);
-				}
-			} catch (ArrayIndexOutOfBoundsException e) {
-				System.err.println("SPLASH SCREEN NOT FOUND.");
-			}
+			System.err.println("SPLASH SCREEN NOT FOUND.");
 		} else {
 			try {
+				splash.createGraphics();
 				Thread.sleep(500);
 				splash.close();
-			} catch (InterruptedException e) {
+			} catch (Exception e) {
 				System.err.println("We have an interruption!");
 			}
 		}
+		
+		// Frame.
 		
 		if (DB.getFields().getItemsCount() < 0) {
 			JFrame initf = new InitFrame();
 			initf.setVisible(true);
 		} else {
-			f.setVisible(true);
+			frame.setVisible(true);
 		}
 		
 	}
@@ -102,6 +95,13 @@ public class Main {
 				UIManager.put(key, f);
 			}
 		}
+	}
+	
+	/**
+	 * Get mainframe.
+	 */
+	public static JFrame getFrame () {
+		return frame;
 	}
 
 }

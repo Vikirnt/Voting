@@ -5,17 +5,20 @@ import gui.init.InitFrame;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import core.DB;
 import main.Main;
 
 /**
@@ -45,6 +48,7 @@ public class MainFrame extends JFrame {
 		setIconImage(new ImageIcon (Main.class.getResource("assets/SchoolLogo.png")).getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 420);
+		setLocationRelativeTo(null);
 		
 		// Layout.
 		
@@ -71,6 +75,12 @@ public class MainFrame extends JFrame {
 		
 		searcher = new JTextField ();
 		searcher.setToolTipText("Search");
+		searcher.setLayout(new BorderLayout(2, 2));
+		// Search icon
+		ImageIcon searchIcon = new ImageIcon(Main.class.getResource("assets/search.png")); // load the image to a imageIcon
+		Image newimg = searchIcon.getImage().getScaledInstance(15, 15,  java.awt.Image.SCALE_SMOOTH); // scale the image the smooth way  
+		searchIcon = new ImageIcon(newimg);  // transform it back
+		searcher.add(new JLabel (searchIcon), BorderLayout.EAST);
 		searcher.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -87,30 +97,35 @@ public class MainFrame extends JFrame {
 				((MainTable) contentTable).repaint ();
 				
 				// Commands.
-				
-				if (text.startsWith("$>")) {
-					searcher.setForeground(new Color(2, 132, 130));
-					
-					if (text.equalsIgnoreCase ("$>results") && e.getKeyChar() == KeyEvent.VK_ENTER) {
-						//setVisible(false);
-						new ResultsFrame ();
-					}
-					
-					if (text.equalsIgnoreCase ("$>edit") && e.getKeyChar() == KeyEvent.VK_ENTER) {
-						setVisible(false);
-						((MainTable) contentTable).changeSorter ("");
-						initf.setVisible(true);
-					}
-					
-				} else {
-					searcher.setForeground(new Color(0, 0, 0));
-				}
+				checkCommands(text, e);
 				
 			}
 		});
 		
 		getContentPane().add(searcher, BorderLayout.NORTH);
 		
+	}
+	
+	private void checkCommands (String text, KeyEvent e) {
+		if (text.startsWith("$")) {
+			searcher.setForeground(new Color(2, 132, 130));
+			
+			if (text.contains(DB.getPassword ()) && e.getKeyChar() == KeyEvent.VK_ENTER) {
+				if (text.startsWith ("$results")) {
+					setVisible(false);
+					new ResultsFrame ().setVisible(true);;
+				}
+				
+				if (text.startsWith ("$edit")) {
+					setVisible(false);
+					((MainTable) contentTable).changeSorter ("");
+					initf.setVisible(true);
+				}				
+			}
+			
+		} else {
+			searcher.setForeground(new Color(0, 0, 0));
+		}
 	}
 	
 	public static JTable getContentTable () {

@@ -1,10 +1,17 @@
 package gui.fin;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+
 import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+
+import main.Main;
 
 public class ResultsFrame extends JFrame {
 	private JTable contentTable;
@@ -16,8 +23,17 @@ public class ResultsFrame extends JFrame {
 		// Properties.
 		super ("Resuls");
 		
+		setIconImage(new ImageIcon (Main.class.getResource("assets/cup.png")).getImage());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setSize (450, 420);
+		setSize (450, 450);
+		setLocationRelativeTo(null);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				Main.getFrame().setVisible (true);
+				super.windowClosing(e);
+			}
+		});;
 		
 		// Content pane.
 		
@@ -31,9 +47,6 @@ public class ResultsFrame extends JFrame {
 		
 		contentTable = new ResultsTable();
 		tablePane.setViewportView(contentTable);
-		
-		// Debugging
-		setVisible(true);
 	}
 	
 }

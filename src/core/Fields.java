@@ -71,26 +71,34 @@ public class Fields {
 			while (fileScanner.hasNextLine()) {
 
 				line = fileScanner.nextLine();
-
+				String content;
+				
 				if (line.startsWith(NAME)) {
-
-					name.add(line.substring(NAME.length ()).trim());
+					
+					content = line.substring(NAME.length ()).trim();
+					content = Character.toUpperCase(content.charAt(0)) + content.substring(1);
+					name.add(content);
 
 				} else if (line.startsWith(SURNAME)) {
-
-					surname.add(line.substring(SURNAME.length ()).trim());
+					
+					content = line.substring(SURNAME.length ()).trim();
+					content = Character.toUpperCase(content.charAt(0)) + content.substring(1);
+					surname.add(content);
 
 				} else if (line.startsWith(POST)) {
-
-					post.add(line.substring(POST.length ()).trim());
+					
+					content = line.substring(POST.length ()).trim();
+					post.add(content);
 
 				} else if (line.startsWith(STDDIV)) {
-
-					stddiv.add(line.substring(STDDIV.length ()).trim());
+					
+					content = line.substring(STDDIV.length ()).trim();
+					stddiv.add(content);
 
 				} else if (line.startsWith(VOTECOUNT)) {
-
-					votecount.add(Integer.parseInt(line.substring(VOTECOUNT.length ()).trim ()));
+					
+					content = line.substring(VOTECOUNT.length ()).trim();
+					votecount.add(Integer.parseInt(content));
 
 				}
 
