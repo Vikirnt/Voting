@@ -13,6 +13,12 @@ import javax.swing.border.EmptyBorder;
 
 import main.Main;
 
+/**
+ * Frame for initialising the database.
+ * 
+ * @author admin
+ *
+ */
 public class InitFrame extends JFrame {
 
 	private final JPanel contentPane;

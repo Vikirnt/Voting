@@ -14,6 +14,12 @@ import javax.swing.JToolBar;
 
 import main.Main;
 
+/**
+ * Tool bar for MainFrame.
+ * 
+ * @author admin
+ *
+ */
 public class MainToolBar extends JToolBar {
 
 	public MainToolBar () {
