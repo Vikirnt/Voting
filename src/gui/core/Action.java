@@ -7,6 +7,7 @@ import gui.main.MainFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
+import main.Main;
 import core.DB;
 
 /**
@@ -16,15 +17,14 @@ import core.DB;
  *
  */
 public class Action {
-
+	
 	/**
 	 * Checks for a command and functions accordingly.
 	 * 
-	 * @param command
-	 *            - the command inputted.
+	 * @param command - the command inputted.
 	 */
 	public static void execute(String command) {
-
+		
 		switch (command) {
 		
 		// add a vote.
@@ -32,14 +32,15 @@ public class Action {
 				int confirm = JOptionPane.showConfirmDialog(null, "Finalise your vote? You can vote only once.", "CONFIRMATION", JOptionPane.YES_NO_CANCEL_OPTION);
 				if (confirm == JOptionPane.YES_OPTION) {
 					DB.getFields().addVote(getPos(MainFrame.getContentTable()));
-					MainFrame.getContentTable().setEnabled(false);
 					saveDB();
 					try {
-						Thread.sleep(3 * 1000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+						Main.getFrame().setResizable(false);
+						Thread.sleep(3200);
+						Main.getFrame().setResizable(true);
+						((MainFrame) Main.getFrame()).getSearchField ().setText("");;
+					} catch (Exception e) {
+						System.err.println("WE HAVE AN INTERRUPTION!");
 					}
-					MainFrame.getContentTable().setEnabled(true);
 					break;						
 				}
 			break;
@@ -111,7 +112,7 @@ public class Action {
 	/**
 	 * Removes an item from the database.
 	 */
-	public static void removeItem(int itemPos) {
+	private static void removeItem(int itemPos) {
 		try {
 			DB.getFields().removeName(itemPos);
 			DB.getFields().removeSurname(itemPos);
@@ -131,7 +132,7 @@ public class Action {
 	 * 
 	 * @return
 	 */
-	public static int getPos (JTable ref) {
+	private static int getPos (JTable ref) {
 		
 		int namepos = -1, surnamepos = -2, postpos = -3, stddivpos = -4;
 		

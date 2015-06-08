@@ -18,8 +18,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import core.DB;
 import main.Main;
+import core.DB;
 
 /**
  * Main frame for the project.
@@ -29,7 +29,7 @@ import main.Main;
  */
 public class MainFrame extends JFrame {
 
-	private JPanel contentPane;
+	private final JPanel contentPane;
 	
 	private JTextField searcher;
 	private static JTable contentTable;
@@ -76,11 +76,12 @@ public class MainFrame extends JFrame {
 		searcher = new JTextField ();
 		searcher.setToolTipText("Search");
 		searcher.setLayout(new BorderLayout(2, 2));
-		// Search icon
+		
 		ImageIcon searchIcon = new ImageIcon(Main.class.getResource("assets/search.png")); // load the image to a imageIcon
 		Image newimg = searchIcon.getImage().getScaledInstance(15, 15,  java.awt.Image.SCALE_SMOOTH); // scale the image the smooth way  
 		searchIcon = new ImageIcon(newimg);  // transform it back
 		searcher.add(new JLabel (searchIcon), BorderLayout.EAST);
+		
 		searcher.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {

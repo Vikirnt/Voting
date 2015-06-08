@@ -14,6 +14,9 @@ import javax.swing.JTable;
 import main.Main;
 
 public class ResultsFrame extends JFrame {
+	
+	private final JTabbedPane tabbedPane;
+	
 	private JTable contentTable;
 	
 	/**
@@ -37,7 +40,7 @@ public class ResultsFrame extends JFrame {
 		
 		// Content pane.
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
 		// Table pane.

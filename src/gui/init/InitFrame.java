@@ -15,7 +15,7 @@ import main.Main;
 
 public class InitFrame extends JFrame {
 
-	private JPanel contentPane;
+	private final JPanel contentPane;
 	
 	private static JTable contentTable;
 	private static JPanel formPane;
