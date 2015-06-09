@@ -48,7 +48,7 @@ public class MainToolBar extends JToolBar {
 		btnVote.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (((MainFrame) Main.getMainFrame()).getContentTable().getSelectedRow () != -1) {
+				if (Main.getMainFrame().getContentTable().getSelectedRow () != -1) {
 					Action.execute(e.getActionCommand());
 				}
 			}

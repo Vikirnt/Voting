@@ -3,7 +3,7 @@ package gui.core;
 public final class Command {
 
 	/**
-	 * Reference commands.
+	 * Reference constants.
 	 */
 	public final static String
 			SAVE = "save db",

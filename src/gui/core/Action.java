@@ -26,47 +26,30 @@ public class Action {
 		
 		// add a vote.
 			case Command.VOTE:
-				int confirm = JOptionPane.showConfirmDialog(null, "Finalise your vote? You can vote only once.", "CONFIRMATION", JOptionPane.YES_NO_CANCEL_OPTION);
-				if (confirm == JOptionPane.YES_OPTION) {
-					DB.getFields().addVote(getPos(Main.getMainFrame().getContentTable()));
-					saveDB();
-					try {
-						Main.getMainFrame().setResizable(false);
-						Thread.sleep(3200);
-						Main.getMainFrame().setResizable(true);
-						Main.getMainFrame().getSearchField ().setText("");
-					} catch (Exception e) {
-						System.err.println("WE HAVE AN INTERRUPTION!");
-					}
-					break;						
-				}
+				doVote ();
+				saveDB ();
 			break;
 			
 		// save DB.
 			case Command.SAVE:
-				saveDB();
+				saveDB ();
 			break;
 			
 		// add an item.
 			case Command.ADD:
-				DB.getFields().addName(Main.getInitFrame().getFormPane().getNameField().getText());
-				DB.getFields().addSurname(Main.getInitFrame().getFormPane().getSurnameField().getText());
-				DB.getFields().addPost(Main.getInitFrame().getFormPane().getPostField().getText());
-				DB.getFields().addStdDiv(Main.getInitFrame().getFormPane().getClassField().getText());
-				DB.getFields().addVotecount(0);
-				saveDB();
-				clearFields();
+				addItem ();
+				saveDB ();
 			break;
 			
 		// remove an item.
 			case Command.DELETE:
-				removeItem(getPos(Main.getInitFrame().getContentTable()));
-				saveDB();
+				removeItem (getPos(Main.getInitFrame().getContentTable()));
+				saveDB ();
 			break;
 			
 		// cancel adding a new item.
 			case Command.CLEAR:
-				clearFields();
+				clearFields ();
 			break;
 		
 			default:
@@ -85,6 +68,36 @@ public class Action {
 	}
 	
 	/**
+	 * Adds an item to DB.
+	 */
+	private static void addItem() {
+		DB.getFields().addName(Main.getInitFrame().getFormPane().getNameField().getText());
+		DB.getFields().addSurname(Main.getInitFrame().getFormPane().getSurnameField().getText());
+		DB.getFields().addPost(Main.getInitFrame().getFormPane().getPostField().getText());
+		DB.getFields().addStdDiv(Main.getInitFrame().getFormPane().getClassField().getText());
+		DB.getFields().addVotecount(0);
+		clearFields();
+	}
+	
+	/**
+	 * Adds a vote.
+	 */
+	private static void doVote() {
+		int confirm = JOptionPane.showConfirmDialog(null, "Finalise your vote? You can vote only once.", "CONFIRMATION", JOptionPane.YES_NO_CANCEL_OPTION);
+		if (confirm == JOptionPane.YES_OPTION) {
+			DB.getFields().addVote(getPos(Main.getMainFrame().getContentTable()));
+			try {
+				Main.getMainFrame().setResizable(false);
+				Thread.sleep(3200);
+				Main.getMainFrame().setResizable(true);
+				Main.getMainFrame().getSearchField ().setText("");
+			} catch (Exception e) {
+				System.err.println("WE HAVE AN INTERRUPTION!");
+			}					
+		}
+	}
+
+	/**
 	 * Clears all text fields in InitForm.
 	 */
 	private static void clearFields () {
@@ -101,7 +114,6 @@ public class Action {
 	 */
 	private static void saveDB() {
 		DB.save();
-		DB.getFields().load();
 	}
 
 	/**
@@ -114,7 +126,6 @@ public class Action {
 			DB.getFields().removePost	(itemPos);
 			DB.getFields().removeStdDiv	(itemPos);
 			DB.getFields().removeVote	(itemPos);
-			
 		} catch (NullPointerException e) {
 			System.err.println("\nRemoval canceled.\n");
 		}

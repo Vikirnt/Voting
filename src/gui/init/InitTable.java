@@ -87,7 +87,7 @@ public class InitTable extends JTable implements ActionListener {
 	}
 
 	private Object [][] rowData() {
-		return DB.getFields().contentTableData ();
+		return DB.getFields().getContentTableData ();
 	}
 
 	private class TableModel extends DefaultTableModel {

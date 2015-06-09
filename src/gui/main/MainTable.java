@@ -27,7 +27,7 @@ public class MainTable extends JTable {
 	private String[] columnData = { "Name", "Surname", "Post", "Class" };
 	private Object [][] getRowData() {
 		DB.getFields().load();
-		return DB.getFields().contentTableData ();
+		return DB.getFields().getContentTableData ();
 	}
 
 	private MainTableModel tableModel = new MainTableModel();

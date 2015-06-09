@@ -237,7 +237,7 @@ public class Fields {
 	/**
 	 * @return data for normal table.
 	 */
-	public Object [][] contentTableData () {
+	public Object [][] getContentTableData () {
 
 		Object [][] temp = new Object [DB.getFields().getItemsCount()][4];
 		for (int i = 0; i < DB.getFields().getItemsCount(); i++) {
@@ -255,7 +255,7 @@ public class Fields {
 	/**
 	 * @return data for results table.
 	 */
-	public Object [][] resultsTableData () {
+	public Object [][] getResultsTableData () {
 
 		Object [][] temp = new Object [DB.getFields().getItemsCount()][5];
 		for (int i = 0; i < DB.getFields().getItemsCount(); i++) {
