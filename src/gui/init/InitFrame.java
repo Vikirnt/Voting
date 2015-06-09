@@ -25,8 +25,8 @@ public class InitFrame extends JFrame {
 
 	private final JPanel contentPane;
 	
-	private static JTable contentTable;
-	private static JPanel formPane;
+	private JTable contentTable;
+	private JPanel formPane;
 
 	/**
 	 * Create the frame.
@@ -46,7 +46,7 @@ public class InitFrame extends JFrame {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				super.windowClosing(e);
-				Main.getFrame().setVisible (true);
+				Main.getMainFrame().setVisible (true);
 			}
 		});
 		
@@ -78,10 +78,10 @@ public class InitFrame extends JFrame {
 		
 	}
 	
-	public static JTable getContentTable () {
+	public JTable getContentTable () {
 		return contentTable;
 	}
-	public static JPanel getFormPane() {
+	public JPanel getFormPane() {
 		return formPane;
 	}
 	

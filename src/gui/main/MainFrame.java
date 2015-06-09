@@ -1,7 +1,6 @@
 package gui.main;
 
 import gui.fin.ResultsFrame;
-import gui.init.InitFrame;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -32,9 +31,7 @@ public class MainFrame extends JFrame {
 	private final JPanel contentPane;
 	
 	private JTextField searcher;
-	private static JTable contentTable;
-	
-	private JFrame initf;
+	private JTable contentTable;
 
 	/**
 	 * Create the frame.
@@ -79,8 +76,6 @@ public class MainFrame extends JFrame {
 		contentPane.add(scrollPane);
 		
 		// Search field.
-		
-		initf = new InitFrame();
 		
 		searcher = new JTextField ();
 		searcher.setToolTipText("Search");
@@ -129,7 +124,7 @@ public class MainFrame extends JFrame {
 				if (text.startsWith ("$edit")) {
 					setVisible(false);
 					((MainTable) contentTable).changeSorter ("");
-					initf.setVisible(true);
+					Main.getInitFrame().setVisible(true);
 				}				
 			}
 			
@@ -138,7 +133,7 @@ public class MainFrame extends JFrame {
 		}
 	}
 	
-	public static JTable getContentTable () {
+	public JTable getContentTable () {
 		return contentTable;
 	}
 	public JTextField getSearchField () {

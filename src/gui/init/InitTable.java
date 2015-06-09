@@ -16,7 +16,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 import main.Main;
 import core.DB;
@@ -32,7 +31,7 @@ public class InitTable extends JTable implements ActionListener {
 
 	private String[] columnData = { "Name", "Surname", "Post", "Class" };
 
-	public TableModel contentTableModel = new MainTableModel();
+	public TableModel contentTableModel = new TableModel();
 	
 	public InitTable() {
 
@@ -91,7 +90,7 @@ public class InitTable extends JTable implements ActionListener {
 		return DB.getFields().contentTableData ();
 	}
 
-	public class MainTableModel extends DefaultTableModel {
+	private class TableModel extends DefaultTableModel {
 
 		@Override
 		public int getRowCount() {

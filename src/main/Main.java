@@ -26,6 +26,10 @@ public class Main {
 	 * The primary frame.
 	 */
 	private static JFrame frame = null;
+	/**
+	 * The initialising frame.
+	 */
+	private static JFrame iframe= null;
 
 	/**
 	 * Main method to start the program.
@@ -53,6 +57,7 @@ public class Main {
 		}
 
 		frame = new MainFrame ();
+		iframe = new InitFrame();
 
 		// Splash screen!
 		
@@ -100,8 +105,11 @@ public class Main {
 	/**
 	 * Get mainframe.
 	 */
-	public static JFrame getFrame () {
+	public static JFrame getMainFrame () {
 		return frame;
+	}
+	public static JFrame getInitFrame() {
+		return iframe;
 	}
 
 }

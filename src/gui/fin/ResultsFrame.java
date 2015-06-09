@@ -40,7 +40,7 @@ public class ResultsFrame extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				Main.getFrame().setVisible (true);
+				Main.getMainFrame().setVisible (true);
 				super.windowClosing(e);
 			}
 		});;

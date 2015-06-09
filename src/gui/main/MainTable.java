@@ -56,7 +56,7 @@ public class MainTable extends JTable {
 		setRowSorter(sorter);
 	}
 	
-	public class MainTableModel extends AbstractTableModel {
+	private class MainTableModel extends AbstractTableModel {
 		@Override
 	    public String getColumnName(int col) {
 	        return columnData [col];

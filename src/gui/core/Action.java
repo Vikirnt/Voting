@@ -31,13 +31,13 @@ public class Action {
 			case Command.VOTE:
 				int confirm = JOptionPane.showConfirmDialog(null, "Finalise your vote? You can vote only once.", "CONFIRMATION", JOptionPane.YES_NO_CANCEL_OPTION);
 				if (confirm == JOptionPane.YES_OPTION) {
-					DB.getFields().addVote(getPos(MainFrame.getContentTable()));
+					DB.getFields().addVote(getPos(((MainFrame) Main.getMainFrame()).getContentTable()));
 					saveDB();
 					try {
-						Main.getFrame().setResizable(false);
+						Main.getMainFrame().setResizable(false);
 						Thread.sleep(3200);
-						Main.getFrame().setResizable(true);
-						((MainFrame) Main.getFrame()).getSearchField ().setText("");
+						Main.getMainFrame().setResizable(true);
+						((MainFrame) Main.getMainFrame()).getSearchField ().setText("");
 					} catch (Exception e) {
 						System.err.println("WE HAVE AN INTERRUPTION!");
 					}
@@ -63,7 +63,7 @@ public class Action {
 			
 		// remove an item.
 			case Command.DELETE:
-				removeItem(getPos(InitFrame.getContentTable()));
+				removeItem(getPos(((InitFrame) Main.getInitFrame()).getContentTable()));
 				saveDB();
 			break;
 			
@@ -79,10 +79,10 @@ public class Action {
 		}
 		
 		try {
-			MainFrame.getContentTable().repaint();
-			MainFrame.getContentTable().updateUI();
-			InitFrame.getContentTable().repaint();
-			InitFrame.getContentTable().updateUI();
+			((MainFrame) Main.getMainFrame()).getContentTable().repaint();
+			((MainFrame) Main.getMainFrame()).getContentTable().updateUI();
+			((InitFrame) Main.getInitFrame()).getContentTable().repaint();
+			((InitFrame) Main.getInitFrame()).getContentTable().updateUI();
 		} catch (NullPointerException e) {
 			System.err.println("Known exception: " + e.getMessage());
 		}

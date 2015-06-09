@@ -25,6 +25,7 @@ import main.Main;
  *
  */
 public class InitForm extends JPanel implements ActionListener {
+	
 	private static JTextField txtName;
 	private static JTextField txtSurname;
 	private static JTextField txtPost;
