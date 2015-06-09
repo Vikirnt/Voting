@@ -76,7 +76,7 @@ public class Main {
 		
 		// Frame.
 		
-		if (DB.getFields().getItemsCount() < 0) {
+		if (DB.getFields().getItemsCount() < 1) {
 			JFrame initf = new InitFrame();
 			initf.setVisible(true);
 		} else {
