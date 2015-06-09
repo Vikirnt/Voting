@@ -95,11 +95,11 @@ public class MainFrame extends JFrame {
 				// Search filter.
 				
 				if (text.length() == 0) {
-					((MainTable) contentTable).changeSorter ("");
+					getContentTable().changeSorter ("");
 				} else {
-					((MainTable) contentTable).changeSorter (text);
+					getContentTable().changeSorter (text);
 				}
-				((MainTable) contentTable).repaint ();
+				getContentTable().repaint ();
 				
 				// Commands.
 				checkCommands(text, e);
@@ -123,7 +123,7 @@ public class MainFrame extends JFrame {
 				
 				if (text.startsWith ("$edit")) {
 					setVisible(false);
-					((MainTable) contentTable).changeSorter ("");
+					getContentTable().changeSorter ("");
 					Main.getInitFrame().setVisible(true);
 				}				
 			}
@@ -133,8 +133,8 @@ public class MainFrame extends JFrame {
 		}
 	}
 	
-	public JTable getContentTable () {
-		return contentTable;
+	public MainTable getContentTable () {
+		return (MainTable) contentTable;
 	}
 	public JTextField getSearchField () {
 		return searcher;

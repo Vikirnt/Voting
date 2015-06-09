@@ -26,10 +26,10 @@ import main.Main;
  */
 public class InitForm extends JPanel implements ActionListener {
 	
-	private static JTextField txtName;
-	private static JTextField txtSurname;
-	private static JTextField txtPost;
-	private static JTextField txtClass;
+	private JTextField txtName;
+	private JTextField txtSurname;
+	private JTextField txtPost;
+	private JTextField txtClass;
 	
 	public static JLabel lblCandidatesCount;
 	
@@ -116,7 +116,7 @@ public class InitForm extends JPanel implements ActionListener {
 		}
 	}
 	
-	private static boolean checkForEmpty () {
+	private boolean checkForEmpty () {
 		if (txtName.getText().isEmpty() || txtSurname.getText().isEmpty() || txtPost.getText().isEmpty() || txtClass.getText().isEmpty()) {
 			return true;
 		} else {
@@ -124,16 +124,16 @@ public class InitForm extends JPanel implements ActionListener {
 		}
 	}
 	
-	public static JTextField getNameField () {
+	public JTextField getNameField () {
 		return txtName;
 	}
-	public static JTextField getSurnameField () {
+	public JTextField getSurnameField () {
 		return txtSurname;
 	}
-	public static JTextField getPostField () {
+	public JTextField getPostField () {
 		return txtPost;
 	}
-	public static JTextField getClassField () {
+	public JTextField getClassField () {
 		return txtClass;
 	}
 	

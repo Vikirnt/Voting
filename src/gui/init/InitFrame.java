@@ -68,8 +68,8 @@ public class InitFrame extends JFrame {
 		contentTable.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				InitForm.getNameField().requestFocus();
-				InitForm.getNameField().setText(InitForm.getNameField().getText() + e.getKeyChar());
+				getFormPane().getNameField().requestFocus();
+				getFormPane().getNameField().setText(((InitForm) formPane).getNameField().getText() + e.getKeyChar());
 			}
 		});
 		
@@ -78,11 +78,11 @@ public class InitFrame extends JFrame {
 		
 	}
 	
-	public JTable getContentTable () {
-		return contentTable;
+	public InitTable getContentTable () {
+		return (InitTable) contentTable;
 	}
-	public JPanel getFormPane() {
-		return formPane;
+	public InitForm getFormPane() {
+		return (InitForm) formPane;
 	}
 	
 }

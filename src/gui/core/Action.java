@@ -1,11 +1,8 @@
 package gui.core;
 
-import gui.init.InitForm;
-import gui.init.InitFrame;
-import gui.main.MainFrame;
-
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.table.AbstractTableModel;
 
 import main.Main;
 import core.DB;
@@ -31,13 +28,13 @@ public class Action {
 			case Command.VOTE:
 				int confirm = JOptionPane.showConfirmDialog(null, "Finalise your vote? You can vote only once.", "CONFIRMATION", JOptionPane.YES_NO_CANCEL_OPTION);
 				if (confirm == JOptionPane.YES_OPTION) {
-					DB.getFields().addVote(getPos(((MainFrame) Main.getMainFrame()).getContentTable()));
+					DB.getFields().addVote(getPos(Main.getMainFrame().getContentTable()));
 					saveDB();
 					try {
 						Main.getMainFrame().setResizable(false);
 						Thread.sleep(3200);
 						Main.getMainFrame().setResizable(true);
-						((MainFrame) Main.getMainFrame()).getSearchField ().setText("");
+						Main.getMainFrame().getSearchField ().setText("");
 					} catch (Exception e) {
 						System.err.println("WE HAVE AN INTERRUPTION!");
 					}
@@ -52,10 +49,10 @@ public class Action {
 			
 		// add an item.
 			case Command.ADD:
-				DB.getFields().addName(InitForm.getNameField().getText());
-				DB.getFields().addSurname(InitForm.getSurnameField().getText());
-				DB.getFields().addPost(InitForm.getPostField().getText());
-				DB.getFields().addStdDiv(InitForm.getClassField().getText());
+				DB.getFields().addName(Main.getInitFrame().getFormPane().getNameField().getText());
+				DB.getFields().addSurname(Main.getInitFrame().getFormPane().getSurnameField().getText());
+				DB.getFields().addPost(Main.getInitFrame().getFormPane().getPostField().getText());
+				DB.getFields().addStdDiv(Main.getInitFrame().getFormPane().getClassField().getText());
 				DB.getFields().addVotecount(0);
 				saveDB();
 				clearFields();
@@ -63,7 +60,7 @@ public class Action {
 			
 		// remove an item.
 			case Command.DELETE:
-				removeItem(getPos(((InitFrame) Main.getInitFrame()).getContentTable()));
+				removeItem(getPos(Main.getInitFrame().getContentTable()));
 				saveDB();
 			break;
 			
@@ -79,10 +76,8 @@ public class Action {
 		}
 		
 		try {
-			((MainFrame) Main.getMainFrame()).getContentTable().repaint();
-			((MainFrame) Main.getMainFrame()).getContentTable().updateUI();
-			((InitFrame) Main.getInitFrame()).getContentTable().repaint();
-			((InitFrame) Main.getInitFrame()).getContentTable().updateUI();
+			((AbstractTableModel) Main.getMainFrame().getContentTable().getModel()).fireTableDataChanged ();
+			((AbstractTableModel) Main.getInitFrame().getContentTable().getModel()).fireTableDataChanged ();
 		} catch (NullPointerException e) {
 			System.err.println("Known exception: " + e.getMessage());
 		}
@@ -93,12 +88,12 @@ public class Action {
 	 * Clears all text fields in InitForm.
 	 */
 	private static void clearFields () {
-		InitForm.getNameField().setText("");
-		InitForm.getSurnameField().setText("");
-		InitForm.getPostField().setText("");
-		InitForm.getClassField().setText("");
+		Main.getInitFrame().getFormPane().getNameField().setText("");
+		Main.getInitFrame().getFormPane().getSurnameField().setText("");
+		Main.getInitFrame().getFormPane().getPostField().setText("");
+		Main.getInitFrame().getFormPane().getClassField().setText("");
 		
-		InitForm.getNameField().requestFocus();
+		Main.getInitFrame().getFormPane().getNameField().requestFocus();
 	}
 
 	/**
@@ -114,11 +109,11 @@ public class Action {
 	 */
 	private static void removeItem(int itemPos) {
 		try {
-			DB.getFields().removeName(itemPos);
+			DB.getFields().removeName	(itemPos);
 			DB.getFields().removeSurname(itemPos);
-			DB.getFields().removePost(itemPos);
-			DB.getFields().removeStdDiv(itemPos);
-			DB.getFields().removeVote(itemPos);
+			DB.getFields().removePost	(itemPos);
+			DB.getFields().removeStdDiv	(itemPos);
+			DB.getFields().removeVote	(itemPos);
 			
 		} catch (NullPointerException e) {
 			System.err.println("\nRemoval canceled.\n");

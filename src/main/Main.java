@@ -105,11 +105,11 @@ public class Main {
 	/**
 	 * Get mainframe.
 	 */
-	public static JFrame getMainFrame () {
-		return frame;
+	public static MainFrame getMainFrame () {
+		return (MainFrame) frame;
 	}
-	public static JFrame getInitFrame() {
-		return iframe;
+	public static InitFrame getInitFrame() {
+		return (InitFrame) iframe;
 	}
 
 }
