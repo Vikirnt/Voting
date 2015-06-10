@@ -44,9 +44,6 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		
-		// Initialse Main.getDB().
-		db = new DBFile ("cont.dat");
-
 		// Set default look and feel and format.
 		try {
 			setUIFont(new javax.swing.plaf.FontUIResource(new Font("Times New Roman", Font.PLAIN, 12)));
@@ -55,7 +52,8 @@ public class Main {
 			e.printStackTrace();
 		}
 
-		// Check database existance.
+		// Initialise items.
+		db = new DBFile ("cont.dat");
 		getDB().initialiseFile();
 		getDB().getFields().load();
 
@@ -63,7 +61,6 @@ public class Main {
 		iframe = new InitFrame();
 
 		// Splash screen!
-		
 		final SplashScreen splash = SplashScreen.getSplashScreen();
 		if (splash == null) {
 			System.err.println("SPLASH SCREEN NOT FOUND.");
@@ -100,6 +97,8 @@ public class Main {
 			}
 		}
 	}
+	
+	// -----
 	
 	public static MainFrame getMainFrame () {
 		return (MainFrame) frame;
