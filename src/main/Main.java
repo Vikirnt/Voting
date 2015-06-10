@@ -76,12 +76,8 @@ public class Main {
 		
 		// Frame.
 		
-		if (DB.getFields().getItemsCount() < 0) {
-			JFrame initf = new InitFrame();
-			initf.setVisible(true);
-		} else {
-			frame.setVisible(true);
-		}
+		iframe.setVisible(false);
+		frame.setVisible(true);
 		
 	}
 

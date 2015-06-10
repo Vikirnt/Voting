@@ -46,7 +46,7 @@ public class InitTable extends JTable implements ActionListener {
 		getTableHeader().setReorderingAllowed(true);
 		
 		// Popup menu.
-		JPopupMenu popup = new JPopupMenu();
+		final JPopupMenu popup = new JPopupMenu();
 		
 		JMenuItem deleteItem = new JMenuItem("Delete", new ImageIcon (Main.class.getResource("assets/cross-script.png")));
 		deleteItem.setActionCommand(Command.DELETE);
