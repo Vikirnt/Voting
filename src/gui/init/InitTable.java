@@ -18,7 +18,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import main.Main;
-import core.DB;
 
 /**
  * The main content table.
@@ -87,14 +86,14 @@ public class InitTable extends JTable implements ActionListener {
 	}
 
 	private Object [][] rowData() {
-		return DB.getFields().getContentTableData ();
+		return Main.getDB().getFields().getContentTableData ();
 	}
 
 	private class TableModel extends DefaultTableModel {
 
 		@Override
 		public int getRowCount() {
-			return DB.getFields().getItemsCount();
+			return Main.getDB().getFields().getItemsCount();
 		}
 
 		@Override

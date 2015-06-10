@@ -18,7 +18,6 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import main.Main;
-import core.DB;
 
 /**
  * Main frame for the project.
@@ -115,7 +114,7 @@ public class MainFrame extends JFrame {
 		if (text.startsWith("$")) {
 			searcher.setForeground(new Color(2, 132, 130));
 			
-			if (text.contains(DB.getPassword ()) && e.getKeyChar() == KeyEvent.VK_ENTER) {
+			if (text.contains(Main.getDB().getPassword ()) && e.getKeyChar() == KeyEvent.VK_ENTER) {
 				if (text.startsWith ("$results")) {
 					setVisible(false);
 					new ResultsFrame ().setVisible(true);;

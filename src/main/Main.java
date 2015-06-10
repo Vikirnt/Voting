@@ -5,13 +5,13 @@ import gui.main.MainFrame;
 
 import java.awt.Font;
 import java.awt.SplashScreen;
+import java.io.File;
 import java.util.Enumeration;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
-import core.DB;
+import core.DBFile;
 
 /**
  * Initializer.
@@ -21,7 +21,12 @@ import core.DB;
  */
 
 public class Main {
-
+	
+	/**
+	 * DB object.
+	 */
+	private static File db = null;
+	
 	/**
 	 * The primary frame.
 	 */
@@ -38,6 +43,9 @@ public class Main {
 	 * 			-nosplash = No splash screen.
 	 */
 	public static void main(String[] args) {
+		
+		// Initialse Main.getDB().
+		db = new DBFile ("cont.dat");
 
 		// Set default look and feel and format.
 		try {
@@ -48,13 +56,8 @@ public class Main {
 		}
 
 		// Check database existance.
-		if (DB.checkExistance()) {
-			DB.getFields().load();
-		} else {
-			JOptionPane.showMessageDialog(null,
-					"Could not find database.\n New database created.",
-					"Oops!", JOptionPane.INFORMATION_MESSAGE);
-		}
+		getDB().initialiseFile();
+		getDB().getFields().load();
 
 		frame = new MainFrame ();
 		iframe = new InitFrame();
@@ -98,14 +101,14 @@ public class Main {
 		}
 	}
 	
-	/**
-	 * Get mainframe.
-	 */
 	public static MainFrame getMainFrame () {
 		return (MainFrame) frame;
 	}
 	public static InitFrame getInitFrame() {
 		return (InitFrame) iframe;
+	}
+	public static DBFile getDB() {
+		return (DBFile) db;
 	}
 
 }

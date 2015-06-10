@@ -13,7 +13,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import core.DB;
+import main.Main;
 
 /**
  * The main content table.
@@ -26,8 +26,8 @@ public class MainTable extends JTable {
 
 	private String[] columnData = { "Name", "Surname", "Post", "Class" };
 	private Object [][] getRowData() {
-		DB.getFields().load();
-		return DB.getFields().getContentTableData ();
+		Main.getDB().getFields().load();
+		return Main.getDB().getFields().getContentTableData ();
 	}
 
 	private MainTableModel tableModel = new MainTableModel();

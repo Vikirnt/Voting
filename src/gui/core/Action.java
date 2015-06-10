@@ -5,7 +5,6 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
 import main.Main;
-import core.DB;
 
 /**
  * A collection of common actions.
@@ -30,7 +29,7 @@ public class Action {
 				saveDB ();
 			break;
 			
-		// save DB.
+		// save Main.getDB().
 			case Command.SAVE:
 				saveDB ();
 			break;
@@ -68,14 +67,14 @@ public class Action {
 	}
 	
 	/**
-	 * Adds an item to DB.
+	 * Adds an item to Main.getDB().
 	 */
 	private static void addItem() {
-		DB.getFields().addName(Main.getInitFrame().getFormPane().getNameField().getText());
-		DB.getFields().addSurname(Main.getInitFrame().getFormPane().getSurnameField().getText());
-		DB.getFields().addPost(Main.getInitFrame().getFormPane().getPostField().getText());
-		DB.getFields().addStdDiv(Main.getInitFrame().getFormPane().getClassField().getText());
-		DB.getFields().addVotecount(0);
+		Main.getDB().getFields().addName(Main.getInitFrame().getFormPane().getNameField().getText());
+		Main.getDB().getFields().addSurname(Main.getInitFrame().getFormPane().getSurnameField().getText());
+		Main.getDB().getFields().addPost(Main.getInitFrame().getFormPane().getPostField().getText());
+		Main.getDB().getFields().addStdDiv(Main.getInitFrame().getFormPane().getClassField().getText());
+		Main.getDB().getFields().addVotecount(0);
 		clearFields();
 	}
 	
@@ -85,7 +84,7 @@ public class Action {
 	private static void doVote() {
 		int confirm = JOptionPane.showConfirmDialog(null, "Finalise your vote? You can vote only once.", "CONFIRMATION", JOptionPane.YES_NO_CANCEL_OPTION);
 		if (confirm == JOptionPane.YES_OPTION) {
-			DB.getFields().addVote(getPos(Main.getMainFrame().getContentTable()));
+			Main.getDB().getFields().addVote(getPos(Main.getMainFrame().getContentTable()));
 			try {
 				Main.getMainFrame().setResizable(false);
 				Thread.sleep(3200);
@@ -113,7 +112,7 @@ public class Action {
 	 * Saves the fields to the database.
 	 */
 	private static void saveDB() {
-		DB.save();
+		Main.getDB().save();
 	}
 
 	/**
@@ -121,11 +120,11 @@ public class Action {
 	 */
 	private static void removeItem(int itemPos) {
 		try {
-			DB.getFields().removeName	(itemPos);
-			DB.getFields().removeSurname(itemPos);
-			DB.getFields().removePost	(itemPos);
-			DB.getFields().removeStdDiv	(itemPos);
-			DB.getFields().removeVote	(itemPos);
+			Main.getDB().getFields().removeName	(itemPos);
+			Main.getDB().getFields().removeSurname(itemPos);
+			Main.getDB().getFields().removePost	(itemPos);
+			Main.getDB().getFields().removeStdDiv	(itemPos);
+			Main.getDB().getFields().removeVote	(itemPos);
 		} catch (NullPointerException e) {
 			System.err.println("\nRemoval canceled.\n");
 		}
@@ -148,17 +147,17 @@ public class Action {
 				stddiv	=	(String) ref.getValueAt (ref.getSelectedRow(), 3);
 		
 		aaa: while (namepos != surnamepos) {
-			for (int i = 0; i < DB.getFields().getItemsCount(); i++) {
-				if (DB.getFields().getName().get(i).equals(name)) {
+			for (int i = 0; i < Main.getDB().getFields().getItemsCount(); i++) {
+				if (Main.getDB().getFields().getName().get(i).equals(name)) {
 					namepos = i;
 				}
-				if (DB.getFields().getSurname().get(i).equals(surname)) {
+				if (Main.getDB().getFields().getSurname().get(i).equals(surname)) {
 					surnamepos = i;
 				}
-				if (DB.getFields().getPost().get(i).equals(post)) {
+				if (Main.getDB().getFields().getPost().get(i).equals(post)) {
 					postpos = i;
 				}
-				if (DB.getFields().getStdDiv().get(i).equals(stddiv)) {
+				if (Main.getDB().getFields().getStdDiv().get(i).equals(stddiv)) {
 					stddivpos = i;
 				}
 				if (namepos == surnamepos && surnamepos == postpos && postpos == stddivpos && stddivpos == namepos) { // Inefficient but gets the job done.

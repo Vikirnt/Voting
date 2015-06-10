@@ -11,7 +11,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import core.DB;
+import main.Main;
 
 /**
  * The results content table for votes.
@@ -23,8 +23,8 @@ public class ResultsTable extends JTable {
 
 	private String[] columnData = { "Name", "Surname", "Post", "Class", "Votes" };
 	private Object [][] getRowData() {
-		DB.getFields().load();
-		return DB.getFields().getResultsTableData();
+		Main.getDB().getFields().load();
+		return Main.getDB().getFields().getResultsTableData();
 	}
 
 	private MainTableModel tableModel = new MainTableModel();

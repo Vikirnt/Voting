@@ -3,6 +3,8 @@ package core;
 import java.util.*;
 import java.io.*;
 
+import main.Main;
+
 /**
  * A collection of core fields of an homework.
  * 
@@ -45,7 +47,7 @@ public class Fields {
 
 
 	/**
-	 * Load everything from DB.
+	 * Load everything from Main.getDB().
 	 */
 	public void load() {
 
@@ -61,7 +63,7 @@ public class Fields {
 			// Creating Scanner object.
 			Scanner fileScanner = null;
 			try {
-				fileScanner = new Scanner(DB.getFile());
+				fileScanner = new Scanner(Main.getDB());
 			} catch (FileNotFoundException e) {
 				System.err.println("WHAT");
 				e.printStackTrace();
@@ -130,7 +132,7 @@ public class Fields {
 	 */
 	public boolean noItems() {
 
-		if (DB.getFile().length() == 0) {
+		if (Main.getDB().length() == 0) {
 			return true;
 		} else {
 			return false;
@@ -239,8 +241,8 @@ public class Fields {
 	 */
 	public Object [][] getContentTableData () {
 
-		Object [][] temp = new Object [DB.getFields().getItemsCount()][4];
-		for (int i = 0; i < DB.getFields().getItemsCount(); i++) {
+		Object [][] temp = new Object [Main.getDB().getFields().getItemsCount()][4];
+		for (int i = 0; i < Main.getDB().getFields().getItemsCount(); i++) {
 
 			temp[i][0] = name.get(i);
 			temp[i][1] = surname.get(i);
@@ -257,8 +259,8 @@ public class Fields {
 	 */
 	public Object [][] getResultsTableData () {
 
-		Object [][] temp = new Object [DB.getFields().getItemsCount()][5];
-		for (int i = 0; i < DB.getFields().getItemsCount(); i++) {
+		Object [][] temp = new Object [Main.getDB().getFields().getItemsCount()][5];
+		for (int i = 0; i < Main.getDB().getFields().getItemsCount(); i++) {
 
 			temp[i][0] = name.get(i);
 			temp[i][1] = surname.get(i);

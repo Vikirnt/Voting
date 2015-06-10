@@ -8,17 +8,16 @@ import java.io.*;
  * @author admin
  *
  */
-public class DB {
-
-	/**
-	 * The file object for database. Stored in /src/
-	 */
-	private static File dbFile = new File(System.getenv("APPDATA") + "/imp/cont.dat");
+public class DBFile extends File {
+	
+	public DBFile (String filename) {
+		super (System.getenv("APPDATA") + "/imp/" + filename);
+	}
 
 	/**
 	 * A new set of fields.
 	 */
-	private static Fields fields = new Fields();
+	private Fields fields;
 
 	/**
 	 * This function could have been one single line, but it also creates a new
@@ -26,35 +25,23 @@ public class DB {
 	 * 
 	 * @return true: file exists, false: new file created.
 	 */
-	public static boolean checkExistance() {
-
-		boolean temp = true;
+	public void initialiseFile() {
 
 		try {
 			new File (System.getenv("APPDATA") + "/imp/").mkdir ();
-			if (dbFile.createNewFile()) {
-				temp = false;
-			} else {
-				temp = true;
-			}
+			this.createNewFile();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		return temp;
+		fields = new Fields();
 
 	}
 
-	/**
-	 * @return the DB file object reference.
-	 */
-	public static File getFile() {
-		return dbFile;
-	}
 	/**
 	 * @return fields object.
 	 */
-	public static Fields getFields() {
+	public Fields getFields() {
 		return fields;
 	}
 
@@ -64,12 +51,12 @@ public class DB {
 	 * Updates the database with new items.
 	 */
 	@SuppressWarnings("resource")
-	public static void save() {
+	public void save() {
 
 		FileWriter fw = null;
 
 		try {
-			fw = new FileWriter(dbFile);
+			fw = new FileWriter(this);
 			fw.write(fields.toString());
 			fw.flush();
 			fw.close();
@@ -82,18 +69,18 @@ public class DB {
 	/**
 	 * Deletes all contents.
 	 */
-	public static void clear() {
+	public void clear() {
 
-		dbFile.delete();
+		this.delete();
 		try {
-			dbFile.createNewFile();
+			this.createNewFile();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
 	
-	public static String getPassword () {
+	public String getPassword () {
 		return "cs15";
 	}
 
