@@ -151,19 +151,19 @@ public class Fields {
 	
 	// Interactions.
 	
-	public ArrayList <String> 	getName () {
+	public ArrayList <String> getName () {
 		return name;
 	}
-	public ArrayList <String> 	getSurname () {
+	public ArrayList <String> getSurname () {
 		return surname;
 	}
-	public ArrayList <String> 	getPost () {
+	public ArrayList <String> getPost () {
 		return post;
 	}
-	public ArrayList <String> 	getStdDiv () {
+	public ArrayList <String> getStdDiv () {
 		return stddiv;
 	}
-	public ArrayList <Integer> 	getVoteCount () {
+	public ArrayList <Integer> getVoteCount () {
 		return votecount;
 	}
 	
@@ -235,6 +235,8 @@ public class Fields {
 		return all;
 
 	}
+	
+	// -----
 
 	/**
 	 * @return data for normal table.
