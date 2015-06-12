@@ -24,7 +24,7 @@ public class ResultsFrame extends JFrame {
 	
 	private final JTabbedPane tabbedPane;
 	
-	private JTable contentTable;
+	private final JTable contentTable;
 	
 	/**
 	 * Construct results frame.

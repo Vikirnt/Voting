@@ -21,13 +21,13 @@ import main.Main;
  */
 public class ResultsTable extends JTable {
 
-	private String[] columnData = { "Name", "Surname", "Post", "Class", "Votes" };
+	private final String[] columnData = { "Name", "Surname", "Post", "Class", "Votes" };
 	private Object [][] getRowData() {
 		Main.getDB().getFields().load();
 		return Main.getDB().getFields().getResultsTableData();
 	}
 
-	private MainTableModel tableModel = new MainTableModel();
+	private final MainTableModel tableModel = new MainTableModel();
 	
 	@Override
 	public TableModel getModel() {

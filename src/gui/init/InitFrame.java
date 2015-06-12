@@ -25,8 +25,8 @@ public class InitFrame extends JFrame {
 
 	private final JPanel contentPane;
 	
-	private JTable contentTable;
-	private JPanel formPane;
+	private final JTable contentTable;
+	private final JPanel formPane;
 
 	/**
 	 * Create the frame.

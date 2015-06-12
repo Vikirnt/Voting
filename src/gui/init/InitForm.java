@@ -26,13 +26,13 @@ import main.Main;
  */
 public class InitForm extends JPanel implements ActionListener {
 	
-	private JTextField txtName;
-	private JTextField txtSurname;
-	private JTextField txtPost;
-	private JTextField txtClass;
+	private final JTextField txtName;
+	private final JTextField txtSurname;
+	private final JTextField txtPost;
+	private final JTextField txtClass;
 	
-	public static JLabel lblCandidatesCount;
-	
+	private final JButton addButton;
+	private final JButton cancelButton;
 
 	/**
 	 * Create the panel.
@@ -84,7 +84,7 @@ public class InitForm extends JPanel implements ActionListener {
 		txtClass.addKeyListener(enterLister);
 		
 		// Add button.
-		JButton addButton = new JButton(new ImageIcon (Main.class.getResource("assets/tick.png")));
+		addButton = new JButton(new ImageIcon (Main.class.getResource("assets/tick.png")));
 		addButton.setText("Add");
 		addButton.setActionCommand(Command.ADD);
 		addButton.setBounds(10, 179, 89, 23);
@@ -92,7 +92,7 @@ public class InitForm extends JPanel implements ActionListener {
 		add(addButton);
 		
 		// Cancel button.
-		JButton cancelButton = new JButton(new ImageIcon (Main.class.getResource("assets/cross-script.png")));
+		cancelButton = new JButton(new ImageIcon (Main.class.getResource("assets/cross-script.png")));
 		cancelButton.setText("Clear");
 		cancelButton.setActionCommand(Command.CLEAR);
 		cancelButton.setBounds(109, 179, 91, 23);

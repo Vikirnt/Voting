@@ -1,20 +1,26 @@
 package gui.main;
 
+import gui.core.Action;
+import gui.core.Command;
 import gui.fin.ResultsFrame;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JToolBar;
 import javax.swing.border.EmptyBorder;
 
 import main.Main;
@@ -29,8 +35,8 @@ public class MainFrame extends JFrame {
 
 	private final JPanel contentPane;
 	
-	private JTextField searcher;
-	private JTable contentTable;
+	private final JTextField searcher;
+	private final JTable contentTable;
 
 	/**
 	 * Create the frame.
@@ -137,6 +143,45 @@ public class MainFrame extends JFrame {
 	}
 	public JTextField getSearchField () {
 		return searcher;
+	}
+	
+	private final class MainToolBar extends JToolBar {
+
+		public MainToolBar () {
+			
+			setFloatable(false);
+			setOrientation(JToolBar.HORIZONTAL);
+			setVisible(true);
+			setOpaque(true);
+			setLayout(new BorderLayout (5, 5));
+			
+			// Double click info.
+			
+			JLabel lblDoubleClick = new JLabel("Double click to finalize vote.");
+			lblDoubleClick.setEnabled(false);
+			add(lblDoubleClick, BorderLayout.WEST);
+			
+			JButton btnVote = new JButton ();
+			btnVote.setToolTipText("Choose wisely!");
+			try {
+				btnVote.setIcon (new ImageIcon (Main.class.getResource ("assets/tick.png")));
+			}  catch (Exception e) {
+				System.err.println("Could not find tick.png");
+				btnVote.setText ("VOTE!");
+			}
+			btnVote.setActionCommand(Command.VOTE);
+			btnVote.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (Main.getMainFrame().getContentTable().getSelectedRow () != -1) {
+						Action.execute(e.getActionCommand());
+					}
+				}
+			});
+			add (btnVote, BorderLayout.EAST);
+			
+		}
+		
 	}
 
 }

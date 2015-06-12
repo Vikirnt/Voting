@@ -28,7 +28,7 @@ import main.Main;
 
 public class InitTable extends JTable implements ActionListener {
 
-	private String[] columnData = { "Name", "Surname", "Post", "Class" };
+	private final String[] columnData = { "Name", "Surname", "Post", "Class" };
 
 	public TableModel contentTableModel = new TableModel();
 	

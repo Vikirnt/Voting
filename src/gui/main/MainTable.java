@@ -24,13 +24,13 @@ import main.Main;
 
 public class MainTable extends JTable {
 
-	private String[] columnData = { "Name", "Surname", "Post", "Class" };
+	private final String[] columnData = { "Name", "Surname", "Post", "Class" };
 	private Object [][] getRowData() {
 		Main.getDB().getFields().load();
 		return Main.getDB().getFields().getContentTableData ();
 	}
 
-	private MainTableModel tableModel = new MainTableModel();
+	private final MainTableModel tableModel = new MainTableModel();
 	
 	@Override
 	public TableModel getModel() {
