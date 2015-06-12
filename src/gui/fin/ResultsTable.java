@@ -24,7 +24,7 @@ public class ResultsTable extends JTable {
 	private String[] columnData = { "Name", "Surname", "Post", "Class", "Votes" };
 	private Object [][] getRowData() {
 		Main.getDB().getFields().load();
-		return Main.getDB().getFields().getResultsTableData();
+		return Main.getDB().getFields().getVoteBasedData();
 	}
 
 	private MainTableModel tableModel = new MainTableModel();

@@ -28,7 +28,6 @@ public class Fields {
 	 */
 	private final String NAME = "name = ", SURNAME = "surname = ", POST = "post = ", STDDIV = "stddiv = ", VOTECOUNT = "votecount = ";
 
-
 	/**
 	 * Default constructor which initialises the lists.
 	 */
@@ -183,7 +182,6 @@ public class Fields {
 		votecount.add (addition);
 	}
 	public void addVote (int index) {
-		System.out.println ("index = " + index);
 		int temp = votecount.get (index);
 		votecount.set (index, temp + 1);
 	}
@@ -259,7 +257,7 @@ public class Fields {
 	/**
 	 * @return data for results table.
 	 */
-	public Object [][] getResultsTableData () {
+	public Object [][] getVoteBasedData () {
 
 		Object [][] temp = new Object [Main.getDB().getFields().getItemsCount()][5];
 		for (int i = 0; i < Main.getDB().getFields().getItemsCount(); i++) {
