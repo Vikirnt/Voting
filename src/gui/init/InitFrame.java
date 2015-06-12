@@ -3,8 +3,6 @@ package gui.init;
 import java.awt.BorderLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -74,14 +72,6 @@ public class InitFrame extends JFrame {
 				getFormPanel().getNameField().setText(((InitForm) formPanel).getNameField().getText() + e.getKeyChar());
 			}
 		});
-		contentTable.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				super.mouseClicked(e);
-				
-				contentTable.getSelectedRow();
-			}
-		});;
 		
 		JScrollPane tablePane = new JScrollPane(contentTable);
 		contentPane.add(tablePane, BorderLayout.WEST);
