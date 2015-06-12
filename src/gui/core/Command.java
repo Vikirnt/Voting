@@ -12,5 +12,6 @@ public final class Command {
 			EDIT = "edit the db",
 			VIEW = "view results",
 			CLEAR = "clear fields",
-			VOTE = "vote for me";
+			VOTE = "vote for me",
+			CLEANSLATE = "plsdontkillme";
 }

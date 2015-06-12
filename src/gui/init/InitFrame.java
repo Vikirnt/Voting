@@ -28,7 +28,7 @@ public class InitFrame extends JFrame {
 	private final JPanel contentPane;
 	
 	private final JTable contentTable;
-	private final JPanel formPane;
+	private final JPanel formPanel;
 
 	/**
 	 * Create the frame.
@@ -61,8 +61,8 @@ public class InitFrame extends JFrame {
 		
 		// Form.
 		
-		formPane = new InitForm ();
-		contentPane.add(formPane, BorderLayout.CENTER);
+		formPanel = new InitForm ();
+		contentPane.add(formPanel, BorderLayout.CENTER);
 		
 		// Table.
 		
@@ -70,8 +70,8 @@ public class InitFrame extends JFrame {
 		contentTable.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				getFormPane().getNameField().requestFocus();
-				getFormPane().getNameField().setText(((InitForm) formPane).getNameField().getText() + e.getKeyChar());
+				getFormPanel().getNameField().requestFocus();
+				getFormPanel().getNameField().setText(((InitForm) formPanel).getNameField().getText() + e.getKeyChar());
 			}
 		});
 		contentTable.addMouseListener(new MouseAdapter() {
@@ -91,8 +91,8 @@ public class InitFrame extends JFrame {
 	public InitTable getContentTable () {
 		return (InitTable) contentTable;
 	}
-	public InitForm getFormPane() {
-		return (InitForm) formPane;
+	public InitForm getFormPanel() {
+		return (InitForm) formPanel;
 	}
 	
 }

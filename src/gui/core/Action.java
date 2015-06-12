@@ -1,5 +1,7 @@
 package gui.core;
 
+import gui.init.InitForm;
+
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
@@ -23,21 +25,28 @@ public class Action {
 		
 		switch (command) {
 		
-		// add a vote.
-			case Command.VOTE:
-				doVote ();
-				saveDB ();
-			break;
-			
 		// save Main.getDB().
 			case Command.SAVE:
 				saveDB ();
 			break;
 			
+		// cancel adding a new item.
+			case Command.CLEAR:
+				clearFields ();
+				Main.getInitFrame().getFormPanel().changeFormState(InitForm.ADD);
+			break;
+			
+		// add a vote.
+			case Command.VOTE:
+				doVote ();
+				saveDB ();
+			break;
+				
 		// add an item.
 			case Command.ADD:
 				addItem ();
 				saveDB ();
+				clearFields();
 			break;
 			
 		// remove an item.
@@ -46,9 +55,19 @@ public class Action {
 				saveDB ();
 			break;
 			
-		// cancel adding a new item.
-			case Command.CLEAR:
-				clearFields ();
+		// edits an item info.
+			case Command.EDIT:
+				editItem();
+				saveDB ();
+				Main.getInitFrame().getFormPanel().changeFormState(InitForm.ADD);
+				clearFields();
+			break;
+			
+		// clears database O.O
+			case Command.CLEANSLATE:
+				int ans = JOptionPane.showConfirmDialog(null, "Do you want to clear the DB? It will be extremely painful.", "CONFIRMATION", JOptionPane.YES_NO_CANCEL_OPTION);
+				if (ans == JOptionPane.YES_OPTION)
+					cleanslateDB();
 			break;
 		
 			default:
@@ -66,37 +85,44 @@ public class Action {
 			
 	}
 	
+	private static void cleanslateDB() {
+		Main.getDB().clear();
+		Main.getDB().getFields().getName().clear();
+		Main.getDB().getFields().getSurname().clear();
+		Main.getDB().getFields().getPost().clear();
+		Main.getDB().getFields().getStdDiv().clear();
+		Main.getDB().getFields().getVoteCount().clear();
+		Main.getDB().save();
+	}
+
 	/**
 	 * Adds an item to Main.getDB().
 	 */
 	private static void addItem() {
 		Main.getDB().getFields().addName
-			(Main.getInitFrame().getFormPane().getNameField().getText());
+			(Main.getInitFrame().getFormPanel().getNameField().getText());
 		Main.getDB().getFields().addSurname
-			(Main.getInitFrame().getFormPane().getSurnameField().getText());
+			(Main.getInitFrame().getFormPanel().getSurnameField().getText());
 		Main.getDB().getFields().addPost
-			(Main.getInitFrame().getFormPane().getPostField().getText());
+			(Main.getInitFrame().getFormPanel().getPostField().getText());
 		Main.getDB().getFields().addStdDiv
-			(Main.getInitFrame().getFormPane().getClassField().getText());
+			(Main.getInitFrame().getFormPanel().getStdDivField().getText());
 		Main.getDB().getFields().addVotecount
 			(0);
-		clearFields();
 	}
 	
 	/**
 	 * Edit an item in Main.getDB().
 	 */
 	private static void editItem() {
-
 		Main.getDB().getFields().getName().set
-			(getPos(Main.getInitFrame().getContentTable()), 	Main.getInitFrame().getFormPane().getNameField().getText());
+			(getPos(Main.getInitFrame().getContentTable()), 	Main.getInitFrame().getFormPanel().getNameField().getText());
 		Main.getDB().getFields().getSurname().set
-			(getPos(Main.getInitFrame().getContentTable()),		Main.getInitFrame().getFormPane().getSurnameField().getText());
+			(getPos(Main.getInitFrame().getContentTable()),		Main.getInitFrame().getFormPanel().getSurnameField().getText());
 		Main.getDB().getFields().getPost().set
-			(getPos(Main.getInitFrame().getContentTable()),		Main.getInitFrame().getFormPane().getPostField().getText());
+			(getPos(Main.getInitFrame().getContentTable()),		Main.getInitFrame().getFormPanel().getPostField().getText());
 		Main.getDB().getFields().getStdDiv().set
-			(getPos(Main.getInitFrame().getContentTable()),		Main.getInitFrame().getFormPane().getClassField().getText());
-		clearFields();
+			(getPos(Main.getInitFrame().getContentTable()),		Main.getInitFrame().getFormPanel().getStdDivField().getText());
 	}
 	
 	/**
@@ -121,12 +147,12 @@ public class Action {
 	 * Clears all text fields in InitForm.
 	 */
 	private static void clearFields () {
-		Main.getInitFrame().getFormPane().getNameField().setText("");
-		Main.getInitFrame().getFormPane().getSurnameField().setText("");
-		Main.getInitFrame().getFormPane().getPostField().setText("");
-		Main.getInitFrame().getFormPane().getClassField().setText("");
+		Main.getInitFrame().getFormPanel().getNameField().setText("");
+		Main.getInitFrame().getFormPanel().getSurnameField().setText("");
+		Main.getInitFrame().getFormPanel().getPostField().setText("");
+		Main.getInitFrame().getFormPanel().getStdDivField().setText("");
 		
-		Main.getInitFrame().getFormPane().getNameField().requestFocus();
+		Main.getInitFrame().getFormPanel().getNameField().requestFocus();
 	}
 
 	/**
@@ -156,9 +182,9 @@ public class Action {
 	 * Gets the position of the selected item in the table.
 	 * Reason: Filtering fucks up indexes.
 	 * 
-	 * @return
+	 * @return filtered index.
 	 */
-	private static int getPos (JTable ref) {
+	public static int getPos (JTable ref) {
 		
 		int namepos = -1, surnamepos = -2, postpos = -3, stddivpos = -4;
 		

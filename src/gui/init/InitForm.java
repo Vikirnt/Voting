@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -26,13 +28,15 @@ import main.Main;
  */
 public class InitForm extends JPanel implements ActionListener {
 	
+	public final static int ADD = 111, EDIT = 222;
+	
 	private final JTextField txtName;
 	private final JTextField txtSurname;
 	private final JTextField txtPost;
-	private final JTextField txtClass;
+	private final JTextField txtStdDiv;
 	
-	private final JButton addButton;
-	private final JButton cancelButton;
+	private final JButton primaryButton;
+	private final JButton clearButton;
 
 	/**
 	 * Create the panel.
@@ -70,34 +74,54 @@ public class InitForm extends JPanel implements ActionListener {
 		lblClass.setBounds(10, 123, 46, 14);
 		add(lblClass);
 		
-		txtClass = new JTextField();
-		txtClass.setBounds(10, 148, 190, 20);
-		add(txtClass);
-		txtClass.setColumns(10);
+		txtStdDiv = new JTextField();
+		txtStdDiv.setBounds(10, 148, 190, 20);
+		add(txtStdDiv);
+		txtStdDiv.setColumns(10);
 		
 		// Enter listener.
 		
-		KeyListener enterLister = new EnterLister();
+		KeyListener enterLister = new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				super.keyTyped(e);
+				if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+					if (!checkForEmpty ()) {
+						Action.execute(primaryButton.getActionCommand());
+					}
+				}
+			}
+		};
 		txtName.addKeyListener(enterLister);
 		txtSurname.addKeyListener(enterLister);
 		txtPost.addKeyListener(enterLister);
-		txtClass.addKeyListener(enterLister);
+		txtStdDiv.addKeyListener(enterLister);
 		
 		// Add button.
-		addButton = new JButton(new ImageIcon (Main.class.getResource("assets/tick.png")));
-		addButton.setText("Add");
-		addButton.setActionCommand(Command.ADD);
-		addButton.setBounds(10, 179, 89, 23);
-		addButton.addActionListener(this);
-		add(addButton);
+		primaryButton = new JButton();
+		{ // Default state.
+			changeFormState(ADD);			
+		}
+		primaryButton.setBounds(10, 179, 89, 23);
+		primaryButton.addActionListener(this);
+		add(primaryButton);
 		
-		// Cancel button.
-		cancelButton = new JButton(new ImageIcon (Main.class.getResource("assets/cross-script.png")));
-		cancelButton.setText("Clear");
-		cancelButton.setActionCommand(Command.CLEAR);
-		cancelButton.setBounds(109, 179, 91, 23);
-		cancelButton.addActionListener(this);
-		add(cancelButton);
+		// Clear button.
+		clearButton = new JButton(new ImageIcon (Main.class.getResource("assets/cross-script.png")));
+		clearButton.setText("Clear");
+		clearButton.setActionCommand(Command.CLEAR);
+		clearButton.setBounds(109, 179, 91, 23);
+		clearButton.addActionListener(this);
+		clearButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				super.mouseClicked(e);
+				if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON2) {
+					Action.execute(Command.CLEANSLATE);
+				}
+			}
+		});
+		add(clearButton);
 		
 		// Logo for fun.
 		ImageIcon imageIcon = new ImageIcon(Main.class.getResource("assets/SchoolLogo_Alt1.png")); // load the image to a imageIcon
@@ -108,21 +132,15 @@ public class InitForm extends JPanel implements ActionListener {
 		lblSchoolLogo.setBounds(10, 213, 190, 190);
 		add(lblSchoolLogo);
 	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (!checkForEmpty () || e.getActionCommand().equals(Command.CLEAR)) {
-			Action.execute(e.getActionCommand());
-		}
-	}
 	
 	private boolean checkForEmpty () {
-		if (txtName.getText().isEmpty() || txtSurname.getText().isEmpty() || txtPost.getText().isEmpty() || txtClass.getText().isEmpty()) {
+		if (txtName.getText().isEmpty() || txtSurname.getText().isEmpty() || txtPost.getText().isEmpty() || txtStdDiv.getText().isEmpty())
 			return true;
-		} else {
+		else
 			return false;
-		}
 	}
+	
+	// -----
 	
 	public JTextField getNameField () {
 		return txtName;
@@ -133,19 +151,43 @@ public class InitForm extends JPanel implements ActionListener {
 	public JTextField getPostField () {
 		return txtPost;
 	}
-	public JTextField getClassField () {
-		return txtClass;
+	public JTextField getStdDivField () {
+		return txtStdDiv;
 	}
 	
-	private class EnterLister extends KeyAdapter {
-		@Override
-		public void keyTyped(KeyEvent e) {
-			super.keyTyped(e);
-			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				if (!checkForEmpty ()) {
-					Action.execute(Command.ADD);
-				}
-			}
+	// -----
+	
+	/**
+	 * Changes icons and action commands around.
+	 * 
+	 * @param state - ADD for adding an item, EDIT for editing an item.
+	 */
+	public void changeFormState (int state) {
+		switch (state) {
+			case EDIT:
+				primaryButton.setActionCommand(Command.EDIT);
+				primaryButton.setText("Edit");
+				primaryButton.setIcon(new ImageIcon (Main.class.getResource("assets/pencil-small.png")));
+				int selectedRow = Main.getInitFrame().getContentTable().getSelectedRow();
+				txtName.setText(Main.getDB().getFields().getName().get(selectedRow));
+				txtSurname.setText(Main.getDB().getFields().getSurname().get(selectedRow));
+				txtPost.setText(Main.getDB().getFields().getPost().get(selectedRow));
+				txtStdDiv.setText(Main.getDB().getFields().getStdDiv().get(selectedRow));
+			break;
+			case ADD:
+			default:
+				primaryButton.setActionCommand(Command.ADD);
+				primaryButton.setText("Add");
+				primaryButton.setIcon(new ImageIcon (Main.class.getResource("assets/tick.png")));
+			break;
 		}
 	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (!checkForEmpty () || e.getActionCommand().equals(Command.CLEAR)) {
+			Action.execute(e.getActionCommand());
+		}
+	}
+
 }

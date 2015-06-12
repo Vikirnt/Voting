@@ -25,7 +25,6 @@ import main.Main;
  * @author admin
  *
  */
-
 public class InitTable extends JTable implements ActionListener {
 
 	private final String[] columnData = { "Name", "Surname", "Post", "Class" };
@@ -52,22 +51,40 @@ public class InitTable extends JTable implements ActionListener {
 		deleteItem.addActionListener(this);
 		popup.add(deleteItem);
 		
+		JMenuItem editItem = new JMenuItem("Edit", new ImageIcon (Main.class.getResource("assets/pencil-small.png")));
+		editItem.setActionCommand(Command.EDIT);
+		editItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Main.getInitFrame().getFormPanel().changeFormState(InitForm.EDIT);
+			}
+		});
+		popup.add(editItem);
+		
 		// Mouse listener for popup menu.
 		
 		addMouseListener (new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-		        maybeShowPopup(e);
+		        super.mousePressed(e);
+				maybeShowPopup(e);
 		    }
 			@Override
 		    public void mouseReleased(MouseEvent e) {
-		        maybeShowPopup(e);
+		        super.mouseReleased(e);
+				maybeShowPopup(e);
 		    }
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				super.mouseClicked(e);
+				if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1 && getSelectedRow() != -1) {
+					Main.getInitFrame().getFormPanel().changeFormState(InitForm.EDIT);
+				}
+			}
 
 		    private void maybeShowPopup(MouseEvent e) {
 		        if (e.isPopupTrigger() && getSelectedRow() != -1) {
-		            popup.show(e.getComponent(),
-		                       e.getX(), e.getY());
+		            popup.show(e.getComponent(), e.getX(), e.getY());
 		        }
 		    }
 		});
