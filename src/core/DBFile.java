@@ -80,7 +80,7 @@ public class DBFile extends File {
 
 	}
 	
-	public String getPassword () {
+	public static String getPassword () {
 		return "cs15";
 	}
 

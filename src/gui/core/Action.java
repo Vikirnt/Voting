@@ -70,11 +70,32 @@ public class Action {
 	 * Adds an item to Main.getDB().
 	 */
 	private static void addItem() {
-		Main.getDB().getFields().addName(Main.getInitFrame().getFormPane().getNameField().getText());
-		Main.getDB().getFields().addSurname(Main.getInitFrame().getFormPane().getSurnameField().getText());
-		Main.getDB().getFields().addPost(Main.getInitFrame().getFormPane().getPostField().getText());
-		Main.getDB().getFields().addStdDiv(Main.getInitFrame().getFormPane().getClassField().getText());
-		Main.getDB().getFields().addVotecount(0);
+		Main.getDB().getFields().addName
+			(Main.getInitFrame().getFormPane().getNameField().getText());
+		Main.getDB().getFields().addSurname
+			(Main.getInitFrame().getFormPane().getSurnameField().getText());
+		Main.getDB().getFields().addPost
+			(Main.getInitFrame().getFormPane().getPostField().getText());
+		Main.getDB().getFields().addStdDiv
+			(Main.getInitFrame().getFormPane().getClassField().getText());
+		Main.getDB().getFields().addVotecount
+			(0);
+		clearFields();
+	}
+	
+	/**
+	 * Edit an item in Main.getDB().
+	 */
+	private static void editItem() {
+
+		Main.getDB().getFields().getName().set
+			(getPos(Main.getInitFrame().getContentTable()), 	Main.getInitFrame().getFormPane().getNameField().getText());
+		Main.getDB().getFields().getSurname().set
+			(getPos(Main.getInitFrame().getContentTable()),		Main.getInitFrame().getFormPane().getSurnameField().getText());
+		Main.getDB().getFields().getPost().set
+			(getPos(Main.getInitFrame().getContentTable()),		Main.getInitFrame().getFormPane().getPostField().getText());
+		Main.getDB().getFields().getStdDiv().set
+			(getPos(Main.getInitFrame().getContentTable()),		Main.getInitFrame().getFormPane().getClassField().getText());
 		clearFields();
 	}
 	

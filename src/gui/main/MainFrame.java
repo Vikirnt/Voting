@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.border.EmptyBorder;
 
+import core.DBFile;
 import main.Main;
 
 /**
@@ -120,7 +121,7 @@ public class MainFrame extends JFrame {
 		if (text.startsWith("$")) {
 			searcher.setForeground(new Color(2, 132, 130));
 			
-			if (text.contains(Main.getDB().getPassword ()) && e.getKeyChar() == KeyEvent.VK_ENTER) {
+			if (text.contains(DBFile.getPassword ()) && e.getKeyChar() == KeyEvent.VK_ENTER) {
 				if (text.startsWith ("$results")) {
 					setVisible(false);
 					new ResultsFrame ().setVisible(true);;
