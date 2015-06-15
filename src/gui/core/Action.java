@@ -65,9 +65,14 @@ public class Action {
 			
 		// clears database O.O
 			case Command.CLEANSLATE:
-				int ans = JOptionPane.showConfirmDialog(null, "Do you want to clear the DB? It will be extremely painful.", "CONFIRMATION", JOptionPane.YES_NO_CANCEL_OPTION);
+				int ans = JOptionPane.showConfirmDialog(Main.getInitFrame(), "Do you want to clear the DB? It will be extremely painful.", "CONFIRMATION", JOptionPane.YES_NO_CANCEL_OPTION);
 				if (ans == JOptionPane.YES_OPTION)
 					cleanslateDB();
+			break;
+			
+		// loads a database file
+			case Command.LOAD:
+				
 			break;
 		
 			default:
@@ -129,7 +134,7 @@ public class Action {
 	 * Adds a vote.
 	 */
 	private static void doVote() {
-		int confirm = JOptionPane.showConfirmDialog(null, "Finalise your vote? You can vote only once.", "CONFIRMATION", JOptionPane.YES_NO_CANCEL_OPTION);
+		int confirm = JOptionPane.showConfirmDialog(Main.getMainFrame(), "Finalise your vote? You can vote only once.", "CONFIRMATION", JOptionPane.YES_NO_CANCEL_OPTION);
 		if (confirm == JOptionPane.YES_OPTION) {
 			Main.getDB().getFields().addVote(getPos(Main.getMainFrame().getContentTable()));
 			try {

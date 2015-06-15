@@ -108,5 +108,9 @@ public class Main {
 	public static DBFile getDB() {
 		return (DBFile) db;
 	}
+	
+	public static void setDB (File db) {
+		Main.db = db;
+	}
 
 }

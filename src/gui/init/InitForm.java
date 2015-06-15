@@ -42,7 +42,8 @@ public class InitForm extends JPanel implements ActionListener {
 	 * Create the panel.
 	 */
 	public InitForm() {
-		super (null);
+		super ();
+		setLayout(null);
 		
 		// Name.
 		JLabel lblName = new JLabel("Name:");
@@ -51,13 +52,13 @@ public class InitForm extends JPanel implements ActionListener {
 		
 		txtName = new JTextField();
 		txtName.setBounds(10, 36, 86, 20);
-		add(txtName);
 		txtName.setColumns(10);
+		add(txtName);
 		
 		txtSurname = new JTextField();
 		txtSurname.setBounds(106, 36, 94, 20);
-		add(txtSurname);
 		txtSurname.setColumns(10);
+		add(txtSurname);
 		
 		// Post.
 		JLabel lblPost = new JLabel("Post:");
@@ -66,8 +67,8 @@ public class InitForm extends JPanel implements ActionListener {
 		
 		txtPost = new JTextField();
 		txtPost.setBounds(10, 92, 190, 20);
-		add(txtPost);
 		txtPost.setColumns(10);
+		add(txtPost);
 		
 		// Class.
 		JLabel lblClass = new JLabel("Class:");
@@ -76,8 +77,8 @@ public class InitForm extends JPanel implements ActionListener {
 		
 		txtStdDiv = new JTextField();
 		txtStdDiv.setBounds(10, 148, 190, 20);
-		add(txtStdDiv);
 		txtStdDiv.setColumns(10);
+		add(txtStdDiv);
 		
 		// Enter listener.
 		
@@ -99,16 +100,13 @@ public class InitForm extends JPanel implements ActionListener {
 		
 		// Add button.
 		primaryButton = new JButton();
-		{ // Default state.
-			changeFormState(ADD);			
-		}
 		primaryButton.setBounds(10, 179, 89, 23);
 		primaryButton.addActionListener(this);
 		add(primaryButton);
 		
 		// Clear button.
 		clearButton = new JButton(new ImageIcon (Main.class.getResource("assets/cross-script.png")));
-		clearButton.setText("Clear");
+		clearButton.setToolTipText("Middle click twice to clear entire DB.");
 		clearButton.setActionCommand(Command.CLEAR);
 		clearButton.setBounds(109, 179, 91, 23);
 		clearButton.addActionListener(this);
@@ -118,10 +116,15 @@ public class InitForm extends JPanel implements ActionListener {
 				super.mouseClicked(e);
 				if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON2) {
 					Action.execute(Command.CLEANSLATE);
+					changeFormState(ADD);
 				}
 			}
 		});
 		add(clearButton);
+		
+		{ // Default state. PLEASE DRAW YOUR ATTENTION HERE.
+			changeFormState(ADD);			
+		}
 		
 		// Logo for fun.
 		ImageIcon imageIcon = new ImageIcon(Main.class.getResource("assets/SchoolLogo_Alt1.png")); // load the image to a imageIcon
@@ -168,6 +171,7 @@ public class InitForm extends JPanel implements ActionListener {
 				primaryButton.setActionCommand(Command.EDIT);
 				primaryButton.setText("Edit");
 				primaryButton.setIcon(new ImageIcon (Main.class.getResource("assets/pencil-small.png")));
+				clearButton.setText("Cancel");
 				int selectedRow = Main.getInitFrame().getContentTable().getSelectedRow();
 				txtName.setText(Main.getDB().getFields().getName().get(selectedRow));
 				txtSurname.setText(Main.getDB().getFields().getSurname().get(selectedRow));
@@ -179,6 +183,7 @@ public class InitForm extends JPanel implements ActionListener {
 				primaryButton.setActionCommand(Command.ADD);
 				primaryButton.setText("Add");
 				primaryButton.setIcon(new ImageIcon (Main.class.getResource("assets/tick.png")));
+				clearButton.setText("Clear");
 			break;
 		}
 	}

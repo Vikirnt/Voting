@@ -10,8 +10,8 @@ import java.io.*;
  */
 public class DBFile extends File {
 	
-	public DBFile (String filename) {
-		super (System.getenv("APPDATA") + "/imp/" + filename);
+	public DBFile (String filepath) {
+		super (filepath + "/imp/" + "cont.dat");
 	}
 
 	/**

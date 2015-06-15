@@ -11,7 +11,10 @@ public final class Command {
 			DELETE = "delete an item",
 			EDIT = "edit the db",
 			VIEW = "view results",
-			CLEAR = "clear fields",
-			VOTE = "vote for me",
-			CLEANSLATE = "plsdontkillme";
+			CLEAR = "clear yo shit",
+			VOTE = "vote for hitler",
+			CLEANSLATE = "plsdontkillme",
+			LOAD = "load a db",
+			RECHOOSE = "choose a new db";
+
 }
