@@ -22,55 +22,55 @@ public class Action {
 	 */
 	public static void execute(String command) {
 		
-		switch (command) {
+		switch(command) {
 		
 		// save Main.getDB().
 			case Command.SAVE:
-				saveDB ();
+				saveDB();
 			break;
 			
 		// add a vote.
 			case Command.VOTE:
-				doVote ();
-				saveDB ();
+				doVote();
+				saveDB();
 			break;
 				
 		// add an item.
 			case Command.ADD:
-				addItem ();
-				saveDB ();
+				addItem();
+				saveDB();
 			break;
 			
 		// remove an item.
 			case Command.DELETE:
-				removeItem (getPos(Main.getInitFrame().getContentTable()));
-				saveDB ();
+				removeItem(getPos(Main.getInitFrame().getContentTable()));
+				saveDB();
 			break;
 			
 		// edits an item info.
 			case Command.EDIT:
 				editItem();
-				saveDB ();
+				saveDB();
 				Main.getInitFrame().getFormPanel().changeFormState(InitFormPanel.ADD);
 			break;
 			
 		// clears database O.O
 			case Command.CLEANSLATE:
 				int ans = JOptionPane.showConfirmDialog(Main.getInitFrame(), "Do you want to clear the DB? It will be extremely painful.", "CONFIRMATION", JOptionPane.YES_NO_CANCEL_OPTION);
-				if (ans == JOptionPane.YES_OPTION)
+				if(ans == JOptionPane.YES_OPTION)
 					cleanslateDB();
 			break;
 		
 			default:
-				System.err.println ("NOT CODED || ERROR: " + command);
+				System.err.println("NOT CODED || ERROR: " + command);
 			break;
 
 		}
 		
 		try {
-			((AbstractTableModel) Main.getMainFrame().getContentTable().getModel()).fireTableDataChanged ();
-			((AbstractTableModel) Main.getInitFrame().getContentTable().getModel()).fireTableDataChanged ();
-		} catch (NullPointerException e) {
+			((AbstractTableModel) Main.getMainFrame().getContentTable().getModel()).fireTableDataChanged();
+			((AbstractTableModel) Main.getInitFrame().getContentTable().getModel()).fireTableDataChanged();
+		} catch(NullPointerException e) {
 			System.err.println("Known exception: " + e.getMessage());
 		}
 			
@@ -121,14 +121,14 @@ public class Action {
 	 */
 	private static void doVote() {
 		int confirm = JOptionPane.showConfirmDialog(Main.getMainFrame(), "Finalise your vote? You can vote only once.", "CONFIRMATION", JOptionPane.YES_NO_CANCEL_OPTION);
-		if (confirm == JOptionPane.YES_OPTION) {
+		if(confirm == JOptionPane.YES_OPTION) {
 			Main.getDB().getFields().addVote(getPos(Main.getMainFrame().getContentTable()));
 			try {
 				Main.getMainFrame().setResizable(false);
 				Thread.sleep(3200);
 				Main.getMainFrame().setResizable(true);
-				Main.getMainFrame().getSearchField ().setText("");
-			} catch (Exception e) {
+				Main.getMainFrame().getSearchField().setText("");
+			} catch(Exception e) {
 				System.err.println("WE HAVE AN INTERRUPTION!");
 			}					
 		}
@@ -151,7 +151,7 @@ public class Action {
 			Main.getDB().getFields().removePost	(itemPos);
 			Main.getDB().getFields().removeStdDiv	(itemPos);
 			Main.getDB().getFields().removeVote	(itemPos);
-		} catch (NullPointerException e) {
+		} catch(NullPointerException e) {
 			System.err.println("\nRemoval canceled.\n");
 		}
 
@@ -163,30 +163,30 @@ public class Action {
 	 * 
 	 * @return filtered index.
 	 */
-	public static int getPos (JTable ref) {
+	public static int getPos(JTable ref) {
 		
 		int namepos = -1, surnamepos = -2, postpos = -3, stddivpos = -4;
 		
-		String 	name	=	(String) ref.getValueAt (ref.getSelectedRow(), 0),
-				surname = 	(String) ref.getValueAt (ref.getSelectedRow(), 1),
-				post	=	(String) ref.getValueAt (ref.getSelectedRow(), 2),
-				stddiv	=	(String) ref.getValueAt (ref.getSelectedRow(), 3);
+		String 	name	=	(String) ref.getValueAt(ref.getSelectedRow(), 0),
+				surname = 	(String) ref.getValueAt(ref.getSelectedRow(), 1),
+				post	=	(String) ref.getValueAt(ref.getSelectedRow(), 2),
+				stddiv	=	(String) ref.getValueAt(ref.getSelectedRow(), 3);
 		
-		aaa: while (namepos != surnamepos) {
-			for (int i = 0; i < Main.getDB().getFields().getItemsCount(); i++) {
-				if (Main.getDB().getFields().getName().get(i).equals(name)) {
+		aaa: while(namepos != surnamepos) {
+			for(int i = 0; i < Main.getDB().getFields().getItemsCount(); i++) {
+				if(Main.getDB().getFields().getName().get(i).equals(name)) {
 					namepos = i;
 				}
-				if (Main.getDB().getFields().getSurname().get(i).equals(surname)) {
+				if(Main.getDB().getFields().getSurname().get(i).equals(surname)) {
 					surnamepos = i;
 				}
-				if (Main.getDB().getFields().getPost().get(i).equals(post)) {
+				if(Main.getDB().getFields().getPost().get(i).equals(post)) {
 					postpos = i;
 				}
-				if (Main.getDB().getFields().getStdDiv().get(i).equals(stddiv)) {
+				if(Main.getDB().getFields().getStdDiv().get(i).equals(stddiv)) {
 					stddivpos = i;
 				}
-				if (namepos == surnamepos && surnamepos == postpos && postpos == stddivpos && stddivpos == namepos) { // Inefficient but gets the job done.
+				if(namepos == surnamepos && surnamepos == postpos && postpos == stddivpos && stddivpos == namepos) { // Inefficient but gets the job done.
 					break aaa;
 				}
 			}

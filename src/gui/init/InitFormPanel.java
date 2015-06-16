@@ -41,14 +41,14 @@ public class InitFormPanel extends JPanel implements ActionListener {
 	 * Create the panel.
 	 */
 	public InitFormPanel() {
-		super ();
+		super();
 		
 		setLayout(null);
 		
 		// Name.
 		JLabel lblName = new JLabel("Name:");
 		lblName.setBounds(10, 11, 46, 14);
-		add (lblName);
+		add(lblName);
 		
 		txtName = new JTextField();
 		txtName.setBounds(10, 36, 86, 20);
@@ -86,9 +86,10 @@ public class InitFormPanel extends JPanel implements ActionListener {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				super.keyTyped(e);
-				if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-					if (!checkForEmpty ()) {
+				if(e.getKeyChar() == KeyEvent.VK_ENTER) {
+					if(!checkForEmpty()) {
 						Action.execute(primaryButton.getActionCommand()); // Primary button has two commands.
+						clearFields();
 					}
 				}
 			}
@@ -105,7 +106,7 @@ public class InitFormPanel extends JPanel implements ActionListener {
 		add(primaryButton);
 		
 		// Clear button.
-		clearButton = new JButton(new ImageIcon (Main.class.getResource("assets/cross-script.png")));
+		clearButton = new JButton(new ImageIcon(Main.class.getResource("assets/cross-script.png")));
 		clearButton.setToolTipText("Middle click twice to clear entire DB.");
 		clearButton.setActionCommand(Command.CLEAR);
 		clearButton.setBounds(109, 179, 91, 23);
@@ -114,9 +115,10 @@ public class InitFormPanel extends JPanel implements ActionListener {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				super.mouseClicked(e);
-				if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON2) {
+				if(e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON2) {
 					Action.execute(Command.CLEANSLATE);
 					changeFormState(ADD);
+					txtName.requestFocusInWindow();
 				}
 			}
 		});
@@ -136,8 +138,8 @@ public class InitFormPanel extends JPanel implements ActionListener {
 		add(lblSchoolLogo);
 	}
 	
-	private boolean checkForEmpty () {
-		if (txtName.getText().isEmpty() || txtSurname.getText().isEmpty() || txtPost.getText().isEmpty() || txtStdDiv.getText().isEmpty())
+	private boolean checkForEmpty() {
+		if(txtName.getText().isEmpty() || txtSurname.getText().isEmpty() || txtPost.getText().isEmpty() || txtStdDiv.getText().isEmpty())
 			return true;
 		else
 			return false;
@@ -145,20 +147,20 @@ public class InitFormPanel extends JPanel implements ActionListener {
 	
 	// -----
 	
-	public JTextField getNameField () {
+	public JTextField getNameField() {
 		return txtName;
 	}
-	public JTextField getSurnameField () {
+	public JTextField getSurnameField() {
 		return txtSurname;
 	}
-	public JTextField getPostField () {
+	public JTextField getPostField() {
 		return txtPost;
 	}
-	public JTextField getStdDivField () {
+	public JTextField getStdDivField() {
 		return txtStdDiv;
 	}
 
-	private void clearFields () {
+	private void clearFields() {
 		getNameField().setText("");
 		getSurnameField().setText("");
 		getPostField().setText("");
@@ -172,12 +174,12 @@ public class InitFormPanel extends JPanel implements ActionListener {
 	 * 
 	 * @param state - ADD for adding an item, EDIT for editing an item.
 	 */
-	public void changeFormState (int state) {
-		switch (state) {
+	public void changeFormState(int state) {
+		switch(state) {
 			case EDIT:
 				primaryButton.setActionCommand(Command.EDIT);
 				primaryButton.setText("Edit");
-				primaryButton.setIcon(new ImageIcon (Main.class.getResource("assets/pencil-small.png")));
+				primaryButton.setIcon(new ImageIcon(Main.class.getResource("assets/pencil-small.png")));
 				clearButton.setText("Cancel");
 				int selectedRow = Main.getInitFrame().getContentTable().getSelectedRow();
 				txtName.setText(Main.getDB().getFields().getName().get(selectedRow));
@@ -189,7 +191,7 @@ public class InitFormPanel extends JPanel implements ActionListener {
 			default:
 				primaryButton.setActionCommand(Command.ADD);
 				primaryButton.setText("Add");
-				primaryButton.setIcon(new ImageIcon (Main.class.getResource("assets/tick.png")));
+				primaryButton.setIcon(new ImageIcon(Main.class.getResource("assets/tick.png")));
 				clearButton.setText("Clear");
 			break;
 		}
@@ -197,11 +199,11 @@ public class InitFormPanel extends JPanel implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals(Command.CLEAR)) {
+		if(e.getActionCommand().equals(Command.CLEAR)) {
 			clearFields();
-			getNameField().requestFocus();
+			getNameField().requestFocusInWindow();
 			changeFormState(ADD);
-		} else if (!checkForEmpty () || !e.getActionCommand().equals(Command.CLEAR)) {
+		} else if(!checkForEmpty() || !e.getActionCommand().equals(Command.CLEAR)) {
 			Action.execute(e.getActionCommand());
 			clearFields();
 		}

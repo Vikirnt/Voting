@@ -45,12 +45,12 @@ public class InitTable extends JTable implements ActionListener {
 		// Popup menu.
 		final JPopupMenu popup = new JPopupMenu();
 		
-		JMenuItem deleteItem = new JMenuItem("Delete", new ImageIcon (Main.class.getResource("assets/cross-script.png")));
+		JMenuItem deleteItem = new JMenuItem("Delete", new ImageIcon(Main.class.getResource("assets/cross-script.png")));
 		deleteItem.setActionCommand(Command.DELETE);
 		deleteItem.addActionListener(this);
 		popup.add(deleteItem);
 		
-		JMenuItem editItem = new JMenuItem("Edit", new ImageIcon (Main.class.getResource("assets/pencil-small.png")));
+		JMenuItem editItem = new JMenuItem("Edit", new ImageIcon(Main.class.getResource("assets/pencil-small.png")));
 		editItem.setActionCommand(Command.EDIT);
 		editItem.addActionListener(new ActionListener() {
 			@Override
@@ -61,7 +61,7 @@ public class InitTable extends JTable implements ActionListener {
 		popup.add(editItem);
 		
 		// Mouse listener for popup menu.
-		addMouseListener (new MouseAdapter() {
+		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 		        super.mousePressed(e);
@@ -75,13 +75,13 @@ public class InitTable extends JTable implements ActionListener {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				super.mouseClicked(e);
-				if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1 && getSelectedRow() != -1) {
+				if(e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1 && getSelectedRow() != -1) {
 					Main.getInitFrame().getFormPanel().changeFormState(InitFormPanel.EDIT);
 				}
 			}
 
 		    private void maybeShowPopup(MouseEvent e) {
-		        if (e.isPopupTrigger() && getSelectedRow() != -1) {
+		        if(e.isPopupTrigger() && getSelectedRow() != -1) {
 		            popup.show(e.getComponent(), e.getX(), e.getY());
 		        }
 		    }
@@ -90,10 +90,10 @@ public class InitTable extends JTable implements ActionListener {
 		addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (e.getKeyChar() == KeyEvent.VK_DELETE) {
+				if(e.getKeyChar() == KeyEvent.VK_DELETE) {
 					Action.execute(Command.DELETE);
 				} else {
-					Main.getInitFrame().getFormPanel().getNameField().requestFocus();
+					Main.getInitFrame().getFormPanel().getNameField().requestFocusInWindow();
 					Main.getInitFrame().getFormPanel().getNameField().setText(Main.getInitFrame().getFormPanel().getNameField().getText() + e.getKeyChar());
 				}
 			}
@@ -102,7 +102,7 @@ public class InitTable extends JTable implements ActionListener {
 	}
 
 	private Object [][] rowData() {
-		return Main.getDB().getFields().getContentTableData ();
+		return Main.getDB().getFields().getContentTableData();
 	}
 
 	private class TableModel extends DefaultTableModel {

@@ -31,11 +31,10 @@ public class InitFrame extends JFrame {
 	 */
 	public InitFrame() {
 		
-		super ("Initialise");
+		super("Initialise");
 		
 		// Properties.
-		
-		setIconImage(new ImageIcon (Main.class.getResource("assets/file-exe-icon.png")).getImage());
+		setIconImage(new ImageIcon(Main.class.getResource("assets/file-exe-icon.png")).getImage());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(688, 455);
 		setLocationRelativeTo(null);
@@ -44,35 +43,32 @@ public class InitFrame extends JFrame {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				super.windowClosing(e);
-				Main.getMainFrame().setVisible (true);
+				Main.getMainFrame().setVisible(true);
 			}
 		});
 		
 		// Content panel.
-		
 		mainPanel = new JPanel();
 		mainPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		mainPanel.setLayout(new BorderLayout (5, 5));
+		mainPanel.setLayout(new BorderLayout(5, 5));
 		setContentPane(mainPanel);
 		
 		// Form.
-		
-		formPanel = new InitFormPanel ();
+		formPanel = new InitFormPanel();
 		mainPanel.add(formPanel, BorderLayout.CENTER);
 		
 		// Table.
-		
-		contentTable = new InitTable ();
+		contentTable = new InitTable();
 		JScrollPane tablePane = new JScrollPane(contentTable);
 		mainPanel.add(tablePane, BorderLayout.WEST);
 		
 	}
 	
 	public InitTable getContentTable() {
-		return (InitTable) contentTable;
+		return(InitTable) contentTable;
 	}
 	public InitFormPanel getFormPanel() {
-		return (InitFormPanel) formPanel;
+		return(InitFormPanel) formPanel;
 	}
 	
 }

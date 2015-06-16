@@ -15,8 +15,8 @@ public class DBFile extends File {
 	/** A new set of fields. */
 	private Fields fields;
 	
-	public DBFile (String loc) {
-		super (loc + "/cont.dat");
+	public DBFile(String loc) {
+		super(loc + "/cont.dat");
 		this.loc = loc;
 	}
 
@@ -29,9 +29,9 @@ public class DBFile extends File {
 	 */
 	public void initialiseFile() {
 		try {
-			new File (loc).mkdir ();
+			new File(loc).mkdir();
 			this.createNewFile();
-		} catch (IOException e) {
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
 
@@ -59,7 +59,7 @@ public class DBFile extends File {
 			fw.write(fields.toString());
 			fw.flush();
 			fw.close();
-		} catch (IOException e) {
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -71,12 +71,12 @@ public class DBFile extends File {
 		this.delete();
 		try {
 			this.createNewFile();
-		} catch (Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public static String getPassword () {
+	public static String getPassword() {
 		return "cs15";
 	}
 

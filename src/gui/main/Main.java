@@ -24,7 +24,7 @@ import javax.swing.UIManager;
 import core.DBFile;
 
 /**
- * Main dialog which initiates the program..
+ * Main dialog which initiates the program.
  * 
  * @author Vikrant.
  *
@@ -47,7 +47,7 @@ public class Main extends JDialog {
 	private static JTextField txtPath = null;
 	
 	/** Main constructor */
-	public Main () {
+	public Main() {
 		
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setType(Type.UTILITY);
@@ -81,7 +81,7 @@ public class Main extends JDialog {
 		mainPanel.add(txtPath);
 		
 		// Buttons
-		loadButton = new JButton(new ImageIcon (Main.class.getResource("assets/tick.png")));
+		loadButton = new JButton(new ImageIcon(Main.class.getResource("assets/tick.png")));
 		loadButton.setBounds(140, 39, 75, 23);
 		loadButton.setActionCommand(Command.LOAD);
 		mainPanel.add(loadButton);
@@ -89,24 +89,23 @@ public class Main extends JDialog {
 		rechooseButton = new JButton("Rechoose");
 		rechooseButton.setBounds(225, 39, 99, 23);
 		rechooseButton.setActionCommand(Command.RECHOOSE);
-		rechooseButton.setIcon(new ImageIcon (Main.class.getResource("assets/folder-horizontal.png")));
+		rechooseButton.setIcon(new ImageIcon(Main.class.getResource("assets/folder-horizontal.png")));
 		mainPanel.add(rechooseButton);
 		
 		// Action listener for buttons.
 		ActionListener buttonActionListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				switch (e.getActionCommand()) {
+				switch(e.getActionCommand()) {
 					case Command.LOAD:
-						if (!loc.isEmpty()) {
-							setDB (new DBFile (loc));
-							System.out.println(loc + "/imp/cont.dat");
-							dispose ();
+						if(!loc.isEmpty()) {
+							setDB(new DBFile(loc));
+							dispose();
 							configure();
 						}
 					break;
 					case Command.RECHOOSE:
-						choose ();
+						choose();
 					break;
 				}
 			}
@@ -121,40 +120,40 @@ public class Main extends JDialog {
 		mainChooser.setAcceptAllFileFilterUsed(false);
 		mainChooser.setDialogTitle("Choose a directory. No need for creating an empty one.");
 		
-		choose ();
+		setVisible(true);
+		choose();
 		
 	}
 	
 	/** Initiates a choosing dialog. */
-	public void choose () {
-		if (mainChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) { 
-			loc = mainChooser.getSelectedFile().getPath ().replace("\\", "/");
+	public void choose() {
+		if(mainChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) { 
+			loc = mainChooser.getSelectedFile().getPath().replace("\\", "/");
 			txtPath.setText(loc);
-			setVisible(true);
 		} else {
 			System.out.println("No Selection!");
 		}
 	}
 	
 	/** Configures program. */
-	public void configure () {
+	public void configure() {
 		// Initialise items.
 		getDB().initialiseFile();
 		getDB().getFields().load();
 
-		frame = new MainFrame ();
+		frame = new MainFrame();
 		iframe = new InitFrame();
 
 		// Splash screen!
 		final SplashScreen splash = SplashScreen.getSplashScreen();
-		if (splash == null) {
+		if(splash == null) {
 			System.err.println("SPLASH SCREEN NOT FOUND.");
 		} else {
 			try {
 				splash.createGraphics();
 				Thread.sleep(500);
 				splash.close();
-			} catch (Exception e) {
+			} catch(Exception e) {
 				System.err.println("We have an interruption!");
 			}
 		}
@@ -174,10 +173,10 @@ public class Main extends JDialog {
 	 */
 	private static void setUIFont(javax.swing.plaf.FontUIResource f) {
 		Enumeration<Object> keys = UIManager.getDefaults().keys();
-		while (keys.hasMoreElements()) {
+		while(keys.hasMoreElements()) {
 			Object key = keys.nextElement();
 			Object value = UIManager.get(key);
-			if (value instanceof javax.swing.plaf.FontUIResource) {
+			if(value instanceof javax.swing.plaf.FontUIResource) {
 				UIManager.put(key, f);
 			}
 		}
@@ -185,17 +184,17 @@ public class Main extends JDialog {
 	
 	// -----
 	
-	public static MainFrame getMainFrame () {
-		return (MainFrame) frame;
+	public static MainFrame getMainFrame() {
+		return(MainFrame) frame;
 	}
 	public static InitFrame getInitFrame() {
-		return (InitFrame) iframe;
+		return(InitFrame) iframe;
 	}
 	
 	public static DBFile getDB() {
-		return (DBFile) db;
+		return(DBFile) db;
 	}
-	public static void setDB (File f) {
+	public static void setDB(File f) {
 		db = f;
 	}
 	
@@ -206,10 +205,10 @@ public class Main extends JDialog {
 		try {
 			setUIFont(new javax.swing.plaf.FontUIResource(new Font("Times New Roman", Font.PLAIN, 12)));
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		new Main ();
+		new Main();
 	}
 
 }

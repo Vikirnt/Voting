@@ -72,7 +72,7 @@ public class ResultsTable extends JTable {
 	    }
 	    @Override
 	    public Object getValueAt(int row, int col) {
-	        return getRowData ()[row][col];
+	        return getRowData()[row][col];
 	    }
 	    @Override
 	    public boolean isCellEditable(int row, int col) {

@@ -27,7 +27,7 @@ public class MainTable extends JTable {
 	private final String[] columnData = { "Name", "Surname", "Post", "Class" };
 	private Object [][] getRowData() {
 		Main.getDB().getFields().load();
-		return Main.getDB().getFields().getContentTableData ();
+		return Main.getDB().getFields().getContentTableData();
 	}
 
 	private final MainTableModel tableModel = new MainTableModel();
@@ -51,14 +51,14 @@ public class MainTable extends JTable {
 		getTableHeader().setReorderingAllowed(false);
 		
 		// Filter.
-		sorter = new TableRowSorter <TableModel> (getModel());
+		sorter = new TableRowSorter <TableModel>(getModel());
 		setRowSorter(sorter);
 		
 		// Key listener for little details.
 		addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				Main.getMainFrame().getSearchField().requestFocus();
+				Main.getMainFrame().getSearchField().requestFocusInWindow();
 				Main.getMainFrame().getSearchField().setText(Main.getMainFrame().getSearchField().getText() + e.getKeyChar());
 			}
 		});
@@ -66,7 +66,7 @@ public class MainTable extends JTable {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				switch (e.getClickCount()) {
+				switch(e.getClickCount()) {
 					case 2:
 						Action.execute(Command.VOTE);
 					break;
@@ -90,7 +90,7 @@ public class MainTable extends JTable {
 	    }
 	    @Override
 	    public Object getValueAt(int row, int col) {
-	        return getRowData ()[row][col];
+	        return getRowData()[row][col];
 	    }
 	    @Override
 	    public boolean isCellEditable(int row, int col) {
@@ -103,7 +103,7 @@ public class MainTable extends JTable {
 	    }
 	}
 	
-	public void changeSorter (String reg) {
+	public void setSorter(String reg) {
 		sorter.setRowFilter(RowFilter.regexFilter("(?i)" + reg));
 	}
 
