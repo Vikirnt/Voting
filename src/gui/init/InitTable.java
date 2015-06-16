@@ -56,13 +56,12 @@ public class InitTable extends JTable implements ActionListener {
 		editItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Main.getInitFrame().getFormPanel().changeFormState(InitForm.EDIT);
+				Main.getInitFrame().getFormPanel().changeFormState(InitFormPanel.EDIT);
 			}
 		});
 		popup.add(editItem);
 		
 		// Mouse listener for popup menu.
-		
 		addMouseListener (new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -78,7 +77,7 @@ public class InitTable extends JTable implements ActionListener {
 			public void mouseClicked(MouseEvent e) {
 				super.mouseClicked(e);
 				if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1 && getSelectedRow() != -1) {
-					Main.getInitFrame().getFormPanel().changeFormState(InitForm.EDIT);
+					Main.getInitFrame().getFormPanel().changeFormState(InitFormPanel.EDIT);
 				}
 			}
 
@@ -88,14 +87,15 @@ public class InitTable extends JTable implements ActionListener {
 		        }
 		    }
 		});
-		
-		// KeyListener for delete hotkey.
+		// Key listener for little details and hotkey for delete.
 		addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				super.keyTyped(e);
 				if (e.getKeyChar() == KeyEvent.VK_DELETE) {
 					Action.execute(Command.DELETE);
+				} else {
+					Main.getInitFrame().getFormPanel().getNameField().requestFocus();
+					Main.getInitFrame().getFormPanel().getNameField().setText(Main.getInitFrame().getFormPanel().getNameField().getText() + e.getKeyChar());
 				}
 			}
 		});

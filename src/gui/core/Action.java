@@ -1,6 +1,6 @@
 package gui.core;
 
-import gui.init.InitForm;
+import gui.init.InitFormPanel;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -9,7 +9,7 @@ import javax.swing.table.AbstractTableModel;
 import main.Main;
 
 /**
- * A collection of common actions.
+ * A collection of *important* actions.
  * 
  * @author admin
  *
@@ -30,12 +30,6 @@ public class Action {
 				saveDB ();
 			break;
 			
-		// cancel adding a new item.
-			case Command.CLEAR:
-				clearFields ();
-				Main.getInitFrame().getFormPanel().changeFormState(InitForm.ADD);
-			break;
-			
 		// add a vote.
 			case Command.VOTE:
 				doVote ();
@@ -46,7 +40,6 @@ public class Action {
 			case Command.ADD:
 				addItem ();
 				saveDB ();
-				clearFields();
 			break;
 			
 		// remove an item.
@@ -59,8 +52,7 @@ public class Action {
 			case Command.EDIT:
 				editItem();
 				saveDB ();
-				Main.getInitFrame().getFormPanel().changeFormState(InitForm.ADD);
-				clearFields();
+				Main.getInitFrame().getFormPanel().changeFormState(InitFormPanel.ADD);
 			break;
 			
 		// clears database O.O
@@ -68,11 +60,6 @@ public class Action {
 				int ans = JOptionPane.showConfirmDialog(Main.getInitFrame(), "Do you want to clear the DB? It will be extremely painful.", "CONFIRMATION", JOptionPane.YES_NO_CANCEL_OPTION);
 				if (ans == JOptionPane.YES_OPTION)
 					cleanslateDB();
-			break;
-			
-		// loads a database file
-			case Command.LOAD:
-				
 			break;
 		
 			default:
@@ -146,18 +133,6 @@ public class Action {
 				System.err.println("WE HAVE AN INTERRUPTION!");
 			}					
 		}
-	}
-
-	/**
-	 * Clears all text fields in InitForm.
-	 */
-	private static void clearFields () {
-		Main.getInitFrame().getFormPanel().getNameField().setText("");
-		Main.getInitFrame().getFormPanel().getSurnameField().setText("");
-		Main.getInitFrame().getFormPanel().getPostField().setText("");
-		Main.getInitFrame().getFormPanel().getStdDivField().setText("");
-		
-		Main.getInitFrame().getFormPanel().getNameField().requestFocus();
 	}
 
 	/**

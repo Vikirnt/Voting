@@ -26,7 +26,7 @@ import main.Main;
  * @author admin
  *
  */
-public class InitForm extends JPanel implements ActionListener {
+public class InitFormPanel extends JPanel implements ActionListener {
 	
 	public final static int ADD = 111, EDIT = 222;
 	
@@ -41,8 +41,9 @@ public class InitForm extends JPanel implements ActionListener {
 	/**
 	 * Create the panel.
 	 */
-	public InitForm() {
+	public InitFormPanel() {
 		super ();
+		
 		setLayout(null);
 		
 		// Name.
@@ -88,7 +89,7 @@ public class InitForm extends JPanel implements ActionListener {
 				super.keyTyped(e);
 				if (e.getKeyChar() == KeyEvent.VK_ENTER) {
 					if (!checkForEmpty ()) {
-						Action.execute(primaryButton.getActionCommand());
+						Action.execute(primaryButton.getActionCommand()); // Primary button has two commands.
 					}
 				}
 			}
@@ -157,6 +158,13 @@ public class InitForm extends JPanel implements ActionListener {
 	public JTextField getStdDivField () {
 		return txtStdDiv;
 	}
+
+	private void clearFields () {
+		getNameField().setText("");
+		getSurnameField().setText("");
+		getPostField().setText("");
+		getStdDivField().setText("");
+	}
 	
 	// -----
 	
@@ -190,8 +198,13 @@ public class InitForm extends JPanel implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (!checkForEmpty () || e.getActionCommand().equals(Command.CLEAR)) {
+		if (e.getActionCommand().equals(Command.CLEAR)) {
+			clearFields();
+			getNameField().requestFocus();
+			changeFormState(ADD);
+		} else if (!checkForEmpty () || !e.getActionCommand().equals(Command.CLEAR)) {
 			Action.execute(e.getActionCommand());
+			clearFields();
 		}
 	}
 

@@ -1,8 +1,6 @@
 package gui.init;
 
 import java.awt.BorderLayout;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -23,7 +21,7 @@ import main.Main;
  */
 public class InitFrame extends JFrame {
 
-	private final JPanel contentPane;
+	private final JPanel mainPanel;
 	
 	private final JTable contentTable;
 	private final JPanel formPanel;
@@ -50,39 +48,31 @@ public class InitFrame extends JFrame {
 			}
 		});
 		
-		// Layout.
+		// Content panel.
 		
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout (5, 5));
-		setContentPane(contentPane);
+		mainPanel = new JPanel();
+		mainPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		mainPanel.setLayout(new BorderLayout (5, 5));
+		setContentPane(mainPanel);
 		
 		// Form.
 		
-		formPanel = new InitForm ();
-		contentPane.add(formPanel, BorderLayout.CENTER);
+		formPanel = new InitFormPanel ();
+		mainPanel.add(formPanel, BorderLayout.CENTER);
 		
 		// Table.
 		
 		contentTable = new InitTable ();
-		contentTable.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				getFormPanel().getNameField().requestFocus();
-				getFormPanel().getNameField().setText(((InitForm) formPanel).getNameField().getText() + e.getKeyChar());
-			}
-		});
-		
 		JScrollPane tablePane = new JScrollPane(contentTable);
-		contentPane.add(tablePane, BorderLayout.WEST);
+		mainPanel.add(tablePane, BorderLayout.WEST);
 		
 	}
 	
-	public InitTable getContentTable () {
+	public InitTable getContentTable() {
 		return (InitTable) contentTable;
 	}
-	public InitForm getFormPanel() {
-		return (InitForm) formPanel;
+	public InitFormPanel getFormPanel() {
+		return (InitFormPanel) formPanel;
 	}
 	
 }

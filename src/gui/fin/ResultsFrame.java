@@ -30,11 +30,11 @@ public class ResultsFrame extends JFrame {
 	 * Construct results frame.
 	 */
 	public ResultsFrame() {
-		// Properties.
 		super ("Resuls");
 		
+		// Properties.
 		setIconImage(new ImageIcon (Main.class.getResource("assets/cup.png")).getImage());
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setSize (450, 450);
 		setLocationRelativeTo(null);
 		addWindowListener(new WindowAdapter() {

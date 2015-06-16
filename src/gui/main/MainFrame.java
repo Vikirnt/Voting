@@ -34,11 +34,13 @@ import main.Main;
  */
 public class MainFrame extends JFrame {
 
-	private final JPanel contentPane;
+	private final JPanel mainPanel;
 	
 	private final JTextField searcher;
 	private final JTable contentTable;
 
+	private final ResultsFrame resultsFrame = new ResultsFrame ();
+	
 	/**
 	 * Create the frame.
 	 */
@@ -49,16 +51,17 @@ public class MainFrame extends JFrame {
 		// Properties.
 		
 		setIconImage(new ImageIcon (Main.class.getResource("assets/SchoolLogo.png")).getImage());
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 450, 420);
 		setLocationRelativeTo(null);
+		getContentPane().setLayout(new BorderLayout(5, 5));
 		
 		// Layout.
 		
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(5, 5));
-		setContentPane(contentPane);
+		mainPanel = new JPanel();
+		mainPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		mainPanel.setLayout(new BorderLayout(5, 5));
+		setContentPane(mainPanel);
 		
 		// Tool bar.
 		
@@ -68,18 +71,9 @@ public class MainFrame extends JFrame {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
-		
 		contentTable = new MainTable();
-		contentTable.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				searcher.requestFocus();
-				searcher.setText(searcher.getText() + e.getKeyChar());
-			}
-		});
 		scrollPane.setViewportView(contentTable);
-		
-		contentPane.add(scrollPane);
+		mainPanel.add(scrollPane);
 		
 		// Search field.
 		
@@ -120,30 +114,24 @@ public class MainFrame extends JFrame {
 	private void checkCommands (String text, KeyEvent e) {
 		if (text.startsWith("$")) {
 			searcher.setForeground(new Color(2, 132, 130));
-			
 			if (text.contains(DBFile.getPassword ()) && e.getKeyChar() == KeyEvent.VK_ENTER) {
 				if (text.startsWith ("$results")) {
 					setVisible(false);
-					new ResultsFrame ().setVisible(true);;
-				}
-				
+					resultsFrame.setVisible(true);
+				} else
 				if (text.startsWith ("$edit")) {
 					setVisible(false);
 					getContentTable().changeSorter ("");
 					Main.getInitFrame().setVisible(true);
-				}				
+				} else
+				if (text.startsWith("$exit")) {
+					System.exit(0);
+				}
 			}
 			
 		} else {
 			searcher.setForeground(new Color(0, 0, 0));
 		}
-	}
-	
-	public MainTable getContentTable () {
-		return (MainTable) contentTable;
-	}
-	public JTextField getSearchField () {
-		return searcher;
 	}
 	
 	private final class MainToolBar extends JToolBar {
@@ -183,6 +171,13 @@ public class MainFrame extends JFrame {
 			
 		}
 		
+	}
+	
+	public MainTable getContentTable () {
+		return (MainTable) contentTable;
+	}
+	public JTextField getSearchField () {
+		return searcher;
 	}
 
 }

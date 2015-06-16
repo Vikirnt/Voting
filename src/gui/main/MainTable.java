@@ -3,6 +3,8 @@ package gui.main;
 import gui.core.Action;
 import gui.core.Command;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -42,7 +44,6 @@ public class MainTable extends JTable {
 	public MainTable() {
 		// Properties.
 		setModel(tableModel);
-		addMouseListener(new TableMouseListener());
 		setToolTipText("Candidates.");
 		setShowGrid(false);
 		setName("Candidates.");
@@ -54,6 +55,26 @@ public class MainTable extends JTable {
 		// Filter.
 		sorter = new TableRowSorter <TableModel> (getModel());
 		setRowSorter(sorter);
+		
+		// Key listener for little details.
+		addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Main.getMainFrame().getSearchField().requestFocus();
+				Main.getMainFrame().getSearchField().setText(Main.getMainFrame().getSearchField().getText() + e.getKeyChar());
+			}
+		});
+		// Mouse listener for double click to vote.
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				switch (e.getClickCount()) {
+					case 2:
+						Action.execute(Command.VOTE);
+					break;
+				}
+			}
+		});
 	}
 	
 	private class MainTableModel extends AbstractTableModel {
@@ -86,21 +107,6 @@ public class MainTable extends JTable {
 	
 	public void changeSorter (String reg) {
 		sorter.setRowFilter(RowFilter.regexFilter("(?i)" + reg));
-	}
-
-	private class TableMouseListener extends MouseAdapter {
-		@Override
-		public void mouseClicked(MouseEvent e) {
-
-			switch (e.getClickCount()) {
-
-			case 2:
-				if (isEnabled()) {
-					Action.execute(Command.VOTE);
-				}
-			}
-
-		}
 	}
 
 }
