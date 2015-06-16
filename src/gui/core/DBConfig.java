@@ -3,6 +3,7 @@ package gui.core;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -11,10 +12,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
 
 import main.Main;
-import core.DBFile;
 
 public class DBConfig extends JDialog implements ActionListener {
 	
@@ -25,7 +24,7 @@ public class DBConfig extends JDialog implements ActionListener {
 	private String loc = NONE;
 	
 	public DBConfig () {
-		super (Main.getMainFrame(), "Select a DB.");
+		super ();
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setType(Type.UTILITY);
 		setSize(350, 100);
@@ -50,11 +49,7 @@ public class DBConfig extends JDialog implements ActionListener {
 		txtPath.setEditable(false);
 		txtPath.setBounds(66, 8, 258, 20);
 		txtPath.setColumns(10);
-		try {
-			txtPath.setText("(╯°□°)╯︵ ┻━┻");
-		} catch (Exception e) {
-			txtPath.setText("No folder selected.");
-		}
+		txtPath.setText("No folder selected.");
 		mainPanel.add(txtPath);
 		
 		// Buttons
@@ -73,46 +68,42 @@ public class DBConfig extends JDialog implements ActionListener {
 		rechooseButton.setIcon(new ImageIcon (Main.class.getResource("assets/folder-horizontal.png")));
 		mainPanel.add(rechooseButton);
 		
+		// File picker.
+		
 		mainChooser = new JFileChooser(System.getenv("APPDATA"));
 		mainChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		mainChooser.setAcceptAllFileFilterUsed(false);
 		mainChooser.setDialogTitle("Choose a directory. No need for creating an empty one.");
 		
+		// Method.
+		
 		choose();
+		setVisible(true);
 	}
 	
-	private void choose () {
+	public void choose () {
 		if (mainChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) { 
-			System.out.println("getCurrentDirectory(): " +  mainChooser.getCurrentDirectory());
 			loc = mainChooser.getCurrentDirectory ().getPath ().replace("\\", "/");
 			txtPath.setText(loc);
 		} else {
 			System.out.println("No Selection!");
 		}
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 			case Command.LOAD:
 				if (!loc.equalsIgnoreCase(NONE)) {
-					Main.setDB(new DBFile (loc));
+					Main.setDB (new File (loc));
 					System.out.println(loc + "/imp/cont.dat");
 					dispose ();
+					Main.getMainFrame().setVisible(true);
 				}
 			break;
 			case Command.RECHOOSE:
 				choose();
 			break;
 		}
-	}
-	
-	public static void main (String [] args) {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		new DBConfig().setVisible(true);
 	}
 }

@@ -10,14 +10,16 @@ import java.io.*;
  */
 public class DBFile extends File {
 	
-	public DBFile (String filepath) {
-		super (filepath + "/imp/" + "cont.dat");
+	/** File path. */
+	private String loc;
+	/** A new set of fields. */
+	private Fields fields;
+	
+	public DBFile (String loc) {
+		super (loc + "/cont.dat");
+		this.loc = loc;
 	}
 
-	/**
-	 * A new set of fields.
-	 */
-	private Fields fields;
 
 	/**
 	 * This function could have been one single line, but it also creates a new
@@ -26,16 +28,14 @@ public class DBFile extends File {
 	 * @return true: file exists, false: new file created.
 	 */
 	public void initialiseFile() {
-
 		try {
-			new File (System.getenv("APPDATA") + "/imp/").mkdir ();
+			new File (loc).mkdir ();
 			this.createNewFile();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		fields = new Fields();
-
 	}
 
 	/**
@@ -52,7 +52,6 @@ public class DBFile extends File {
 	 */
 	@SuppressWarnings("resource")
 	public void save() {
-
 		FileWriter fw = null;
 
 		try {
@@ -63,21 +62,18 @@ public class DBFile extends File {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	/**
 	 * Deletes all contents.
 	 */
 	public void clear() {
-
 		this.delete();
 		try {
 			this.createNewFile();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 	
 	public static String getPassword () {
