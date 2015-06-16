@@ -2,6 +2,7 @@ package gui.init;
 
 import gui.core.Action;
 import gui.core.Command;
+import gui.main.Main;
 
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -17,8 +18,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import main.Main;
 
 /**
  * Form panel for adding new items.

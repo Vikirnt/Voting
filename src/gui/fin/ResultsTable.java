@@ -1,5 +1,7 @@
 package gui.fin;
 
+import gui.main.Main;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +12,6 @@ import javax.swing.SortOrder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-
-import main.Main;
 
 /**
  * The results content table for votes.

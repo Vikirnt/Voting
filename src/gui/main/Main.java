@@ -1,8 +1,7 @@
-package main;
+package gui.main;
 
 import gui.core.Command;
 import gui.init.InitFrame;
-import gui.main.MainFrame;
 
 import java.awt.BorderLayout;
 import java.awt.Font;

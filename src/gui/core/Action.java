@@ -1,12 +1,11 @@
 package gui.core;
 
 import gui.init.InitFormPanel;
+import gui.main.Main;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
-
-import main.Main;
 
 /**
  * A collection of *important* actions.

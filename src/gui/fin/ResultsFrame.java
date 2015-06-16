@@ -1,5 +1,7 @@
 package gui.fin;
 
+import gui.main.Main;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -10,8 +12,6 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-
-import main.Main;
 
 /**
  * Frame which hods the results content table.

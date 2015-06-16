@@ -24,7 +24,6 @@ import javax.swing.JToolBar;
 import javax.swing.border.EmptyBorder;
 
 import core.DBFile;
-import main.Main;
 
 /**
  * Main frame for the project.
@@ -125,6 +124,7 @@ public class MainFrame extends JFrame {
 					Main.getInitFrame().setVisible(true);
 				} else
 				if (text.startsWith("$exit")) {
+					Action.execute(Command.SAVE);
 					System.exit(0);
 				}
 			}

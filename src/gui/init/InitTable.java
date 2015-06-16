@@ -2,6 +2,7 @@ package gui.init;
 
 import gui.core.Action;
 import gui.core.Command;
+import gui.main.Main;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,8 +17,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-
-import main.Main;
 
 /**
  * The main content table.

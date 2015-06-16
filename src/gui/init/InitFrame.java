@@ -1,5 +1,7 @@
 package gui.init;
 
+import gui.main.Main;
+
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -10,8 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
-
-import main.Main;
 
 /**
  * Frame for initialising the database.

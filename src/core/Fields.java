@@ -1,9 +1,9 @@
 package core;
 
+import gui.main.Main;
+
 import java.util.*;
 import java.io.*;
-
-import main.Main;
 
 /**
  * A collection of core fields of an homework.

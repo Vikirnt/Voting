@@ -15,8 +15,6 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import main.Main;
-
 /**
  * The main content table.
  * 
