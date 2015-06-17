@@ -58,8 +58,10 @@ public class MainTable extends JTable {
 		addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				Main.getMainFrame().getSearchField().requestFocusInWindow();
-				Main.getMainFrame().getSearchField().setText(Main.getMainFrame().getSearchField().getText() + e.getKeyChar());
+				if (Character.isLetter(e.getKeyChar()) || Character.isDigit(e.getKeyChar()) || e.getKeyChar() == '$') {
+					Main.getMainFrame().getSearchField().requestFocusInWindow();
+					Main.getMainFrame().getSearchField().setText(Main.getMainFrame().getSearchField().getText() + e.getKeyChar());					
+				}
 			}
 		});
 		// Mouse listener for double click to vote.

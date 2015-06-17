@@ -48,7 +48,6 @@ public class Main extends JDialog {
 	
 	/** Main constructor */
 	public Main() {
-		
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setType(Type.UTILITY);
 		setSize(350, 100);

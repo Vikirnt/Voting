@@ -30,7 +30,6 @@ public class InitFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public InitFrame() {
-		
 		super("Initialise");
 		
 		// Properties.
@@ -39,13 +38,6 @@ public class InitFrame extends JFrame {
 		setSize(688, 455);
 		setLocationRelativeTo(null);
 		setResizable(false);
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				super.windowClosing(e);
-				Main.getMainFrame().setVisible(true);
-			}
-		});
 		
 		// Content panel.
 		mainPanel = new JPanel();
@@ -62,6 +54,15 @@ public class InitFrame extends JFrame {
 		JScrollPane tablePane = new JScrollPane(contentTable);
 		mainPanel.add(tablePane, BorderLayout.WEST);
 		
+		// Closing out.
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				super.windowClosing(e);
+				Main.getMainFrame().setVisible(true);
+				Main.getMainFrame().getSearchField().setText("");
+			}
+		});
 	}
 	
 	public InitTable getContentTable() {

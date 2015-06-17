@@ -92,7 +92,7 @@ public class InitTable extends JTable implements ActionListener {
 			public void keyTyped(KeyEvent e) {
 				if(e.getKeyChar() == KeyEvent.VK_DELETE) {
 					Action.execute(Command.DELETE);
-				} else {
+				} else if (Character.isLetter(e.getKeyChar()) || Character.isDigit(e.getKeyChar())) {
 					Main.getInitFrame().getFormPanel().getNameField().requestFocusInWindow();
 					Main.getInitFrame().getFormPanel().getNameField().setText(Main.getInitFrame().getFormPanel().getNameField().getText() + e.getKeyChar());
 				}

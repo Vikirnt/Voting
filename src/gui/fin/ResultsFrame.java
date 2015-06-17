@@ -39,13 +39,6 @@ public class ResultsFrame extends JFrame {
 		setSize(450, 450);
 		setLocationRelativeTo(null);
 		setAlwaysOnTop(true);
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				Main.getMainFrame().setVisible(true);
-				super.windowClosing(e);
-			}
-		});;
 		
 		// Content pane.
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -57,6 +50,16 @@ public class ResultsFrame extends JFrame {
 		
 		contentTable = new ResultsTable();
 		tablePane.setViewportView(contentTable);
+		
+		// Closing out.
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				super.windowClosing(e);
+				Main.getMainFrame().setVisible(true);
+				Main.getMainFrame().getSearchField().setText("");
+			}
+		});
 	}
 	
 	@Override

@@ -81,7 +81,6 @@ public class InitFormPanel extends JPanel implements ActionListener {
 		add(txtStdDiv);
 		
 		// Enter listener.
-		
 		KeyListener enterLister = new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -90,6 +89,7 @@ public class InitFormPanel extends JPanel implements ActionListener {
 					if(!checkForEmpty()) {
 						Action.execute(primaryButton.getActionCommand()); // Primary button has two commands.
 						clearFields();
+						txtName.requestFocusInWindow();
 					}
 				}
 			}
@@ -203,9 +203,10 @@ public class InitFormPanel extends JPanel implements ActionListener {
 			clearFields();
 			getNameField().requestFocusInWindow();
 			changeFormState(ADD);
-		} else if(!checkForEmpty() || !e.getActionCommand().equals(Command.CLEAR)) {
-			Action.execute(e.getActionCommand());
+		} else if(!checkForEmpty()) {
+			Action.execute(primaryButton.getActionCommand()); // Primary button has two commands.
 			clearFields();
+			txtName.requestFocusInWindow();
 		}
 	}
 
