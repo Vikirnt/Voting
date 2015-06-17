@@ -125,11 +125,12 @@ public class Action {
 			Main.getDB().getFields().addVote(getPos(Main.getMainFrame().getContentTable()));
 			try {
 				Main.getMainFrame().setResizable(false);
-				Thread.sleep(3200);
+				Thread.sleep(3000);
 				Main.getMainFrame().setResizable(true);
 				Main.getMainFrame().getSearchField().setText("");
+				Main.getMainFrame().getContentTable().setSorter("");
 			} catch(Exception e) {
-				System.err.println("WE HAVE AN INTERRUPTION!");
+				System.err.println("WE HAVE AN ITERRUPTION!");
 			}					
 		}
 	}
