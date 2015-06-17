@@ -44,7 +44,6 @@ public class Fields {
 
 	}
 
-
 	/**
 	 * Load everything from Main.getDB().
 	 */
@@ -115,13 +114,11 @@ public class Fields {
 	 * Clear teh lists.
 	 */
 	public void clear() {
-
 		name		.clear();
 		surname		.clear();
 		post		.clear();
 		stddiv		.clear();
 		votecount	.clear();
-
 	}
 
 	/**

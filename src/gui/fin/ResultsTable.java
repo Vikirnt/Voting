@@ -20,21 +20,14 @@ import javax.swing.table.TableRowSorter;
  *
  */
 public class ResultsTable extends JTable {
-
+	
+	/** Column names. */
 	private final String[] columnData = { "Name", "Surname", "Post", "Class", "Votes" };
-	private Object [][] getRowData() {
-		Main.getDB().getFields().load();
-		return Main.getDB().getFields().getVoteBasedData();
-	}
 
+	/** Table model. */
 	private final MainTableModel tableModel = new MainTableModel();
 	
-	@Override
-	public TableModel getModel() {
-		return tableModel;
-	}
-	
-
+	/** Main constructor. */
 	public ResultsTable() {
 		// Properties.
 		setModel(tableModel);
@@ -57,6 +50,7 @@ public class ResultsTable extends JTable {
 		setRowSorter(sorter);
 	}
 	
+	/** Table model class. */
 	public class MainTableModel extends AbstractTableModel {
 		@Override
 	    public String getColumnName(int col) {
@@ -64,7 +58,7 @@ public class ResultsTable extends JTable {
 	    }
 	    @Override
 	    public int getRowCount() {
-	    	return getRowData().length;
+	    	return Main.getDB().getFields().getItemsCount();
 	    }
 	    @Override
 	    public int getColumnCount() {
@@ -72,7 +66,7 @@ public class ResultsTable extends JTable {
 	    }
 	    @Override
 	    public Object getValueAt(int row, int col) {
-	        return getRowData()[row][col];
+	        return Main.getDB().getFields().getVoteBasedData()[row][col];
 	    }
 	    @Override
 	    public boolean isCellEditable(int row, int col) {

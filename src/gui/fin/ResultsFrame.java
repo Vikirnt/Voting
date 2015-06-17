@@ -23,8 +23,10 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ResultsFrame extends JFrame {
 	
+	/** Tabbed pane for fun and learn. */
 	private final JTabbedPane tabbedPane;
 	
+	/** Main content table for candidates. */
 	private final JTable contentTable;
 	
 	/**

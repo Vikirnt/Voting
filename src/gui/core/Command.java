@@ -1,5 +1,11 @@
 package gui.core;
 
+/**
+ * Class of reference commands.
+ * 
+ * @author admin
+ *
+ */
 public final class Command {
 
 	/**

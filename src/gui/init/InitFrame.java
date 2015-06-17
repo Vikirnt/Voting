@@ -21,8 +21,10 @@ import javax.swing.border.EmptyBorder;
  */
 public class InitFrame extends JFrame {
 
+	/** Main content panel. */
 	private final JPanel mainPanel;
 	
+	/** Content table for candidate names. */
 	private final JTable contentTable;
 	private final JPanel formPanel;
 
@@ -65,11 +67,13 @@ public class InitFrame extends JFrame {
 		});
 	}
 	
+	/** Returns content table reference. */
 	public InitTable getContentTable() {
-		return(InitTable) contentTable;
+		return (InitTable) contentTable;
 	}
+	/** Returns form panel reference. */
 	public InitFormPanel getFormPanel() {
-		return(InitFormPanel) formPanel;
+		return (InitFormPanel) formPanel;
 	}
 	
 }

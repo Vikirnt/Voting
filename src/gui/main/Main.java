@@ -48,6 +48,7 @@ public class Main extends JDialog {
 	
 	/** Main constructor */
 	public Main() {
+		// Properties.
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setType(Type.UTILITY);
 		setSize(350, 100);
@@ -137,7 +138,7 @@ public class Main extends JDialog {
 	/** Configures program. */
 	public void configure() {
 		// Initialise items.
-		getDB().initialiseFile();
+		getDB().initFields();
 		getDB().getFields().load();
 
 		frame = new MainFrame();
@@ -146,7 +147,7 @@ public class Main extends JDialog {
 		// Splash screen!
 		final SplashScreen splash = SplashScreen.getSplashScreen();
 		if(splash == null) {
-			System.err.println("SPLASH SCREEN NOT FOUND.");
+			log ("Splash image not found.");
 		} else {
 			try {
 				splash.createGraphics();
@@ -183,16 +184,20 @@ public class Main extends JDialog {
 	
 	// -----
 	
+	/** @return - Main frame object. */
 	public static MainFrame getMainFrame() {
 		return(MainFrame) frame;
 	}
+	/** @return - Init frame object. */
 	public static InitFrame getInitFrame() {
 		return(InitFrame) iframe;
 	}
 	
+	/** @return - DBFile object. */
 	public static DBFile getDB() {
 		return(DBFile) db;
 	}
+	/** Sets the db File variable. */
 	public static void setDB(File f) {
 		db = f;
 	}
@@ -200,14 +205,25 @@ public class Main extends JDialog {
 	// -----
 	
 	public static void main(String[] args) {
+		// Look and feel.
+		String landf = UIManager.getSystemLookAndFeelClassName();
 		// Set default look and feel and format.
 		try {
 			setUIFont(new javax.swing.plaf.FontUIResource(new Font("Times New Roman", Font.PLAIN, 12)));
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel(landf);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		new Main();
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+        		new Main();
+            }
+        });
+	}
+	
+	/** Logging with a tag. */
+	public static void log (String msg) {
+		System.out.println ("LOG -> " + msg);
 	}
 
 }

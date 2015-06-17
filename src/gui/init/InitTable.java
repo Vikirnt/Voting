@@ -25,7 +25,8 @@ import javax.swing.table.DefaultTableModel;
  *
  */
 public class InitTable extends JTable implements ActionListener {
-
+	
+	/**  */
 	private final String[] columnData = { "Name", "Surname", "Post", "Class" };
 
 	public TableModel contentTableModel = new TableModel();
@@ -100,39 +101,29 @@ public class InitTable extends JTable implements ActionListener {
 		});
 
 	}
-
-	private Object [][] rowData() {
-		return Main.getDB().getFields().getContentTableData();
-	}
-
+	
+	/** Table model class. */
 	private class TableModel extends DefaultTableModel {
-
-		@Override
-		public int getRowCount() {
-			return Main.getDB().getFields().getItemsCount();
-		}
-
-		@Override
-		public int getColumnCount() {
-			return columnData.length;
-		}
-
 		@Override
 		public String getColumnName(int columnIndex) {
 			return columnData[columnIndex];
 		}
-
+		@Override
+		public int getRowCount() {
+			return Main.getDB().getFields().getItemsCount();
+		}
+		@Override
+		public int getColumnCount() {
+			return columnData.length;
+		}
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
-			Object [][] rowData = rowData();
-			return rowData[rowIndex][columnIndex];
+			return Main.getDB().getFields().getContentTableData()[rowIndex][columnIndex];
 		}
-
 		@Override
 		public boolean isCellEditable(int rowIndex, int columnIndex) {
 			return false;
 		}
-
 	}
 
 	@Override

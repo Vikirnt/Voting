@@ -21,24 +21,18 @@ import javax.swing.table.TableRowSorter;
  * @author admin
  *
  */
-
 public class MainTable extends JTable {
 
+	/** Array of column names. */
 	private final String[] columnData = { "Name", "Surname", "Post", "Class" };
-	private Object [][] getRowData() {
-		Main.getDB().getFields().load();
-		return Main.getDB().getFields().getContentTableData();
-	}
-
+	
+	/** Table model object. */
 	private final MainTableModel tableModel = new MainTableModel();
 	
-	@Override
-	public TableModel getModel() {
-		return tableModel;
-	}
-	
+	/** Table filer. */
 	public TableRowSorter <TableModel> sorter;
 
+	/** Initialise this table. */
 	public MainTable() {
 		// Properties.
 		setModel(tableModel);
@@ -77,6 +71,7 @@ public class MainTable extends JTable {
 		});
 	}
 	
+	/** Table model class. */
 	private class MainTableModel extends AbstractTableModel {
 		@Override
 	    public String getColumnName(int col) {
@@ -84,7 +79,7 @@ public class MainTable extends JTable {
 	    }
 	    @Override
 	    public int getRowCount() {
-	    	return getRowData().length;
+	    	return Main.getDB().getFields().getItemsCount();
 	    }
 	    @Override
 	    public int getColumnCount() {
@@ -92,19 +87,20 @@ public class MainTable extends JTable {
 	    }
 	    @Override
 	    public Object getValueAt(int row, int col) {
-	        return getRowData()[row][col];
-	    }
-	    @Override
-	    public boolean isCellEditable(int row, int col) {
-	    	return false;
+	        return Main.getDB().getFields().getContentTableData()[row][col];
 	    }
 	    @Override
 	    public void setValueAt(Object value, int row, int col) {
 	    	super.setValueAt(value, row, col);
 	    	fireTableDataChanged();
 	    }
+	    @Override
+	    public boolean isCellEditable(int row, int col) {
+	    	return false;
+	    }
 	}
 	
+	/** Changes the sorter according to the regex. Case insensitive. */
 	public void setSorter(String reg) {
 		sorter.setRowFilter(RowFilter.regexFilter("(?i)" + reg));
 	}

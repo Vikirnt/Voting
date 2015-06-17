@@ -32,19 +32,22 @@ import core.DBFile;
  *
  */
 public class MainFrame extends JFrame {
-
+	
+	/** Main content panel. */
 	private final JPanel mainPanel;
 	
+	/** A text field for searching through the table. */
 	private final JTextField searcher;
+	/** Main content table with the list of all candidates. */
 	private final JTable contentTable;
 
+	/** Results frame. */
 	private final ResultsFrame resultsFrame = new ResultsFrame();
 	
 	/**
 	 * Create the frame.
 	 */
 	public MainFrame() {
-		
 		super("VOTE!");
 		
 		// Properties.
@@ -107,9 +110,22 @@ public class MainFrame extends JFrame {
 		});
 		
 		getContentPane().add(searcher, BorderLayout.NORTH);
-		
 	}
 	
+	/**
+	 * Check if the user has entered any commands.
+	 * 
+	 * How commands work:
+	 *  - $ sign indicates a command.
+	 *  - after a $ sign, enter the command keyword.
+	 *  - then type the password.
+	 * 
+	 * Current commands:
+	 *  - results: shows the results frame.
+	 *  - edit: shows the edit frame.
+	 *  - exit: exits the app.
+	 * 
+	 */
 	private void checkCommands(String text, KeyEvent e) {
 		if(text.startsWith("$")) {
 			searcher.setForeground(new Color(2, 132, 130));
@@ -134,10 +150,14 @@ public class MainFrame extends JFrame {
 		}
 	}
 	
+	/** Information tool bar. */
 	private final class MainToolBar extends JToolBar {
-
+		
+		/** Initialising the tool bar. */
 		public MainToolBar() {
+			super ("Information.");
 			
+			// Properties.
 			setFloatable(false);
 			setOrientation(JToolBar.HORIZONTAL);
 			setVisible(true);
@@ -145,11 +165,11 @@ public class MainFrame extends JFrame {
 			setLayout(new BorderLayout(5, 5));
 			
 			// Double click info.
-			
 			JLabel lblDoubleClick = new JLabel("Double click to finalize vote.");
 			lblDoubleClick.setEnabled(false);
 			add(lblDoubleClick, BorderLayout.WEST);
 			
+			// Vote button.
 			JButton btnVote = new JButton();
 			btnVote.setToolTipText("Choose wisely!");
 			try {
@@ -168,14 +188,19 @@ public class MainFrame extends JFrame {
 				}
 			});
 			add(btnVote, BorderLayout.EAST);
-			
 		}
 		
 	}
 	
+	/**
+	 * @return - Main content table.
+	 */
 	public MainTable getContentTable() {
 		return(MainTable) contentTable;
 	}
+	/**
+	 * @return - Search text field.
+	 */
 	public JTextField getSearchField() {
 		return searcher;
 	}

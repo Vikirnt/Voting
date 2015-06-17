@@ -27,15 +27,22 @@ import javax.swing.JTextField;
  */
 public class InitFormPanel extends JPanel implements ActionListener {
 	
-	public final static int ADD = 111, EDIT = 222;
+	/** Reference constants. */
+	public final static int
+		ADD = 111,
+		EDIT = 222;
 	
-	private final JTextField txtName;
-	private final JTextField txtSurname;
-	private final JTextField txtPost;
-	private final JTextField txtStdDiv;
+	/** Text fields. */
+	private final JTextField
+		txtName,
+		txtSurname,
+		txtPost,
+		txtStdDiv;
 	
-	private final JButton primaryButton;
-	private final JButton clearButton;
+	/** Buttons. */
+	private final JButton
+		primaryButton,
+		clearButton;
 
 	/**
 	 * Create the panel.
@@ -43,9 +50,10 @@ public class InitFormPanel extends JPanel implements ActionListener {
 	public InitFormPanel() {
 		super();
 		
+		// Properties.
 		setLayout(null);
 		
-		// Name.
+		// Name fields.
 		JLabel lblName = new JLabel("Name:");
 		lblName.setBounds(10, 11, 46, 14);
 		add(lblName);
@@ -129,15 +137,20 @@ public class InitFormPanel extends JPanel implements ActionListener {
 		}
 		
 		// Logo for fun.
-		ImageIcon imageIcon = new ImageIcon(Main.class.getResource("assets/SchoolLogo_Alt1.png")); // load the image to a imageIcon
-		Image newimg = imageIcon.getImage().getScaledInstance(120, 120,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
-		imageIcon = new ImageIcon(newimg);  // transform it back
-		
-		JLabel lblSchoolLogo = new JLabel(imageIcon);
-		lblSchoolLogo.setBounds(10, 213, 190, 190);
-		add(lblSchoolLogo);
+		try {
+			ImageIcon imageIcon = new ImageIcon(Main.class.getResource("assets/SchoolLogo_Alt1.png")); // load the image to a imageIcon
+			Image newimg = imageIcon.getImage().getScaledInstance(120, 120,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+			imageIcon = new ImageIcon(newimg);  // transform it back
+			
+			JLabel lblSchoolLogo = new JLabel(imageIcon);
+			lblSchoolLogo.setBounds(10, 213, 190, 190);
+			add(lblSchoolLogo);
+		} catch (NullPointerException e) {
+			Main.log("Logo not found. No issues.");
+		}
 	}
 	
+	/** Checks if text fields are empty. */
 	private boolean checkForEmpty() {
 		if(txtName.getText().isEmpty() || txtSurname.getText().isEmpty() || txtPost.getText().isEmpty() || txtStdDiv.getText().isEmpty())
 			return true;
@@ -147,19 +160,24 @@ public class InitFormPanel extends JPanel implements ActionListener {
 	
 	// -----
 	
+	/** @return - Name field reference. */
 	public JTextField getNameField() {
 		return txtName;
 	}
+	/** @return - Surname field reference. */
 	public JTextField getSurnameField() {
 		return txtSurname;
 	}
+	/** @return - Post field reference. */
 	public JTextField getPostField() {
 		return txtPost;
 	}
+	/** @return - StdDiv field reference. */
 	public JTextField getStdDivField() {
 		return txtStdDiv;
 	}
-
+	
+	/** Clears all fields. */
 	private void clearFields() {
 		getNameField().setText("");
 		getSurnameField().setText("");

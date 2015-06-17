@@ -78,11 +78,7 @@ public class Action {
 	
 	private static void cleanslateDB() {
 		Main.getDB().clear();
-		Main.getDB().getFields().getName().clear();
-		Main.getDB().getFields().getSurname().clear();
-		Main.getDB().getFields().getPost().clear();
-		Main.getDB().getFields().getStdDiv().clear();
-		Main.getDB().getFields().getVoteCount().clear();
+		Main.getDB().getFields().clear();
 		Main.getDB().save();
 	}
 
