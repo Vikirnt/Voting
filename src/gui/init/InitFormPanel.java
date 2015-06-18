@@ -4,6 +4,7 @@ import gui.core.Action;
 import gui.core.Command;
 import gui.main.Main;
 
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -52,39 +53,40 @@ public class InitFormPanel extends JPanel implements ActionListener {
 		
 		// Properties.
 		setLayout(null);
+		setPreferredSize(new Dimension(230, 400));
 		
 		// Name fields.
 		JLabel lblName = new JLabel("Name:");
-		lblName.setBounds(10, 11, 46, 14);
+		lblName.setBounds(39, 41, 46, 14);
 		add(lblName);
 		
 		txtName = new JTextField();
-		txtName.setBounds(10, 36, 86, 20);
+		txtName.setBounds(30, 66, 86, 20);
 		txtName.setColumns(10);
 		add(txtName);
 		
 		txtSurname = new JTextField();
-		txtSurname.setBounds(106, 36, 94, 20);
+		txtSurname.setBounds(126, 66, 94, 20);
 		txtSurname.setColumns(10);
 		add(txtSurname);
 		
 		// Post.
 		JLabel lblPost = new JLabel("Post:");
-		lblPost.setBounds(10, 67, 46, 14);
+		lblPost.setBounds(39, 97, 46, 14);
 		add(lblPost);
 		
 		txtPost = new JTextField();
-		txtPost.setBounds(10, 92, 190, 20);
+		txtPost.setBounds(30, 122, 190, 20);
 		txtPost.setColumns(10);
 		add(txtPost);
 		
 		// Class.
 		JLabel lblClass = new JLabel("Class:");
-		lblClass.setBounds(10, 123, 46, 14);
+		lblClass.setBounds(39, 153, 46, 14);
 		add(lblClass);
 		
 		txtStdDiv = new JTextField();
-		txtStdDiv.setBounds(10, 148, 190, 20);
+		txtStdDiv.setBounds(30, 178, 190, 20);
 		txtStdDiv.setColumns(10);
 		add(txtStdDiv);
 		
@@ -109,7 +111,7 @@ public class InitFormPanel extends JPanel implements ActionListener {
 		
 		// Add button.
 		primaryButton = new JButton();
-		primaryButton.setBounds(10, 179, 89, 23);
+		primaryButton.setBounds(16, 209, 100, 23);
 		primaryButton.addActionListener(this);
 		add(primaryButton);
 		
@@ -117,7 +119,7 @@ public class InitFormPanel extends JPanel implements ActionListener {
 		clearButton = new JButton(new ImageIcon(Main.class.getResource("assets/cross-script.png")));
 		clearButton.setToolTipText("Middle click twice to clear entire DB.");
 		clearButton.setActionCommand(Command.CLEAR);
-		clearButton.setBounds(109, 179, 91, 23);
+		clearButton.setBounds(120, 209, 100, 23);
 		clearButton.addActionListener(this);
 		clearButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -138,16 +140,41 @@ public class InitFormPanel extends JPanel implements ActionListener {
 		
 		// Logo for fun.
 		try {
-			ImageIcon imageIcon = new ImageIcon(Main.class.getResource("assets/SchoolLogo_Alt1.png")); // load the image to a imageIcon
+			ImageIcon imageIcon = new ImageIcon(Main.class.getResource("assets/SchoolLogoAlt.png")); // load the image to a imageIcon
 			Image newimg = imageIcon.getImage().getScaledInstance(120, 120,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
 			imageIcon = new ImageIcon(newimg);  // transform it back
 			
 			JLabel lblSchoolLogo = new JLabel(imageIcon);
-			lblSchoolLogo.setBounds(10, 213, 190, 190);
+			lblSchoolLogo.setBounds(39, 243, 160, 160);
 			add(lblSchoolLogo);
+			
 		} catch (NullPointerException e) {
 			Main.log("Logo not found. No issues.");
 		}
+		
+		// Shinanigans.
+		
+		JLabel lblEntry = new JLabel("ENTRY:");
+		lblEntry.setEnabled(false);
+		lblEntry.setBounds(36, 11, 60, 19);
+		add(lblEntry);
+		
+		JLabel addIcon = new JLabel(new ImageIcon(Main.class.getResource("assets/notebook--plus.png")));
+		addIcon.setBounds(10, 11, 16, 19);
+		add(addIcon);
+		
+		JLabel nameIcon = new JLabel(new ImageIcon(Main.class.getResource("assets/smiley-grin.png")));
+		nameIcon.setBounds(10, 41, 16, 19);
+		add(nameIcon);
+		
+		JLabel postLabel = new JLabel(new ImageIcon(Main.class.getResource("assets/certificate.png")));
+		postLabel.setBounds(10, 97, 16, 19);
+		add(postLabel);
+		
+		JLabel stddivLabel = new JLabel(new ImageIcon(Main.class.getResource("assets/chalkboard.png")));
+		stddivLabel.setBounds(10, 153, 16, 19);
+		add(stddivLabel);
+		
 	}
 	
 	/** Checks if text fields are empty. */
@@ -227,5 +254,4 @@ public class InitFormPanel extends JPanel implements ActionListener {
 			txtName.requestFocusInWindow();
 		}
 	}
-
 }

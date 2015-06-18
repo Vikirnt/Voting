@@ -45,9 +45,9 @@ public class InitFrame extends JFrame {
 		// Properties.
 		setIconImage(new ImageIcon(Main.class.getResource("assets/file-exe-icon.png")).getImage());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setSize(688, 455);
+		setSize(714, 455);
 		setLocationRelativeTo(null);
-		setResizable(false);
+		setResizable(true);
 		
 		// Content panel.
 		mainPanel = new JPanel();
@@ -57,11 +57,11 @@ public class InitFrame extends JFrame {
 		
 		// Form.
 		formPanel = new InitFormPanel();
-		mainPanel.add(formPanel, BorderLayout.CENTER);
+		mainPanel.add(formPanel, BorderLayout.EAST);
 		
 		// Table panel.
 		JPanel tablePanel = new JPanel(new BorderLayout(5, 5));
-		mainPanel.add(tablePanel, BorderLayout.WEST);
+		mainPanel.add(tablePanel, BorderLayout.CENTER);
 		
 		// Table.
 		contentTable = new InitTable();
