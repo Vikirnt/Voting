@@ -57,7 +57,7 @@ public class ResultsFrame extends JFrame {
 		setupPostTab();
 		
 		// Default view.
-		tabbedPane.setSelectedIndex(1);
+		tabbedPane.setSelectedIndex(0);
 		
 		// Closing out.
 		addWindowListener(new WindowAdapter() {
@@ -80,6 +80,9 @@ public class ResultsFrame extends JFrame {
 		JScrollPane tablePane = new JScrollPane();
 		tablePane.setViewportView(postTable);
 		tabbedPane.addTab("Posts", new ImageIcon (Main.class.getResource("assets/certificate.png")), tablePane, null);
+		
+		// TODO: Work.
+		tabbedPane.setEnabledAt(1, false);
 	}
 	
 	@Override
