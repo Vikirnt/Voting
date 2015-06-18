@@ -26,8 +26,10 @@ public class ResultsFrame extends JFrame {
 	/** Tabbed pane for fun and learn. */
 	private final JTabbedPane tabbedPane;
 	
-	/** Main content table for candidates. */
-	private final JTable contentTable;
+	/** Overall content table for candidates. */
+	private final JTable overallTable;
+	/** Post wise content table for winners. */
+	private JTable postTable;
 	
 	/**
 	 * Construct results frame.
@@ -46,12 +48,16 @@ public class ResultsFrame extends JFrame {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
-		// Table pane.
-		JScrollPane tablePane = new JScrollPane();
-		tabbedPane.addTab("Votes", null, tablePane, null);
+		// Overall view.
+		overallTable = new OverallTable();
+		setupOverallTab ();
 		
-		contentTable = new ResultsTable();
-		tablePane.setViewportView(contentTable);
+		// Post view.
+		postTable = new PostsTable();
+		setupPostTab();
+		
+		// Default view.
+		tabbedPane.setSelectedIndex(1);
 		
 		// Closing out.
 		addWindowListener(new WindowAdapter() {
@@ -64,10 +70,22 @@ public class ResultsFrame extends JFrame {
 		});
 	}
 	
+	private void setupOverallTab () {
+		JScrollPane tablePane = new JScrollPane();
+		tablePane.setViewportView(overallTable);
+		tabbedPane.addTab("Overview", new ImageIcon (Main.class.getResource("assets/specs.png")), tablePane, "Contains all candidates and all data.");
+	}
+	
+	private void setupPostTab () {
+		JScrollPane tablePane = new JScrollPane();
+		tablePane.setViewportView(postTable);
+		tabbedPane.addTab("Posts", new ImageIcon (Main.class.getResource("assets/certificate.png")), tablePane, null);
+	}
+	
 	@Override
 	public void setVisible(boolean b) {
 		super.setVisible(b);
-		((AbstractTableModel) contentTable.getModel()).fireTableDataChanged();
+		((AbstractTableModel) overallTable.getModel()).fireTableDataChanged();
 	}
 	
 }

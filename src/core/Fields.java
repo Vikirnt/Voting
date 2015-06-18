@@ -254,7 +254,7 @@ public class Fields {
 	/**
 	 * @return data for results table.
 	 */
-	public Object [][] getVoteBasedData() {
+	public Object [][] getOverallResultsData() {
 
 		Object [][] temp = new Object [Main.getDB().getFields().getItemsCount()][5];
 		for(int i = 0; i < Main.getDB().getFields().getItemsCount(); i++) {
@@ -268,6 +268,26 @@ public class Fields {
 		}
 		return temp;
 
+	}
+	
+	/**
+	 * WIP
+	 * @return
+	 */
+	public Object [][] getPostResultsData () {
+		
+		Object [][] temp = new Object [Main.getDB().getFields().getItemsCount()][5];
+		for(int i = 0; i < Main.getDB().getFields().getItemsCount(); i++) {
+
+			temp[i][0] = post.get(i);
+			temp[i][1] = name.get(i);
+			temp[i][2] = surname.get(i);
+			temp[i][3] = stddiv.get(i);
+			temp[i][4] = votecount.get(i);
+
+		}
+		return temp;
+		
 	}
 
 }

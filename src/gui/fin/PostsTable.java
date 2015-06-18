@@ -19,16 +19,16 @@ import javax.swing.table.TableRowSorter;
  * @author admin
  *
  */
-public class ResultsTable extends JTable {
+public class PostsTable extends JTable {
 	
 	/** Column names. */
-	private final String[] columnData = { "Name", "Surname", "Post", "Class", "Votes" };
+	private final String[] columnData = { "Post", "Name", "Surname", "Class", "Votes" };
 
 	/** Table model. */
 	private final MainTableModel tableModel = new MainTableModel();
 	
 	/** Main constructor. */
-	public ResultsTable() {
+	public PostsTable() {
 		// Properties.
 		setModel(tableModel);
 		setToolTipText("Candidates.");
@@ -37,13 +37,15 @@ public class ResultsTable extends JTable {
 		setOpaque(true);
 		setAutoCreateRowSorter(true);
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		getTableHeader().setReorderingAllowed(true);
+		getTableHeader().setReorderingAllowed(false);
 		
-		// Filter ny votes.
+		requestFocusInWindow();
+		
+		// Filter my votes.
 		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(getModel());
 		List<RowSorter.SortKey> sortKeys = new ArrayList<>();
 		 
-		sortKeys.add(new RowSorter.SortKey(4, SortOrder.DESCENDING));
+		sortKeys.add(new RowSorter.SortKey(0, SortOrder.DESCENDING));
 		sorter.setSortKeys(sortKeys);
 		sorter.sort();
 		 
@@ -51,7 +53,7 @@ public class ResultsTable extends JTable {
 	}
 	
 	/** Table model class. */
-	public class MainTableModel extends AbstractTableModel {
+	private class MainTableModel extends AbstractTableModel {
 		@Override
 	    public String getColumnName(int col) {
 	        return columnData [col];
@@ -66,7 +68,7 @@ public class ResultsTable extends JTable {
 	    }
 	    @Override
 	    public Object getValueAt(int row, int col) {
-	        return Main.getDB().getFields().getVoteBasedData()[row][col];
+	        return Main.getDB().getFields().getPostResultsData()[row][col];
 	    }
 	    @Override
 	    public boolean isCellEditable(int row, int col) {
