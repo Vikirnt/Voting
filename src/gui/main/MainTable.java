@@ -27,9 +27,9 @@ public class MainTable extends JTable {
 	private final String[] columnData = { "Name", "Surname", "Post", "Class" };
 	
 	/** Table model object. */
-	private final MainTableModel tableModel = new MainTableModel();
+	private final TableModel tableModel = new MainTableModel();
 	
-	/** Table filer. */
+	/** Table filter. */
 	public TableRowSorter <TableModel> sorter;
 
 	/** Initialise this table. */

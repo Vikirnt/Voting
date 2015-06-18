@@ -25,7 +25,7 @@ public class OverallTable extends JTable {
 	private final String[] columnData = { "Name", "Surname", "Post", "Class", "Votes" };
 
 	/** Table model. */
-	private final MainTableModel tableModel = new MainTableModel();
+	private final TableModel tableModel = new MainTableModel();
 	
 	/** Main constructor. */
 	public OverallTable() {

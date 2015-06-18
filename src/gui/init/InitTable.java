@@ -16,7 +16,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  * The main content table.
@@ -26,13 +29,16 @@ import javax.swing.table.DefaultTableModel;
  */
 public class InitTable extends JTable implements ActionListener {
 	
-	/**  */
+	/** Column names */
 	private final String[] columnData = { "Name", "Surname", "Post", "Class" };
 
-	public TableModel contentTableModel = new TableModel();
+	/** Table model. */
+	public final TableModel contentTableModel = new MyTableModel();
+	
+	/** Table filter. */
+	public TableRowSorter <TableModel> sorter;
 	
 	public InitTable() {
-
 		// Properties.
 		setModel(contentTableModel);
 		setToolTipText("Candidates.");
@@ -42,6 +48,10 @@ public class InitTable extends JTable implements ActionListener {
 		setAutoCreateRowSorter(true);
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		getTableHeader().setReorderingAllowed(true);
+		
+		// Filter.
+		sorter = new TableRowSorter <TableModel>(getModel());
+		setRowSorter(sorter);
 		
 		// Popup menu.
 		final JPopupMenu popup = new JPopupMenu();
@@ -99,11 +109,10 @@ public class InitTable extends JTable implements ActionListener {
 				}
 			}
 		});
-
 	}
 	
 	/** Table model class. */
-	private class TableModel extends DefaultTableModel {
+	private class MyTableModel extends DefaultTableModel {
 		@Override
 		public String getColumnName(int columnIndex) {
 			return columnData[columnIndex];
@@ -129,6 +138,11 @@ public class InitTable extends JTable implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Action.execute(e.getActionCommand());
+	}
+	
+	/** Changes the sorter according to the regex. Case insensitive. */
+	public void setSorter(String reg) {
+		sorter.setRowFilter(RowFilter.regexFilter("(?i)" + reg));
 	}
 
 }

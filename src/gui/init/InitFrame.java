@@ -3,14 +3,19 @@ package gui.init;
 import gui.main.Main;
 
 import java.awt.BorderLayout;
+import java.awt.Image;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 /**
@@ -27,6 +32,9 @@ public class InitFrame extends JFrame {
 	/** Content table for candidate names. */
 	private final JTable contentTable;
 	private final JPanel formPanel;
+	
+	/** Search field. */
+	private final JTextField searcher;
 
 	/**
 	 * Create the frame.
@@ -51,10 +59,49 @@ public class InitFrame extends JFrame {
 		formPanel = new InitFormPanel();
 		mainPanel.add(formPanel, BorderLayout.CENTER);
 		
+		// Table panel.
+		JPanel tablePanel = new JPanel(new BorderLayout(5, 5));
+		mainPanel.add(tablePanel, BorderLayout.WEST);
+		
 		// Table.
 		contentTable = new InitTable();
-		JScrollPane tablePane = new JScrollPane(contentTable);
-		mainPanel.add(tablePane, BorderLayout.WEST);
+		JScrollPane tableScrollPane = new JScrollPane(contentTable);
+		tablePanel.add(tableScrollPane, BorderLayout.CENTER);
+		
+		// Table search bar.
+		searcher = new JTextField();
+		searcher.setToolTipText("Search");
+		searcher.setLayout(new BorderLayout(2, 2));
+		
+		ImageIcon searchIcon = new ImageIcon(Main.class.getResource("assets/search.png")); // load the image to a imageIcon
+		Image newimg = searchIcon.getImage().getScaledInstance(15, 15,  java.awt.Image.SCALE_SMOOTH); // scale the image the smooth way  
+		searchIcon = new ImageIcon(newimg);  // transform it back
+		searcher.add(new JLabel(searchIcon), BorderLayout.EAST);
+		
+		searcher.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+								
+				String text = searcher.getText();
+				
+				// Search filter.
+				if(text.length() == 0) {
+					getContentTable().setSorter("");
+				} else {
+					getContentTable().setSorter(text);
+				}
+				getContentTable().repaint();
+				
+				// Limit.
+				if(text.length() > 20) {
+					searcher.setText("");
+					getContentTable().setSorter("");
+				}
+				
+			}
+		});
+		
+		tablePanel.add(searcher, BorderLayout.NORTH);
 		
 		// Closing out.
 		addWindowListener(new WindowAdapter() {

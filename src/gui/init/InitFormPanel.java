@@ -199,7 +199,7 @@ public class InitFormPanel extends JPanel implements ActionListener {
 				primaryButton.setText("Edit");
 				primaryButton.setIcon(new ImageIcon(Main.class.getResource("assets/pencil-small.png")));
 				clearButton.setText("Cancel");
-				int selectedRow = Main.getInitFrame().getContentTable().getSelectedRow();
+				int selectedRow = Action.getPos (Main.getInitFrame().getContentTable());
 				txtName.setText(Main.getDB().getFields().getName().get(selectedRow));
 				txtSurname.setText(Main.getDB().getFields().getSurname().get(selectedRow));
 				txtPost.setText(Main.getDB().getFields().getPost().get(selectedRow));
