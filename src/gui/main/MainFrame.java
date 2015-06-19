@@ -42,74 +42,74 @@ public class MainFrame extends JFrame {
 	private final JTable contentTable;
 
 	/** Results frame. */
-	private final ResultsFrame resultsFrame = new ResultsFrame();
+	private final ResultsFrame resultsFrame = new ResultsFrame ();
 	
 	/**
 	 * Create the frame.
 	 */
-	public MainFrame() {
-		super("VOTE!");
+	public MainFrame () {
+		super ("VOTE!");
 		
 		// Properties.
-		setIconImage(new ImageIcon(Main.class.getResource("assets/SchoolLogo.png")).getImage());
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setBounds(100, 100, 450, 420);
-		setLocationRelativeTo(null);
-		getContentPane().setLayout(new BorderLayout(5, 5));
+		setIconImage (new ImageIcon (Main.class.getResource ("assets/SchoolLogo.png")).getImage ());
+		setDefaultCloseOperation (JFrame.DO_NOTHING_ON_CLOSE);
+		setBounds (100, 100, 450, 420);
+		setLocationRelativeTo (null);
+		getContentPane ().setLayout (new BorderLayout (5, 5));
 		
 		// Panel.
-		mainPanel = new JPanel();
-		mainPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		mainPanel.setLayout(new BorderLayout(5, 5));
-		setContentPane(mainPanel);
+		mainPanel = new JPanel ();
+		mainPanel.setBorder (new EmptyBorder (5, 5, 5, 5));
+		mainPanel.setLayout (new BorderLayout (5, 5));
+		setContentPane (mainPanel);
 		
 		// Tool bar.
-		getContentPane().add(new MainToolBar(), BorderLayout.SOUTH);
+		getContentPane ().add (new MainToolBar (), BorderLayout.SOUTH);
 		
 		// Table of candidates.
-		JScrollPane scrollPane = new JScrollPane();
+		JScrollPane scrollPane = new JScrollPane ();
 		
-		contentTable = new MainTable();
-		scrollPane.setViewportView(contentTable);
-		mainPanel.add(scrollPane);
+		contentTable = new MainTable ();
+		scrollPane.setViewportView (contentTable);
+		mainPanel.add (scrollPane);
 		
 		// Search field.
-		searcher = new JTextField();
-		searcher.setToolTipText("Search");
-		searcher.setLayout(new BorderLayout(2, 2));
+		searcher = new JTextField ();
+		searcher.setToolTipText ("Search");
+		searcher.setLayout (new BorderLayout (2, 2));
 		
-		ImageIcon searchIcon = new ImageIcon(Main.class.getResource("assets/search.png")); // load the image to a imageIcon
-		Image newimg = searchIcon.getImage().getScaledInstance(15, 15,  java.awt.Image.SCALE_SMOOTH); // scale the image the smooth way  
-		searchIcon = new ImageIcon(newimg);  // transform it back
-		searcher.add(new JLabel(searchIcon), BorderLayout.EAST);
+		ImageIcon searchIcon = new ImageIcon (Main.class.getResource ("assets/search.png")); // load the image to a imageIcon
+		Image newimg = searchIcon.getImage ().getScaledInstance (15, 15,  java.awt.Image.SCALE_SMOOTH); // scale the image the smooth way  
+		searchIcon = new ImageIcon (newimg);  // transform it back
+		searcher.add (new JLabel (searchIcon), BorderLayout.EAST);
 		
-		searcher.addKeyListener(new KeyAdapter() {
+		searcher.addKeyListener (new KeyAdapter () {
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyTyped (KeyEvent e) {
 								
-				String text = searcher.getText();
+				String text = searcher.getText ();
 				
 				// Search filter.
-				if(text.length() == 0) {
-					getContentTable().setSorter("");
+				if (text.length () == 0) {
+					getContentTable ().setSorter ("");
 				} else {
-					getContentTable().setSorter(text);
+					getContentTable ().setSorter (text);
 				}
-				getContentTable().repaint();
+				getContentTable ().repaint ();
 				
 				// Commands.
-				checkCommands(text, e);
+				checkCommands (text, e);
 				
 				// Limit.
-				if(text.length() > 20) {
-					searcher.setText("");
-					getContentTable().setSorter("");
+				if (text.length () > 20) {
+					searcher.setText ("");
+					getContentTable ().setSorter ("");
 				}
 				
 			}
 		});
 		
-		getContentPane().add(searcher, BorderLayout.NORTH);
+		getContentPane ().add (searcher, BorderLayout.NORTH);
 	}
 	
 	/**
@@ -126,27 +126,27 @@ public class MainFrame extends JFrame {
 	 *  - exit: exits the app.
 	 * 
 	 */
-	private void checkCommands(String text, KeyEvent e) {
-		if(text.startsWith("$")) {
-			searcher.setForeground(new Color(2, 132, 130));
-			if(text.contains(DBFile.getPassword()) && e.getKeyChar() == KeyEvent.VK_ENTER) {
-				if(text.startsWith("$results")) {
-					setVisible(false);
-					resultsFrame.setVisible(true);
+	private void checkCommands (String text, KeyEvent e) {
+		if (text.startsWith ("$")) {
+			searcher.setForeground (new Color (2, 132, 130));
+			if (text.contains (DBFile.getPassword ()) && e.getKeyChar () == KeyEvent.VK_ENTER) {
+				if (text.startsWith ("$results")) {
+					setVisible (false);
+					resultsFrame.setVisible (true);
 				} else
-				if(text.startsWith("$edit")) {
-					setVisible(false);
-					getContentTable().setSorter("");
-					Main.getInitFrame().setVisible(true);
+				if (text.startsWith ("$edit")) {
+					setVisible (false);
+					getContentTable ().setSorter ("");
+					Main.getInitFrame ().setVisible (true);
 				} else
-				if(text.startsWith("$exit")) {
-					Action.execute(Command.SAVE);
-					System.exit(0);
+				if (text.startsWith ("$exit")) {
+					Action.execute (Command.SAVE);
+					System.exit (0);
 				}
 			}
 			
 		} else {
-			searcher.setForeground(new Color(0, 0, 0));
+			searcher.setForeground (new Color (0, 0, 0));
 		}
 	}
 	
@@ -154,40 +154,40 @@ public class MainFrame extends JFrame {
 	private final class MainToolBar extends JToolBar {
 		
 		/** Initialising the tool bar. */
-		public MainToolBar() {
+		public MainToolBar () {
 			super ("Information.");
 			
 			// Properties.
-			setFloatable(false);
-			setOrientation(JToolBar.HORIZONTAL);
-			setVisible(true);
-			setOpaque(true);
-			setLayout(new BorderLayout(5, 5));
+			setFloatable (false);
+			setOrientation (JToolBar.HORIZONTAL);
+			setVisible (true);
+			setOpaque (true);
+			setLayout (new BorderLayout (5, 5));
 			
 			// Double click info.
-			JLabel lblDoubleClick = new JLabel("Double click to finalize vote.");
-			lblDoubleClick.setEnabled(false);
-			add(lblDoubleClick, BorderLayout.WEST);
+			JLabel lblDoubleClick = new JLabel ("Double click to finalize vote.");
+			lblDoubleClick.setEnabled (false);
+			add (lblDoubleClick, BorderLayout.WEST);
 			
 			// Vote button.
-			JButton btnVote = new JButton();
-			btnVote.setToolTipText("Choose wisely!");
+			JButton btnVote = new JButton ();
+			btnVote.setToolTipText ("Choose wisely!");
 			try {
-				btnVote.setIcon(new ImageIcon(Main.class.getResource("assets/tick.png")));
-			}  catch(Exception e) {
-				System.err.println("Could not find tick.png");
-				btnVote.setText("VOTE!");
+				btnVote.setIcon (new ImageIcon (Main.class.getResource ("assets/tick.png")));
+			}  catch (Exception e) {
+				System.err.println ("Could not find tick.png");
+				btnVote.setText ("VOTE!");
 			}
-			btnVote.setActionCommand(Command.VOTE);
-			btnVote.addActionListener(new ActionListener() {
+			btnVote.setActionCommand (Command.VOTE);
+			btnVote.addActionListener (new ActionListener () {
 				@Override
-				public void actionPerformed(ActionEvent e) {
-					if(Main.getMainFrame().getContentTable().getSelectedRow() != -1) {
-						Action.execute(e.getActionCommand());
+				public void actionPerformed (ActionEvent e) {
+					if (Main.getMainFrame ().getContentTable ().getSelectedRow () != -1) {
+						Action.execute (e.getActionCommand ());
 					}
 				}
 			});
-			add(btnVote, BorderLayout.EAST);
+			add (btnVote, BorderLayout.EAST);
 		}
 		
 	}
@@ -195,13 +195,13 @@ public class MainFrame extends JFrame {
 	/**
 	 * @return - Main content table.
 	 */
-	public MainTable getContentTable() {
-		return(MainTable) contentTable;
+	public MainTable getContentTable () {
+		return (MainTable) contentTable;
 	}
 	/**
 	 * @return - Search text field.
 	 */
-	public JTextField getSearchField() {
+	public JTextField getSearchField () {
 		return searcher;
 	}
 

@@ -31,80 +31,80 @@ public class Fields {
 	/**
 	 * Default constructor which initialises the lists.
 	 */
-	public Fields() {
+	public Fields () {
 
 		// Creating objects.
-		name 		= 	new ArrayList<String>();
-		surname 	=	new ArrayList<String>();
-		post 		= 	new ArrayList<String>();
-		stddiv 		= 	new ArrayList<String>();
-		votecount 	= 	new ArrayList<Integer>();
+		name 		= 	new ArrayList<String> ();
+		surname 	=	new ArrayList<String> ();
+		post 		= 	new ArrayList<String> ();
+		stddiv 		= 	new ArrayList<String> ();
+		votecount 	= 	new ArrayList<Integer> ();
 
-		load();
+		load ();
 
 	}
 
 	/**
-	 * Load everything from Main.getDB().
+	 * Load everything from Main.getDB ().
 	 */
-	public void load() {
+	public void load () {
 
 		// A line in the db.
 		String line = "";
 
 		// Clear all lists.
-		clear();
+		clear ();
 
 		// If the DB is not empty...
-		if(!noItems()) {
+		if (!noItems ()) {
 
 			// Creating Scanner object.
 			Scanner fileScanner = null;
 			try {
-				fileScanner = new Scanner(Main.getDB());
-			} catch(FileNotFoundException e) {
-				System.err.println("WHAT");
-				e.printStackTrace();
+				fileScanner = new Scanner (Main.getDB ());
+			} catch (FileNotFoundException e) {
+				System.err.println ("WHAT");
+				e.printStackTrace ();
 			}
 
 			// loops through each item and adds its fields to the lists.
-			while(fileScanner.hasNextLine()) {
-
-				line = fileScanner.nextLine();
+			while (fileScanner.hasNextLine ()) {
+				
+				line = fileScanner.nextLine ();
 				String content;
 				
-				if(line.startsWith(NAME)) {
+				if (line.startsWith (NAME)) {
 					
-					content = line.substring(NAME.length()).trim();
-					content = Character.toUpperCase(content.charAt(0)) + content.substring(1);
-					name.add(content);
+					content = line.substring (NAME.length ()).trim ();
+					content = Character.toUpperCase (content.charAt (0)) + content.substring (1);
+					name.add (content);
 
-				} else if(line.startsWith(SURNAME)) {
+				} else if (line.startsWith (SURNAME)) {
 					
-					content = line.substring(SURNAME.length()).trim();
-					content = Character.toUpperCase(content.charAt(0)) + content.substring(1);
-					surname.add(content);
+					content = line.substring (SURNAME.length ()).trim ();
+					content = Character.toUpperCase (content.charAt (0)) + content.substring (1);
+					surname.add (content);
 
-				} else if(line.startsWith(POST)) {
+				} else if (line.startsWith (POST)) {
 					
-					content = line.substring(POST.length()).trim();
-					post.add(content);
+					content = line.substring (POST.length ()).trim ();
+					post.add (content);
 
-				} else if(line.startsWith(STDDIV)) {
+				} else if (line.startsWith (STDDIV)) {
 					
-					content = line.substring(STDDIV.length()).trim();
-					stddiv.add(content);
+					content = line.substring (STDDIV.length ()).trim ();
+					stddiv.add (content);
 
-				} else if(line.startsWith(VOTECOUNT)) {
+				} else if (line.startsWith (VOTECOUNT)) {
 					
-					content = line.substring(VOTECOUNT.length()).trim();
-					votecount.add(Integer.parseInt(content));
+					content = line.substring (VOTECOUNT.length ()).trim ();
+					votecount.add (Integer.parseInt (content));
 
 				}
 
 			} // loop ends.
 
-			fileScanner.close();
+			fileScanner.close ();
 
 		} // if ends.
 
@@ -113,12 +113,12 @@ public class Fields {
 	/**
 	 * Clear teh lists.
 	 */
-	public void clear() {
-		name		.clear();
-		surname		.clear();
-		post		.clear();
-		stddiv		.clear();
-		votecount	.clear();
+	public void clear () {
+		name		.clear ();
+		surname		.clear ();
+		post		.clear ();
+		stddiv		.clear ();
+		votecount	.clear ();
 	}
 
 	/**
@@ -126,9 +126,9 @@ public class Fields {
 	 * 
 	 * @return true- DB empty. false- DB isn't empty.
 	 */
-	public boolean noItems() {
+	public boolean noItems () {
 
-		if(Main.getDB().length() == 0) {
+		if (Main.getDB ().length () == 0) {
 			return true;
 		} else {
 			return false;
@@ -139,65 +139,65 @@ public class Fields {
 	/**
 	 * @return number of items.
 	 */
-	public int getItemsCount() {
+	public int getItemsCount () {
 
-		return name.size();
+		return name.size ();
 
 	}
 	
 	// Interactions.
 	
-	public ArrayList <String> getName() {
+	public ArrayList <String> getName () {
 		return name;
 	}
-	public ArrayList <String> getSurname() {
+	public ArrayList <String> getSurname () {
 		return surname;
 	}
-	public ArrayList <String> getPost() {
+	public ArrayList <String> getPost () {
 		return post;
 	}
-	public ArrayList <String> getStdDiv() {
+	public ArrayList <String> getStdDiv () {
 		return stddiv;
 	}
-	public ArrayList <Integer> getVoteCount() {
+	public ArrayList <Integer> getVoteCount () {
 		return votecount;
 	}
 	
-	public void addName(String addition) {
-		name.add(addition);
+	public void addName (String addition) {
+		name.add (addition);
 	}
-	public void addSurname(String addition) {
-		surname.add(addition);
+	public void addSurname (String addition) {
+		surname.add (addition);
 	}
-	public void addPost(String addition) {
-		post.add(addition);
+	public void addPost (String addition) {
+		post.add (addition);
 	}
-	public void addStdDiv(String addition) {
-		stddiv.add(addition);
+	public void addStdDiv (String addition) {
+		stddiv.add (addition);
 	}
-	public void addVotecount(int addition) {
-		votecount.add(addition);
+	public void addVotecount (int addition) {
+		votecount.add (addition);
 	}
-	public void addVote(int index) {
-		int temp = votecount.get(index);
-		votecount.set(index, temp + 1);
+	public void addVote (int index) {
+		int temp = votecount.get (index);
+		votecount.set (index, temp + 1);
 	}
 	
-	public void removeName(int itemPos) {
-		name.remove(itemPos);
+	public void removeName (int itemPos) {
+		name.remove (itemPos);
 	}
-	public void removeSurname(int removal) {
-		surname.remove(removal);
+	public void removeSurname (int removal) {
+		surname.remove (removal);
 	}
-	public void removePost(int removal) {
-		post.remove(removal);
+	public void removePost (int removal) {
+		post.remove (removal);
 	}
-	public void removeStdDiv(int removal) {
-		stddiv.remove(removal);
+	public void removeStdDiv (int removal) {
+		stddiv.remove (removal);
 	}
-	public void removeVote(int index) {
-		int temp = votecount.get(index);
-		votecount.set(index, temp - 1);
+	public void removeVote (int index) {
+		int temp = votecount.get (index);
+		votecount.set (index, temp - 1);
 	}
 
 	// -----
@@ -206,24 +206,24 @@ public class Fields {
 	 * Returns all fields in output-able format.
 	 */
 	@Override
-	public String toString() {
+	public String toString () {
 
 		String all = "";
 
-		for(int i = 0; i < getItemsCount(); i++) {
+		for (int i = 0; i < getItemsCount (); i++) {
 			all = all
-					+ NAME + name.get(i)
-					+ System.getProperty("line.separator")
-					+ SURNAME + surname.get(i)
-					+ System.getProperty("line.separator")
-					+ POST + post.get(i)
-					+ System.getProperty("line.separator")
-					+ STDDIV + stddiv.get(i)
-					+ System.getProperty("line.separator")
-					+ VOTECOUNT + votecount.get(i)
-					+ System.getProperty("line.separator");
+					+ NAME + name.get (i)
+					+ System.getProperty ("line.separator")
+					+ SURNAME + surname.get (i)
+					+ System.getProperty ("line.separator")
+					+ POST + post.get (i)
+					+ System.getProperty ("line.separator")
+					+ STDDIV + stddiv.get (i)
+					+ System.getProperty ("line.separator")
+					+ VOTECOUNT + votecount.get (i)
+					+ System.getProperty ("line.separator");
 					
-			all += "<::>" + System.getProperty("line.separator");
+			all += "<::>" + System.getProperty ("line.separator");
 			
 		}
 
@@ -236,15 +236,15 @@ public class Fields {
 	/**
 	 * @return data for normal table.
 	 */
-	public Object [][] getContentTableData() {
+	public Object [][] getContentTableData () {
 
-		Object [][] temp = new Object [Main.getDB().getFields().getItemsCount()][4];
-		for(int i = 0; i < Main.getDB().getFields().getItemsCount(); i++) {
+		Object [][] temp = new Object [Main.getDB ().getFields ().getItemsCount ()][4];
+		for (int i = 0; i < Main.getDB ().getFields ().getItemsCount (); i++) {
 
-			temp[i][0] = name.get(i);
-			temp[i][1] = surname.get(i);
-			temp[i][2] = post.get(i);
-			temp[i][3] = stddiv.get(i);
+			temp[i][0] = name.get (i);
+			temp[i][1] = surname.get (i);
+			temp[i][2] = post.get (i);
+			temp[i][3] = stddiv.get (i);
 
 		}
 		return temp;
@@ -254,16 +254,16 @@ public class Fields {
 	/**
 	 * @return data for results table.
 	 */
-	public Object [][] getOverallResultsData() {
+	public Object [][] getOverallResultsData () {
 
-		Object [][] temp = new Object [Main.getDB().getFields().getItemsCount()][5];
-		for(int i = 0; i < Main.getDB().getFields().getItemsCount(); i++) {
+		Object [][] temp = new Object [Main.getDB ().getFields ().getItemsCount ()][5];
+		for (int i = 0; i < Main.getDB ().getFields ().getItemsCount (); i++) {
 
-			temp[i][0] = name.get(i);
-			temp[i][1] = surname.get(i);
-			temp[i][2] = post.get(i);
-			temp[i][3] = stddiv.get(i);
-			temp[i][4] = votecount.get(i);
+			temp[i][0] = name.get (i);
+			temp[i][1] = surname.get (i);
+			temp[i][2] = post.get (i);
+			temp[i][3] = stddiv.get (i);
+			temp[i][4] = votecount.get (i);
 
 		}
 		return temp;
@@ -276,14 +276,14 @@ public class Fields {
 	 */
 	public Object [][] getPostResultsData () {
 		
-		Object [][] temp = new Object [Main.getDB().getFields().getItemsCount()][5];
-		for(int i = 0; i < Main.getDB().getFields().getItemsCount(); i++) {
+		Object [][] temp = new Object [Main.getDB ().getFields ().getItemsCount ()][5];
+		for (int i = 0; i < Main.getDB ().getFields ().getItemsCount (); i++) {
 
-			temp[i][0] = post.get(i);
-			temp[i][1] = name.get(i);
-			temp[i][2] = surname.get(i);
-			temp[i][3] = stddiv.get(i);
-			temp[i][4] = votecount.get(i);
+			temp[i][0] = post.get (i);
+			temp[i][1] = name.get (i);
+			temp[i][2] = surname.get (i);
+			temp[i][3] = stddiv.get (i);
+			temp[i][4] = votecount.get (i);
 
 		}
 		return temp;

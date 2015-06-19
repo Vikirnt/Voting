@@ -25,57 +25,57 @@ public class OverallTable extends JTable {
 	private final String[] columnData = { "Name", "Surname", "Post", "Class", "Votes" };
 
 	/** Table model. */
-	private final TableModel tableModel = new MainTableModel();
+	private final TableModel tableModel = new MainTableModel ();
 	
 	/** Main constructor. */
-	public OverallTable() {
+	public OverallTable () {
 		// Properties.
-		setModel(tableModel);
-		setToolTipText("Candidates.");
-		setShowGrid(false);
-		setName("Candidates.");
-		setOpaque(true);
-		setAutoCreateRowSorter(true);
-		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		getTableHeader().setReorderingAllowed(true);
+		setModel (tableModel);
+		setToolTipText ("Candidates.");
+		setShowGrid (false);
+		setName ("Candidates.");
+		setOpaque (true);
+		setAutoCreateRowSorter (true);
+		setSelectionMode (ListSelectionModel.SINGLE_SELECTION);
+		getTableHeader ().setReorderingAllowed (true);
 		
 		// Filter ny votes.
-		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(getModel());
-		List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel> (getModel ());
+		List<RowSorter.SortKey> sortKeys = new ArrayList<> ();
 		 
-		sortKeys.add(new RowSorter.SortKey(4, SortOrder.DESCENDING));
-		sorter.setSortKeys(sortKeys);
-		sorter.sort();
+		sortKeys.add (new RowSorter.SortKey (4, SortOrder.DESCENDING));
+		sorter.setSortKeys (sortKeys);
+		sorter.sort ();
 		 
-		setRowSorter(sorter);
+		setRowSorter (sorter);
 	}
 	
 	/** Table model class. */
 	private class MainTableModel extends AbstractTableModel {
 		@Override
-	    public String getColumnName(int col) {
+	    public String getColumnName (int col) {
 	        return columnData [col];
 	    }
 	    @Override
-	    public int getRowCount() {
-	    	return Main.getDB().getFields().getItemsCount();
+	    public int getRowCount () {
+	    	return Main.getDB ().getFields ().getItemsCount ();
 	    }
 	    @Override
-	    public int getColumnCount() {
+	    public int getColumnCount () {
 	    	return columnData.length;
 	    }
 	    @Override
-	    public Object getValueAt(int row, int col) {
-	        return Main.getDB().getFields().getOverallResultsData()[row][col];
+	    public Object getValueAt (int row, int col) {
+	        return Main.getDB ().getFields ().getOverallResultsData ()[row][col];
 	    }
 	    @Override
-	    public boolean isCellEditable(int row, int col) {
+	    public boolean isCellEditable (int row, int col) {
 	    	return false;
 	    }
 	    @Override
-	    public void setValueAt(Object value, int row, int col) {
-	    	super.setValueAt(value, row, col);
-	    	fireTableDataChanged();
+	    public void setValueAt (Object value, int row, int col) {
+	    	super.setValueAt (value, row, col);
+	    	fireTableDataChanged ();
 	    }
 	}
 

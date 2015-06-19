@@ -34,61 +34,61 @@ public class ResultsFrame extends JFrame {
 	/**
 	 * Construct results frame.
 	 */
-	public ResultsFrame() {
-		super("Resuls");
+	public ResultsFrame () {
+		super ("Resuls");
 		
 		// Properties.
-		setIconImage(new ImageIcon(Main.class.getResource("assets/cup.png")).getImage());
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setSize(450, 450);
-		setLocationRelativeTo(null);
-		setAlwaysOnTop(true);
+		setIconImage (new ImageIcon (Main.class.getResource ("assets/cup.png")).getImage ());
+		setDefaultCloseOperation (JFrame.HIDE_ON_CLOSE);
+		setSize (450, 450);
+		setLocationRelativeTo (null);
+		setAlwaysOnTop (true);
 		
 		// Content pane.
-		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		getContentPane().add(tabbedPane, BorderLayout.CENTER);
+		tabbedPane = new JTabbedPane (JTabbedPane.TOP);
+		getContentPane ().add (tabbedPane, BorderLayout.CENTER);
 		
 		// Overall view.
-		overallTable = new OverallTable();
+		overallTable = new OverallTable ();
 		setupOverallTab ();
 		
 		// Post view.
-		postTable = new PostsTable();
-		setupPostTab();
+		postTable = new PostsTable ();
+		setupPostTab ();
 		
 		// Default view.
-		tabbedPane.setSelectedIndex(0);
+		tabbedPane.setSelectedIndex (0);
 		
 		// Closing out.
-		addWindowListener(new WindowAdapter() {
+		addWindowListener (new WindowAdapter () {
 			@Override
-			public void windowClosing(WindowEvent e) {
-				super.windowClosing(e);
-				Main.getMainFrame().setVisible(true);
-				Main.getMainFrame().getSearchField().setText("");
+			public void windowClosing (WindowEvent e) {
+				super.windowClosing (e);
+				Main.getMainFrame ().setVisible (true);
+				Main.getMainFrame ().getSearchField ().setText ("");
 			}
 		});
 	}
 	
 	private void setupOverallTab () {
-		JScrollPane tablePane = new JScrollPane();
-		tablePane.setViewportView(overallTable);
-		tabbedPane.addTab("Overview", new ImageIcon (Main.class.getResource("assets/specs.png")), tablePane, "Contains all candidates and all data.");
+		JScrollPane tablePane = new JScrollPane ();
+		tablePane.setViewportView (overallTable);
+		tabbedPane.addTab ("Overview", new ImageIcon (Main.class.getResource ("assets/specs.png")), tablePane, "Contains all candidates and all data.");
 	}
 	
 	private void setupPostTab () {
-		JScrollPane tablePane = new JScrollPane();
-		tablePane.setViewportView(postTable);
-		tabbedPane.addTab("Posts", new ImageIcon (Main.class.getResource("assets/certificate.png")), tablePane, null);
+		JScrollPane tablePane = new JScrollPane ();
+		tablePane.setViewportView (postTable);
+		tabbedPane.addTab ("Posts", new ImageIcon (Main.class.getResource ("assets/certificate.png")), tablePane, null);
 		
 		// TODO: Work.
-		tabbedPane.setEnabledAt(1, false);
+		tabbedPane.setEnabledAt (1, false);
 	}
 	
 	@Override
-	public void setVisible(boolean b) {
-		super.setVisible(b);
-		((AbstractTableModel) overallTable.getModel()).fireTableDataChanged();
+	public void setVisible (boolean b) {
+		super.setVisible (b);
+		 ( (AbstractTableModel) overallTable.getModel ()).fireTableDataChanged ();
 	}
 	
 }

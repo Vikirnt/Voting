@@ -16,26 +16,26 @@ public class DBFile extends File {
 	/**
 	 * Main constructor.
 	 */
-	public DBFile(String loc) {
-		super(loc + "/cont.dat");
+	public DBFile (String loc) {
+		super (loc + "/cont.dat");
 		try {
-			new File(loc).mkdir();
-			this.createNewFile();
-		} catch(IOException e) {
-			e.printStackTrace();
+			new File (loc).mkdir ();
+			this.createNewFile ();
+		} catch (IOException e) {
+			e.printStackTrace ();
 		}
 	}
 
 	/**
 	 * Initialise fields.
 	 */
-	public void initFields() {
-		fields = new Fields();
+	public void initFields () {
+		fields = new Fields ();
 	}
 	/**
 	 * @return fields object.
 	 */
-	public Fields getFields() {
+	public Fields getFields () {
 		return fields;
 	}
 
@@ -44,34 +44,34 @@ public class DBFile extends File {
 	/**
 	 * Updates the database with new items.
 	 */
-	@SuppressWarnings("resource")
-	public void save() {
+	@SuppressWarnings ("resource")
+	public void save () {
 		FileWriter fw = null;
 
 		try {
-			fw = new FileWriter(this, false); // No appending!
-			fw.write(fields.toString()); // Writes new data every time it saves.
-			fw.flush();
-			fw.close();
-		} catch(IOException e) {
-			e.printStackTrace();
+			fw = new FileWriter (this, false); // No appending!
+			fw.write (fields.toString ()); // Writes new data every time it saves.
+			fw.flush ();
+			fw.close ();
+		} catch (IOException e) {
+			e.printStackTrace ();
 		}
 	}
 
 	/**
 	 * Deletes all contents.
 	 */
-	public void clear() {
-		this.delete(); // delete
+	public void clear () {
+		this.delete (); // delete
 		try {
-			this.createNewFile(); // create :p
-		} catch(Exception e) {
-			e.printStackTrace();
+			this.createNewFile (); // create :p
+		} catch (Exception e) {
+			e.printStackTrace ();
 		}
 	}
 	
 	/** Temperory password placeholder. */
-	public static String getPassword() {
+	public static String getPassword () {
 		return "cs15";
 	}
 
