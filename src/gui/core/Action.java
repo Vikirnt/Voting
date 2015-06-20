@@ -33,6 +33,8 @@ public class Action {
 			case Command.VOTE:
 				doVote ();
 				saveDB ();
+				Main.getMainFrame().getSearchField().setText ("");
+				Main.getMainFrame().getContentTable().setSorter ("");
 			break;
 				
 		// add an item.
@@ -85,6 +87,9 @@ public class Action {
 			
 	}
 	
+	/**
+	 * Clears entire DB.
+	 */
 	private static void cleanslateDB () {
 		Main.getDB ().clear ();
 		Main.getDB ().getFields ().clear ();
@@ -132,8 +137,6 @@ public class Action {
 				Main.getMainFrame ().setResizable (false);
 				Thread.sleep (3000);
 				Main.getMainFrame ().setResizable (true);
-				Main.getMainFrame ().getSearchField ().setText ("");
-				Main.getMainFrame ().getContentTable ().setSorter ("");
 			} catch (Exception e) {
 				System.err.println ("WE HAVE AN ITERRUPTION!");
 			}					
