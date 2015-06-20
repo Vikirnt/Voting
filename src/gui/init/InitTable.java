@@ -36,7 +36,7 @@ public class InitTable extends JTable implements ActionListener {
 	public final TableModel contentTableModel = new MyTableModel ();
 	
 	/** Table filter. */
-	public TableRowSorter <TableModel> sorter;
+	private TableRowSorter <TableModel> sorter;
 	
 	public InitTable () {
 		// Properties.

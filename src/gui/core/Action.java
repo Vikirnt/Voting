@@ -46,7 +46,7 @@ public class Action {
 			
 		// edits an item info.
 			case Command.EDIT:
-				editItem ();
+				editItem (getPos (Main.getInitFrame ().getContentTable ()));
 				saveDB ();
 				execute (Command.CLEAR);
 			break;
@@ -115,15 +115,15 @@ public class Action {
 	/**
 	 * Edit an item in Main.getDB ().
 	 */
-	private static void editItem () {
+	private static void editItem (int pos) {
 		Main.getDB ().getFields ().getName ().set
-			 (getPos (Main.getInitFrame ().getContentTable ()), 	Main.getInitFrame ().getFormPanel ().getNameField ().getText ());
+			 (pos, 	Main.getInitFrame ().getFormPanel ().getNameField ().getText ());
 		Main.getDB ().getFields ().getSurname ().set
-			 (getPos (Main.getInitFrame ().getContentTable ()),		Main.getInitFrame ().getFormPanel ().getSurnameField ().getText ());
+			 (pos,		Main.getInitFrame ().getFormPanel ().getSurnameField ().getText ());
 		Main.getDB ().getFields ().getPost ().set
-			 (getPos (Main.getInitFrame ().getContentTable ()),		Main.getInitFrame ().getFormPanel ().getPostField ().getText ());
+			 (pos,		Main.getInitFrame ().getFormPanel ().getPostField ().getText ());
 		Main.getDB ().getFields ().getStdDiv ().set
-			 (getPos (Main.getInitFrame ().getContentTable ()),		Main.getInitFrame ().getFormPanel ().getStdDivField ().getText ());
+			 (pos,		Main.getInitFrame ().getFormPanel ().getStdDivField ().getText ());
 	}
 	
 	/**
@@ -135,7 +135,7 @@ public class Action {
 			Main.getDB ().getFields ().addVote (getPos (Main.getMainFrame ().getContentTable ()));
 			try {
 				Main.getMainFrame ().setResizable (false);
-				Thread.sleep (3000);
+				Thread.sleep (2500);
 				Main.getMainFrame ().setResizable (true);
 			} catch (Exception e) {
 				System.err.println ("WE HAVE AN ITERRUPTION!");

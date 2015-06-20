@@ -30,7 +30,7 @@ public class MainTable extends JTable {
 	private final TableModel tableModel = new MainTableModel ();
 	
 	/** Table filter. */
-	public TableRowSorter <TableModel> sorter;
+	private TableRowSorter <TableModel> sorter;
 
 	/** Initialise this table. */
 	public MainTable () {
