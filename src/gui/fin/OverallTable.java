@@ -39,7 +39,7 @@ public class OverallTable extends JTable {
 		setSelectionMode (ListSelectionModel.SINGLE_SELECTION);
 		getTableHeader ().setReorderingAllowed (true);
 		
-		// Filter ny votes.
+		// Filter any votes.
 		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel> (getModel ());
 		List<RowSorter.SortKey> sortKeys = new ArrayList<> ();
 		 

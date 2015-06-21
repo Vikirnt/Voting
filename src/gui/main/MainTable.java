@@ -102,7 +102,7 @@ public class MainTable extends JTable {
 	
 	/** Changes the sorter according to the regex. Case insensitive. */
 	public void setSorter (String reg) {
-		sorter.setRowFilter (RowFilter.regexFilter ("(?i)" + reg));
+		sorter.setRowFilter (RowFilter.regexFilter ( (" (?i)" + reg).trim ()));
 	}
 
 }

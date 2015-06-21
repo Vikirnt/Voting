@@ -33,8 +33,8 @@ public class Action {
 			case Command.VOTE:
 				doVote ();
 				saveDB ();
-				Main.getMainFrame().getSearchField().setText ("");
-				Main.getMainFrame().getContentTable().setSorter ("");
+				Main.getMainFrame ().getSearchField ().setText ("");
+				Main.getMainFrame ().getContentTable ().setSorter ("");
 			break;
 				
 		// add an item.

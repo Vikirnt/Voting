@@ -2,11 +2,11 @@ package gui.main;
 
 import gui.core.Action;
 import gui.core.Command;
+import gui.core.SearchField;
 import gui.fin.ResultsFrame;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -74,19 +74,10 @@ public class MainFrame extends JFrame {
 		mainPanel.add (scrollPane);
 		
 		// Search field.
-		searcher = new JTextField ();
-		searcher.setToolTipText ("Search");
-		searcher.setLayout (new BorderLayout (2, 2));
-		
-		ImageIcon searchIcon = new ImageIcon (Main.class.getResource ("assets/search.png")); // load the image to a imageIcon
-		Image newimg = searchIcon.getImage ().getScaledInstance (15, 15,  java.awt.Image.SCALE_SMOOTH); // scale the image the smooth way  
-		searchIcon = new ImageIcon (newimg);  // transform it back
-		searcher.add (new JLabel (searchIcon), BorderLayout.EAST);
-		
+		searcher = new SearchField (getContentTable ());
 		searcher.addKeyListener (new KeyAdapter () {
 			@Override
 			public void keyTyped (KeyEvent e) {
-								
 				String text = searcher.getText ();
 				
 				// Search filter.
@@ -105,7 +96,6 @@ public class MainFrame extends JFrame {
 					searcher.setText ("");
 					getContentTable ().setSorter ("");
 				}
-				
 			}
 		});
 		
