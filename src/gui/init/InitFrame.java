@@ -43,7 +43,7 @@ public class InitFrame extends JFrame {
 		super ("Initialise");
 		
 		// Properties.
-		setIconImage (new ImageIcon (Main.class.getResource ("assets/file-exe-icon.png")).getImage ());
+		setIconImage (new ImageIcon (Main.class.getResource ("assets/settings.png")).getImage ());
 		setDefaultCloseOperation (JFrame.DISPOSE_ON_CLOSE);
 		setSize (714, 455);
 		setLocationRelativeTo (null);

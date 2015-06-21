@@ -28,8 +28,6 @@ public class ResultsFrame extends JFrame {
 	
 	/** Overall content table for candidates. */
 	private final JTable overallTable;
-	/** Post wise content table for winners. */
-	private JTable postTable;
 	
 	/**
 	 * Construct results frame.
@@ -38,7 +36,7 @@ public class ResultsFrame extends JFrame {
 		super ("Resuls");
 		
 		// Properties.
-		setIconImage (new ImageIcon (Main.class.getResource ("assets/cup.png")).getImage ());
+		setIconImage (new ImageIcon (Main.class.getResource ("assets/fin.png")).getImage ());
 		setDefaultCloseOperation (JFrame.HIDE_ON_CLOSE);
 		setSize (450, 450);
 		setLocationRelativeTo (null);
@@ -51,10 +49,6 @@ public class ResultsFrame extends JFrame {
 		// Overall view.
 		overallTable = new OverallTable ();
 		setupOverallTab ();
-		
-		// Post view.
-		postTable = new PostsTable ();
-		setupPostTab ();
 		
 		// Default view.
 		tabbedPane.setSelectedIndex (0);
@@ -74,15 +68,6 @@ public class ResultsFrame extends JFrame {
 		JScrollPane tablePane = new JScrollPane ();
 		tablePane.setViewportView (overallTable);
 		tabbedPane.addTab ("Overview", new ImageIcon (Main.class.getResource ("assets/specs.png")), tablePane, "Contains all candidates and all data.");
-	}
-	
-	private void setupPostTab () {
-		JScrollPane tablePane = new JScrollPane ();
-		tablePane.setViewportView (postTable);
-		tabbedPane.addTab ("Posts", new ImageIcon (Main.class.getResource ("assets/certificate.png")), tablePane, null);
-		
-		// TODO: Work.
-		tabbedPane.setEnabledAt (1, false);
 	}
 	
 	@Override
