@@ -21,7 +21,6 @@ public class Action {
 	 * @param command - the command inputted.
 	 */
 	public static void execute (String command) {
-		
 		switch (command) {
 		
 		// save Main.getDB ().
@@ -84,7 +83,6 @@ public class Action {
 		} catch (NullPointerException e) {
 			System.err.println ("Known exception: " + e.getMessage ());
 		}
-			
 	}
 	
 	/**
@@ -117,7 +115,7 @@ public class Action {
 	 */
 	private static void editItem (int pos) {
 		Main.getDB ().getFields ().getName ().set
-			 (pos, 	Main.getInitFrame ().getFormPanel ().getNameField ().getText ());
+			 (pos,		Main.getInitFrame ().getFormPanel ().getNameField ().getText ());
 		Main.getDB ().getFields ().getSurname ().set
 			 (pos,		Main.getInitFrame ().getFormPanel ().getSurnameField ().getText ());
 		Main.getDB ().getFields ().getPost ().set
@@ -163,7 +161,6 @@ public class Action {
 		} catch (NullPointerException e) {
 			System.err.println ("\nRemoval canceled.\n");
 		}
-
 	}
 	
 	/**

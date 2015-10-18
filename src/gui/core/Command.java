@@ -7,7 +7,6 @@ package gui.core;
  *
  */
 public final class Command {
-
 	/**
 	 * Reference constants.
 	 */
@@ -22,5 +21,4 @@ public final class Command {
 			CLEANSLATE = "plsdontkillme",
 			LOAD = "load a db",
 			RECHOOSE = "choose a new db";
-
 }

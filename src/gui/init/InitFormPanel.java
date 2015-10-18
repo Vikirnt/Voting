@@ -4,6 +4,7 @@ import gui.core.Action;
 import gui.core.Command;
 import gui.main.Main;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -56,6 +57,7 @@ public class InitFormPanel extends JPanel implements ActionListener {
 		setLayout (null);
 		setPreferredSize (new Dimension (230, 400));
 		setBorder (BorderFactory.createTitledBorder ("Candidate"));
+		setBackground (new Color (255, 255, 255));
 		
 		// Name.
 		txtName = new JTextField ();

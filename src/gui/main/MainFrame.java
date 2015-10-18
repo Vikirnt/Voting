@@ -70,6 +70,7 @@ public class MainFrame extends JFrame {
 		JScrollPane scrollPane = new JScrollPane ();
 		
 		contentTable = new MainTable ();
+		
 		scrollPane.setViewportView (contentTable);
 		mainPanel.add (scrollPane);
 		
