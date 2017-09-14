@@ -8,4 +8,4 @@ Download
 -------------
 
 You can download the latest executable *JAR* from my Google Drive:
-[Here.] (https://drive.google.com/file/d/0B7odY-IMnoBoTzkzOFNaWDRmcTg/view?usp=sharing)
+[Here.](https://drive.google.com/file/d/0B7odY-IMnoBoTzkzOFNaWDRmcTg/view?usp=sharing)
