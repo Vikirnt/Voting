@@ -1,51 +1,39 @@
 package gui.main;
 
+import core.DBFile;
 import gui.core.Command;
 import gui.init.InitFrame;
 
-import java.awt.BorderLayout;
-import java.awt.Font;
-import java.awt.SplashScreen;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Enumeration;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
-
-import core.DBFile;
-
 /**
  * Main dialog which initiates the program.
- * 
+ *
  * @author Vikrant.
  *
  */
 public class Main extends JDialog {
-	
+
 	/** DB object. */
 	private static File db = null;
-	
+
 	/** The primary frame. */
 	private static JFrame frame = null;
 	/** The initialising frame. */
 	private static JFrame iframe= null;
-	
+
 	/** File chooser. */
 	private static JFileChooser mainChooser = null;
 	/** Location of DB in String form. */
 	private static String loc = null;
 	/** Text field for path */
 	private static JTextField txtPath = null;
-	
+
 	/** Main constructor */
 	public Main () {
 		// Properties.
@@ -56,24 +44,24 @@ public class Main extends JDialog {
 		setLocationRelativeTo (null);
 		setAlwaysOnTop (true);
 		setIconImage (new ImageIcon (Main.class.getResource ("assets/search.png")).getImage ());
-			
+
 		// Variables.
 		loc = "";
 		JPanel mainPanel = null;
 		JButton loadButton = null;
 		JButton rechooseButton = null;
-		
+
 		// Content pane.
 		getContentPane ().setLayout (new BorderLayout (0, 0));
 		mainPanel = new JPanel ();
 		mainPanel.setLayout (null);
 		getContentPane ().add (mainPanel, BorderLayout.CENTER);
-		
+
 		// Folder path.
 		JLabel lblFolder = new JLabel ("Folder:");
 		lblFolder.setBounds (10, 11, 46, 14);
 		mainPanel.add (lblFolder);
-		
+
 		// TestField for path display.
 		txtPath = new JTextField ();
 		txtPath.setEditable (false);
@@ -81,19 +69,19 @@ public class Main extends JDialog {
 		txtPath.setColumns (10);
 		txtPath.setText ("No folder selected.");
 		mainPanel.add (txtPath);
-		
+
 		// Buttons
 		loadButton = new JButton (new ImageIcon (Main.class.getResource ("assets/tick.png")));
 		loadButton.setBounds (140, 39, 75, 23);
 		loadButton.setActionCommand (Command.LOAD);
 		mainPanel.add (loadButton);
-		
+
 		rechooseButton = new JButton ("Rechoose");
 		rechooseButton.setBounds (225, 39, 99, 23);
 		rechooseButton.setActionCommand (Command.RECHOOSE);
 		rechooseButton.setIcon (new ImageIcon (Main.class.getResource ("assets/folder-horizontal.png")));
 		mainPanel.add (rechooseButton);
-		
+
 		// Action listener for buttons.
 		ActionListener buttonActionListener = new ActionListener () {
 			@Override
@@ -112,31 +100,31 @@ public class Main extends JDialog {
 				}
 			}
 		};
-		
+
 		loadButton.addActionListener (buttonActionListener);
 		rechooseButton.addActionListener (buttonActionListener);
-		
+
 		// File picker.
 		mainChooser = new JFileChooser (System.getenv ("APPDATA"));
 		mainChooser.setFileSelectionMode (JFileChooser.DIRECTORIES_ONLY);
 		mainChooser.setAcceptAllFileFilterUsed (false);
 		mainChooser.setDialogTitle ("Choose a directory. No need for creating an empty one.");
-		
+
 		setVisible (true);
 		choose ();
-		
+
 	}
-	
+
 	/** Initiates a choosing dialog. */
 	public void choose () {
-		if (mainChooser.showOpenDialog (this) == JFileChooser.APPROVE_OPTION) { 
+		if (mainChooser.showOpenDialog (this) == JFileChooser.APPROVE_OPTION) {
 			loc = mainChooser.getSelectedFile ().getPath ().replace ("\\", "/");
 			txtPath.setText (loc);
 		} else {
 			System.out.println ("No Selection!");
 		}
 	}
-	
+
 	/** Configures program. */
 	public void configure () {
 		// Initialise items.
@@ -159,18 +147,18 @@ public class Main extends JDialog {
 				System.err.println ("We have an interruption!");
 			}
 		}
-		
+
 		// Commence!
 		frame.setLocationRelativeTo (this);
 		frame.setVisible (true);
 	}
-	
+
 	// -----
 
 	/**
 	 * Sets the base font. Times New Roman, because looks like a typical
 	 * homework sheet. :P
-	 * 
+	 *
 	 * @param f
 	 */
 	private static void setUIFont (javax.swing.plaf.FontUIResource f) {
@@ -183,9 +171,9 @@ public class Main extends JDialog {
 			}
 		}
 	}
-	
+
 	// -----
-	
+
 	/** @return - Main frame object. */
 	public static MainFrame getMainFrame () {
 		return (MainFrame) frame;
@@ -194,7 +182,7 @@ public class Main extends JDialog {
 	public static InitFrame getInitFrame () {
 		return (InitFrame) iframe;
 	}
-	
+
 	/** @return - DBFile object. */
 	public static DBFile getDB () {
 		return (DBFile) db;
@@ -203,9 +191,9 @@ public class Main extends JDialog {
 	public static void setDB (File f) {
 		db = f;
 	}
-	
+
 	// -----
-	
+
 	public static void main (String[] args) {
 		// Look and feel.
 		String landf = UIManager.getSystemLookAndFeelClassName ();
@@ -222,7 +210,7 @@ public class Main extends JDialog {
             }
         });
 	}
-	
+
 	/** Logging with a tag. */
 	public static void log (String msg) {
 		System.out.println ("LOG -> " + msg);
