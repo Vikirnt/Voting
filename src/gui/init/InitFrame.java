@@ -25,9 +25,6 @@ import javax.swing.border.EmptyBorder;
  */
 public class InitFrame extends JFrame {
 
-	/** Main content panel. */
-	private final JPanel mainPanel;
-	
 	/** Content table for candidate names. */
 	private final JTable contentTable;
 	private final JPanel formPanel;
@@ -49,7 +46,8 @@ public class InitFrame extends JFrame {
 		setResizable (true);
 		
 		// Content panel.
-		mainPanel = new JPanel ();
+		/* Main content panel. */
+		JPanel mainPanel = new JPanel ();
 		mainPanel.setBorder (new EmptyBorder (5, 5, 5, 5));
 		mainPanel.setLayout (new BorderLayout (5, 5));
 		setContentPane (mainPanel);

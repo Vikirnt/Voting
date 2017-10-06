@@ -32,14 +32,13 @@ public class InitTable extends JTable implements ActionListener {
 	/** Column names */
 	private final String[] columnData = { "Name", "Surname", "Post", "Class" };
 
-	/** Table model. */
-	public final TableModel contentTableModel = new MyTableModel ();
-	
 	/** Table filter. */
 	private TableRowSorter <TableModel> sorter;
 	
-	public InitTable () {
+	InitTable () {
 		// Properties.
+		/* Table model. */
+		TableModel contentTableModel = new MyTableModel ();
 		setModel (contentTableModel);
 		setToolTipText ("Candidates.");
 		setShowGrid (false);
@@ -50,7 +49,7 @@ public class InitTable extends JTable implements ActionListener {
 		getTableHeader ().setReorderingAllowed (true);
 		
 		// Filter.
-		sorter = new TableRowSorter <TableModel> (getModel ());
+		sorter = new TableRowSorter<> (getModel ());
 		setRowSorter (sorter);
 		
 		// Popup menu.
@@ -63,12 +62,7 @@ public class InitTable extends JTable implements ActionListener {
 		
 		JMenuItem editItem = new JMenuItem ("Edit", new ImageIcon (Main.class.getResource ("assets/pencil-small.png")));
 		editItem.setActionCommand (Command.EDIT);
-		editItem.addActionListener (new ActionListener () {
-			@Override
-			public void actionPerformed (ActionEvent e) {
-				Main.getInitFrame ().getFormPanel ().changeFormState (InitFormPanel.EDIT);
-			}
-		});
+		editItem.addActionListener (e -> Main.getInitFrame ().getFormPanel ().changeFormState (InitFormPanel.EDIT));
 		popup.add (editItem);
 		
 		// Mouse listener for popup menu.
@@ -119,7 +113,7 @@ public class InitTable extends JTable implements ActionListener {
 		}
 		@Override
 		public int getRowCount () {
-			return Main.getDB ().getFields ().getItemsCount ();
+			return Main.getDB ().getCount ();
 		}
 		@Override
 		public int getColumnCount () {
@@ -127,7 +121,7 @@ public class InitTable extends JTable implements ActionListener {
 		}
 		@Override
 		public Object getValueAt (int rowIndex, int columnIndex) {
-			return Main.getDB ().getFields ().getContentTableData ()[rowIndex][columnIndex];
+			return Main.getDB ().getTableContentArray () [rowIndex][columnIndex];
 		}
 		@Override
 		public boolean isCellEditable (int rowIndex, int columnIndex) {
@@ -141,7 +135,7 @@ public class InitTable extends JTable implements ActionListener {
 	}
 	
 	/** Changes the sorter according to the regex. Case insensitive. */
-	public void setSorter (String reg) {
+	void setSorter (String reg) {
 		sorter.setRowFilter (RowFilter.regexFilter ( (" (?i)" + reg).trim ()));
 	}
 

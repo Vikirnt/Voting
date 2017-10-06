@@ -32,8 +32,8 @@ public class InitFormPanel extends JPanel implements ActionListener {
 	
 	/** Reference constants. */
 	public final static int
-		ADD = 111,
-		EDIT = 222;
+		ADD = 111;
+	private final static int EDIT = 222;
 	
 	/** Text fields. */
 	private final JTextField
@@ -50,7 +50,7 @@ public class InitFormPanel extends JPanel implements ActionListener {
 	/**
 	 * Create the panel.
 	 */
-	public InitFormPanel () {
+	InitFormPanel () {
 		super ();
 		
 		// Properties.
@@ -151,10 +151,7 @@ public class InitFormPanel extends JPanel implements ActionListener {
 	
 	/** Checks if text fields are empty. */
 	private boolean checkForEmpty () {
-		if (txtName.getText ().isEmpty () || txtSurname.getText ().isEmpty () || txtPost.getText ().isEmpty () || txtStdDiv.getText ().isEmpty ())
-			return true;
-		else
-			return false;
+		return txtName.getText ().isEmpty () || txtSurname.getText ().isEmpty () || txtPost.getText ().isEmpty () || txtStdDiv.getText ().isEmpty ();
 	}
 	
 	// -----
@@ -199,6 +196,7 @@ public class InitFormPanel extends JPanel implements ActionListener {
 				primaryButton.setIcon (new ImageIcon (Main.class.getResource ("assets/pencil-small.png")));
 				clearButton.setText ("Cancel");
 				int selectedRow = Action.getPos (Main.getInitFrame ().getContentTable ());
+				// TODO: GETTER FUCNTIONS IN DATABASEFILE!!
 				txtName.setText (Main.getDB ().getFields ().getName ().get (selectedRow));
 				txtSurname.setText (Main.getDB ().getFields ().getSurname ().get (selectedRow));
 				txtPost.setText (Main.getDB ().getFields ().getPost ().get (selectedRow));

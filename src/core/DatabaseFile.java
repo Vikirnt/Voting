@@ -15,6 +15,9 @@ import java.sql.*;
  */
 public class DatabaseFile {
 
+    /** Temperory hard-coded password. */
+    public static final String password = "cs15";
+
     /** Location of DB. */
     private String loc;
     /** Table name. */

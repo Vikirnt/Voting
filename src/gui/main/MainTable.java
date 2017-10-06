@@ -25,16 +25,15 @@ public class MainTable extends JTable {
 
 	/** Array of column names. */
 	private final String[] columnData = { "Name", "Surname", "Post", "Class" };
-	
-	/** Table model object. */
-	private final TableModel tableModel = new MainTableModel ();
-	
+
 	/** Table filter. */
 	private TableRowSorter <TableModel> sorter;
 
 	/** Initialise this table. */
-	public MainTable () {
+	MainTable () {
 		// Properties.
+		/* Table model object. */
+		TableModel tableModel = new MainTableModel ();
 		setModel (tableModel);
 		setToolTipText ("Candidates.");
 		setShowGrid (false);
@@ -45,7 +44,7 @@ public class MainTable extends JTable {
 		getTableHeader ().setReorderingAllowed (false);
 		
 		// Filter.
-		sorter = new TableRowSorter <TableModel> (getModel ());
+		sorter = new TableRowSorter <> (getModel ());
 		setRowSorter (sorter);
 		
 		// Key listener for little details.
@@ -79,7 +78,7 @@ public class MainTable extends JTable {
 	    }
 	    @Override
 	    public int getRowCount () {
-	    	return Main.getDB ().getFields ().getItemsCount ();
+	    	return Main.getDB ().getCount ();
 	    }
 	    @Override
 	    public int getColumnCount () {
@@ -87,7 +86,7 @@ public class MainTable extends JTable {
 	    }
 	    @Override
 	    public Object getValueAt (int row, int col) {
-	        return Main.getDB ().getFields ().getContentTableData ()[row][col];
+	        return Main.getDB ().getTableContentArray () [row][col];
 	    }
 	    @Override
 	    public void setValueAt (Object value, int row, int col) {

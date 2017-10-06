@@ -2,13 +2,9 @@ package gui.main;
 
 import gui.core.Action;
 import gui.core.Command;
-import gui.core.SearchField;
 import gui.fin.ResultsFrame;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -23,7 +19,6 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.border.EmptyBorder;
 
-import core.DBFile;
 
 /**
  * Main frame for the project.
@@ -32,10 +27,7 @@ import core.DBFile;
  *
  */
 public class MainFrame extends JFrame {
-	
-	/** Main content panel. */
-	private final JPanel mainPanel;
-	
+
 	/** A text field for searching through the table. */
 	private final JTextField searcher;
 	/** Main content table with the list of all candidates. */
@@ -47,7 +39,7 @@ public class MainFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MainFrame () {
+	MainFrame () {
 		super ("VOTE!");
 		
 		// Properties.
@@ -58,7 +50,8 @@ public class MainFrame extends JFrame {
 		getContentPane ().setLayout (new BorderLayout (5, 5));
 		
 		// Panel.
-		mainPanel = new JPanel ();
+		/* Main content panel. */
+		JPanel mainPanel = new JPanel ();
 		mainPanel.setBorder (new EmptyBorder (5, 5, 5, 5));
 		mainPanel.setLayout (new BorderLayout (5, 5));
 		setContentPane (mainPanel);
@@ -75,7 +68,8 @@ public class MainFrame extends JFrame {
 		mainPanel.add (scrollPane);
 		
 		// Search field.
-		searcher = new SearchField (getContentTable ());
+		searcher = new JTextField ();
+
 		searcher.addKeyListener (new KeyAdapter () {
 			@Override
 			public void keyTyped (KeyEvent e) {
@@ -120,7 +114,7 @@ public class MainFrame extends JFrame {
 	private void checkCommands (String text, KeyEvent e) {
 		if (text.startsWith ("$")) {
 			searcher.setForeground (new Color (2, 132, 130));
-			if (text.contains (DBFile.getPassword ()) && e.getKeyChar () == KeyEvent.VK_ENTER) {
+			if (text.contains (core.DatabaseFile.password) && e.getKeyChar () == KeyEvent.VK_ENTER) {
 				if (text.startsWith ("$results")) {
 					setVisible (false);
 					resultsFrame.setVisible (true);
@@ -145,7 +139,7 @@ public class MainFrame extends JFrame {
 	private final class MainToolBar extends JToolBar {
 		
 		/** Initialising the tool bar. */
-		public MainToolBar () {
+		MainToolBar () {
 			super ("Information.");
 			
 			// Properties.
@@ -170,14 +164,11 @@ public class MainFrame extends JFrame {
 				btnVote.setText ("VOTE!");
 			}
 			btnVote.setActionCommand (Command.VOTE);
-			btnVote.addActionListener (new ActionListener () {
-				@Override
-				public void actionPerformed (ActionEvent e) {
-					if (Main.getMainFrame ().getContentTable ().getSelectedRow () != -1) {
-						Action.execute (e.getActionCommand ());
-					}
-				}
-			});
+			btnVote.addActionListener (e -> {
+                if (Main.getMainFrame ().getContentTable ().getSelectedRow () != -1) {
+                    Action.execute (e.getActionCommand ());
+                }
+            });
 			add (btnVote, BorderLayout.EAST);
 		}
 		

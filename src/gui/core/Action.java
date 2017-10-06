@@ -10,7 +10,9 @@ import javax.swing.table.AbstractTableModel;
 /**
  * A collection of *important* actions.
  * 
- * @author admin
+ * @author vikirnt
+ *
+ * TODO: Rewrite?
  *
  */
 public class Action {
@@ -90,12 +92,12 @@ public class Action {
 	 */
 	private static void cleanslateDB () {
 		Main.getDB ().clear ();
-		Main.getDB ().getFields ().clear ();
-		Main.getDB ().save ();
 	}
 
 	/**
 	 * Adds an item to Main.getDB ().
+	 *
+	 * TODO: SETTERS AND GETTERS!
 	 */
 	private static void addItem () {
 		Main.getDB ().getFields ().addName

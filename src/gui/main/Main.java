@@ -1,14 +1,12 @@
 package gui.main;
 
-import core.DBFile;
+import core.DatabaseFile;
 import gui.core.Command;
 import gui.init.InitFrame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.Enumeration;
 
 /**
@@ -20,7 +18,7 @@ import java.util.Enumeration;
 public class Main extends JDialog {
 
 	/** DB object. */
-	private static File db = null;
+	private static DatabaseFile db = null;
 
 	/** The primary frame. */
 	private static JFrame frame = null;
@@ -47,9 +45,9 @@ public class Main extends JDialog {
 
 		// Variables.
 		loc = "";
-		JPanel mainPanel = null;
-		JButton loadButton = null;
-		JButton rechooseButton = null;
+		JPanel mainPanel;
+		JButton loadButton;
+		JButton rechooseButton;
 
 		// Content pane.
 		getContentPane ().setLayout (new BorderLayout (0, 0));
@@ -83,13 +81,11 @@ public class Main extends JDialog {
 		mainPanel.add (rechooseButton);
 
 		// Action listener for buttons.
-		ActionListener buttonActionListener = new ActionListener () {
-			@Override
-			public void actionPerformed (ActionEvent e) {
+		ActionListener buttonActionListener = e -> {
 				switch (e.getActionCommand ()) {
 					case Command.LOAD:
 						if (!loc.isEmpty ()) {
-							setDB (new DBFile (loc));
+							db = new DatabaseFile (loc);
 							dispose ();
 							configure ();
 						}
@@ -98,7 +94,6 @@ public class Main extends JDialog {
 						choose ();
 					break;
 				}
-			}
 		};
 
 		loadButton.addActionListener (buttonActionListener);
@@ -116,7 +111,7 @@ public class Main extends JDialog {
 	}
 
 	/** Initiates a choosing dialog. */
-	public void choose () {
+    private void choose () {
 		if (mainChooser.showOpenDialog (this) == JFileChooser.APPROVE_OPTION) {
 			loc = mainChooser.getSelectedFile ().getPath ().replace ("\\", "/");
 			txtPath.setText (loc);
@@ -126,10 +121,7 @@ public class Main extends JDialog {
 	}
 
 	/** Configures program. */
-	public void configure () {
-		// Initialise items.
-		getDB ().initFields ();
-		getDB ().getFields ().load ();
+    private void configure () {
 
 		frame = new MainFrame ();
 		iframe = new InitFrame ();
@@ -159,7 +151,7 @@ public class Main extends JDialog {
 	 * Sets the base font. Times New Roman, because looks like a typical
 	 * homework sheet. :P
 	 *
-	 * @param f
+	 * @param f: Custom font.
 	 */
 	private static void setUIFont (javax.swing.plaf.FontUIResource f) {
 		Enumeration<Object> keys = UIManager.getDefaults ().keys ();
@@ -184,12 +176,8 @@ public class Main extends JDialog {
 	}
 
 	/** @return - DBFile object. */
-	public static DBFile getDB () {
-		return (DBFile) db;
-	}
-	/** Sets the db File variable. */
-	public static void setDB (File f) {
-		db = f;
+	public static DatabaseFile getDB () {
+		return db;
 	}
 
 	// -----
@@ -204,11 +192,7 @@ public class Main extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace ();
 		}
-		javax.swing.SwingUtilities.invokeLater (new Runnable () {
-            public void run () {
-        		new Main ();
-            }
-        });
+		javax.swing.SwingUtilities.invokeLater (Main::new);
 	}
 
 	/** Logging with a tag. */

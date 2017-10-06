@@ -19,17 +19,16 @@ import javax.swing.table.TableRowSorter;
  * @author admin
  *
  */
-public class OverallTable extends JTable {
+class OverallTable extends JTable {
 	
 	/** Column names. */
 	private final String[] columnData = { "Name", "Surname", "Post", "Class", "Votes" };
 
-	/** Table model. */
-	private final TableModel tableModel = new MainTableModel ();
-	
 	/** Main constructor. */
-	public OverallTable () {
+	OverallTable () {
 		// Properties.
+		/* Table model. */
+		TableModel tableModel = new MainTableModel ();
 		setModel (tableModel);
 		setToolTipText ("Candidates.");
 		setShowGrid (false);
@@ -40,7 +39,7 @@ public class OverallTable extends JTable {
 		getTableHeader ().setReorderingAllowed (true);
 		
 		// Filter any votes.
-		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel> (getModel ());
+		TableRowSorter<TableModel> sorter = new TableRowSorter<> (getModel ());
 		List<RowSorter.SortKey> sortKeys = new ArrayList<> ();
 		 
 		sortKeys.add (new RowSorter.SortKey (4, SortOrder.DESCENDING));
@@ -58,7 +57,7 @@ public class OverallTable extends JTable {
 	    }
 	    @Override
 	    public int getRowCount () {
-	    	return Main.getDB ().getFields ().getItemsCount ();
+	    	return Main.getDB ().getCount ();
 	    }
 	    @Override
 	    public int getColumnCount () {
@@ -66,7 +65,7 @@ public class OverallTable extends JTable {
 	    }
 	    @Override
 	    public Object getValueAt (int row, int col) {
-	        return Main.getDB ().getFields ().getOverallResultsData ()[row][col];
+	        return Main.getDB ().getTableContentArray () [row][col];
 	    }
 	    @Override
 	    public boolean isCellEditable (int row, int col) {
