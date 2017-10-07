@@ -4,23 +4,9 @@ import gui.core.Action;
 import gui.core.Command;
 import gui.main.Main;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 /**
  * Form panel for adding new items.
@@ -33,7 +19,7 @@ public class InitFormPanel extends JPanel implements ActionListener {
 	/** Reference constants. */
 	public final static int
 		ADD = 111;
-	private final static int EDIT = 222;
+	final static int EDIT = 222;
 	
 	/** Text fields. */
 	private final JTextField
@@ -93,7 +79,7 @@ public class InitFormPanel extends JPanel implements ActionListener {
 				super.keyTyped (e);
 				if (e.getKeyChar () == KeyEvent.VK_ENTER) {
 					if (!checkForEmpty ()) {
-						Action.execute (primaryButton.getActionCommand ()); // Primary button has two commands.
+						Action.execute (Command.valueOf (primaryButton.getActionCommand ())); // Primary button has two commands.
 						txtName.requestFocusInWindow ();
 					}
 				}
@@ -113,7 +99,7 @@ public class InitFormPanel extends JPanel implements ActionListener {
 		// Clear button.
 		clearButton = new JButton (new ImageIcon (Main.class.getResource ("assets/cross-script.png")));
 		clearButton.setToolTipText ("Middle click twice to clear entire DB.");
-		clearButton.setActionCommand (Command.CLEAR);
+		clearButton.setActionCommand (Command.CLEAR.name ());
 		clearButton.setBounds (116, 180, 90, 25);
 		clearButton.addActionListener (this);
 		clearButton.addMouseListener (new MouseAdapter () {
@@ -191,20 +177,20 @@ public class InitFormPanel extends JPanel implements ActionListener {
 	public void changeFormState (int state) {
 		switch (state) {
 			case EDIT:
-				primaryButton.setActionCommand (Command.EDIT);
+				primaryButton.setActionCommand (Command.EDIT.name ());
 				primaryButton.setText ("Edit");
 				primaryButton.setIcon (new ImageIcon (Main.class.getResource ("assets/pencil-small.png")));
 				clearButton.setText ("Cancel");
 				int selectedRow = Action.getPos (Main.getInitFrame ().getContentTable ());
 				// TODO: GETTER FUCNTIONS IN DATABASEFILE!!
-				txtName.setText (Main.getDB ().getFields ().getName ().get (selectedRow));
-				txtSurname.setText (Main.getDB ().getFields ().getSurname ().get (selectedRow));
-				txtPost.setText (Main.getDB ().getFields ().getPost ().get (selectedRow));
-				txtStdDiv.setText (Main.getDB ().getFields ().getStdDiv ().get (selectedRow));
+				txtName.setText (Main.getDB ().get ("first_name", selectedRow+1));
+				txtSurname.setText (Main.getDB ().get ("last_name", selectedRow+1));
+				txtPost.setText (Main.getDB ().get ("post", selectedRow+1));
+				txtStdDiv.setText (Main.getDB ().get ("class", selectedRow+1));
 			break;
 			case ADD:
 			default:
-				primaryButton.setActionCommand (Command.ADD);
+				primaryButton.setActionCommand (Command.ADD.name ());
 				primaryButton.setText ("Add");
 				primaryButton.setIcon (new ImageIcon (Main.class.getResource ("assets/tick.png")));
 				clearButton.setText ("Clear");
@@ -214,7 +200,7 @@ public class InitFormPanel extends JPanel implements ActionListener {
 	
 	@Override
 	public void actionPerformed (ActionEvent e) {
-		if (!checkForEmpty () || e.getActionCommand () == Command.CLEAR)
-			Action.execute (e.getActionCommand ());
+		if (!checkForEmpty () || Command.valueOf (e.getActionCommand ()) == Command.CLEAR)
+			Action.execute (Command.valueOf (e.getActionCommand ()));
 	}
 }

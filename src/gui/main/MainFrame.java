@@ -4,20 +4,11 @@ import gui.core.Action;
 import gui.core.Command;
 import gui.fin.ResultsFrame;
 
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.JToolBar;
-import javax.swing.border.EmptyBorder;
 
 
 /**
@@ -28,8 +19,9 @@ import javax.swing.border.EmptyBorder;
  */
 public class MainFrame extends JFrame {
 
+	// Search field.
 	/** A text field for searching through the table. */
-	private final JTextField searcher;
+	private final JTextField searcher = new JTextField ();
 	/** Main content table with the list of all candidates. */
 	private final JTable contentTable;
 
@@ -66,9 +58,6 @@ public class MainFrame extends JFrame {
 		
 		scrollPane.setViewportView (contentTable);
 		mainPanel.add (scrollPane);
-		
-		// Search field.
-		searcher = new JTextField ();
 
 		searcher.addKeyListener (new KeyAdapter () {
 			@Override
@@ -163,10 +152,10 @@ public class MainFrame extends JFrame {
 				System.err.println ("Could not find tick.png");
 				btnVote.setText ("VOTE!");
 			}
-			btnVote.setActionCommand (Command.VOTE);
+			btnVote.setActionCommand (Command.VOTE.name ());
 			btnVote.addActionListener (e -> {
                 if (Main.getMainFrame ().getContentTable ().getSelectedRow () != -1) {
-                    Action.execute (e.getActionCommand ());
+                    Action.execute (Command.valueOf (e.getActionCommand ()));
                 }
             });
 			add (btnVote, BorderLayout.EAST);

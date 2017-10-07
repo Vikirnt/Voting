@@ -71,28 +71,24 @@ public class Main extends JDialog {
 		// Buttons
 		loadButton = new JButton (new ImageIcon (Main.class.getResource ("assets/tick.png")));
 		loadButton.setBounds (140, 39, 75, 23);
-		loadButton.setActionCommand (Command.LOAD);
+		loadButton.setActionCommand (Command.LOAD.name ());
 		mainPanel.add (loadButton);
 
 		rechooseButton = new JButton ("Rechoose");
 		rechooseButton.setBounds (225, 39, 99, 23);
-		rechooseButton.setActionCommand (Command.RECHOOSE);
+		rechooseButton.setActionCommand (Command.RECHOOSE.name ());
 		rechooseButton.setIcon (new ImageIcon (Main.class.getResource ("assets/folder-horizontal.png")));
 		mainPanel.add (rechooseButton);
 
 		// Action listener for buttons.
 		ActionListener buttonActionListener = e -> {
-				switch (e.getActionCommand ()) {
-					case Command.LOAD:
-						if (!loc.isEmpty ()) {
-							db = new DatabaseFile (loc);
-							dispose ();
-							configure ();
-						}
-					break;
-					case Command.RECHOOSE:
-						choose ();
-					break;
+				if (e.getActionCommand ().equals (Command.LOAD.name ()) && !loc.isEmpty ()) {
+					db = new DatabaseFile (loc);
+					dispose ();
+					configure ();
+				} else
+				if (e.getActionCommand ().equals (Command.RECHOOSE.name ())) {
+					choose ();
 				}
 		};
 

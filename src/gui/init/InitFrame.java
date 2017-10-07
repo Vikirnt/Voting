@@ -1,21 +1,14 @@
 package gui.init;
 
-import gui.core.SearchField;
 import gui.main.Main;
 
-import java.awt.BorderLayout;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 
 /**
  * Frame for initialising the database.
@@ -66,7 +59,28 @@ public class InitFrame extends JFrame {
 		tablePanel.add (tableScrollPane, BorderLayout.CENTER);
 		
 		// Table search bar.
-		searcher = new SearchField (getContentTable ());
+		searcher = new JTextField ();
+
+		searcher.addKeyListener (new KeyAdapter () {
+			@Override
+			public void keyTyped (KeyEvent e) {
+				String text = searcher.getText ();
+
+				// Search filter.
+				if (text.length () == 0) {
+					getContentTable ().setSorter ("");
+				} else {
+					getContentTable ().setSorter (text);
+				}
+				getContentTable ().repaint ();
+
+				// Limit.
+				if (text.length () > 20) {
+					searcher.setText ("");
+					getContentTable ().setSorter ("");
+				}
+			}
+		});
 		
 		searcher.addKeyListener (new KeyAdapter () {
 			@Override

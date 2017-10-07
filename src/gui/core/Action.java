@@ -1,76 +1,89 @@
 package gui.core;
 
+import core.DatabaseFile;
 import gui.init.InitFormPanel;
 import gui.main.Main;
 
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
 /**
  * A collection of *important* actions.
- * 
- * @author vikirnt
  *
- * TODO: Rewrite?
+ * @version 2.0
+ * @author vikirnt
  *
  */
 public class Action {
 	
 	/**
 	 * Checks for a command and functions accordingly.
-	 * 
-	 * @param command - the command inputted.
-	 */
-	public static void execute (String command) {
+	 *
+     * @param command - the command inputted.
+     */
+	public static void execute (Command command) {
+
 		switch (command) {
-		
-		// save Main.getDB ().
-			case Command.SAVE:
-				saveDB ();
-			break;
 			
 		// add a vote.
-			case Command.VOTE:
-				doVote ();
-				saveDB ();
+			case VOTE:
+				int confirm = JOptionPane.showConfirmDialog (Main.getMainFrame (), "Finalise your vote? You can vote only once.", "CONFIRMATION", JOptionPane.YES_NO_CANCEL_OPTION);
+				if (confirm == JOptionPane.YES_OPTION) {
+					Main.getDB ().execute (
+							DatabaseFile.Query.VOTE,
+							getPos (Main.getMainFrame ().getContentTable ()))
+					;
+					try {
+						Main.getMainFrame ().setResizable (false);
+						Thread.sleep (2500);
+						Main.getMainFrame ().setResizable (true);
+					} catch (Exception e) {
+						System.err.println ("WE HAVE AN ITERRUPTION!");
+					}
+				}
 				Main.getMainFrame ().getSearchField ().setText ("");
 				Main.getMainFrame ().getContentTable ().setSorter ("");
 			break;
 				
 		// add an item.
-			case Command.ADD:
+			case ADD:
 				addItem ();
-				saveDB ();
 				execute (Command.CLEAR);
 			break;
 			
 		// edits an item info.
-			case Command.EDIT:
-				editItem (getPos (Main.getInitFrame ().getContentTable ()));
-				saveDB ();
+			case EDIT:
+				Main.getDB ().execute (
+						DatabaseFile.Query.EDIT,
+						getPos (Main.getInitFrame ().getContentTable ())
+				);
 				execute (Command.CLEAR);
 			break;
 			
 		// remove an item.
-			case Command.DELETE:
-				removeItem (getPos (Main.getInitFrame ().getContentTable ()));
-				saveDB ();
+			case DELETE:
+				Main.getDB ().execute (
+						DatabaseFile.Query.SUB,
+						getPos (Main.getInitFrame ().getContentTable ())
+				);
 				execute (Command.CLEAR);
 			break;
 			
 		// clears all fields in editing frame.
-			case Command.CLEAR:
+			case CLEAR:
 				Main.getInitFrame ().getFormPanel ().clearFields ();
 				Main.getInitFrame ().getFormPanel ().getNameField ().requestFocusInWindow ();
 				Main.getInitFrame ().getFormPanel ().changeFormState (InitFormPanel.ADD);
 			break;
 			
 		// clears database O.O
-			case Command.CLEANSLATE:
-				int ans = JOptionPane.showConfirmDialog (Main.getInitFrame (), "Do you want to clear the DB? It will be extremely painful.", "CONFIRMATION", JOptionPane.YES_NO_CANCEL_OPTION);
-				if (ans == JOptionPane.YES_OPTION)
-					cleanslateDB ();
+			case CLEANSLATE:
+				if (
+						JOptionPane.showConfirmDialog
+								(Main.getInitFrame (), "Do you want to clear the DB? It will be extremely painful.","CONFIRMATION", JOptionPane.YES_NO_CANCEL_OPTION)
+								== JOptionPane.YES_OPTION
+					)
+					Main.getDB ().execute (DatabaseFile.Query.DELETEDB);
 			break;
 		
 			default:
@@ -86,121 +99,59 @@ public class Action {
 			System.err.println ("Known exception: " + e.getMessage ());
 		}
 	}
-	
-	/**
-	 * Clears entire DB.
-	 */
-	private static void cleanslateDB () {
-		Main.getDB ().clear ();
-	}
 
 	/**
 	 * Adds an item to Main.getDB ().
-	 *
-	 * TODO: SETTERS AND GETTERS!
 	 */
 	private static void addItem () {
-		Main.getDB ().getFields ().addName
-			 (Main.getInitFrame ().getFormPanel ().getNameField ().getText ());
-		Main.getDB ().getFields ().addSurname
-			 (Main.getInitFrame ().getFormPanel ().getSurnameField ().getText ());
-		Main.getDB ().getFields ().addPost
-			 (Main.getInitFrame ().getFormPanel ().getPostField ().getText ());
-		Main.getDB ().getFields ().addStdDiv
-			 (Main.getInitFrame ().getFormPanel ().getStdDivField ().getText ());
-		Main.getDB ().getFields ().addVotecount
-			 (0);
+		String
+			first_name = Main.getInitFrame ().getFormPanel ().getNameField ().getText (),
+			last_name = Main.getInitFrame ().getFormPanel ().getSurnameField ().getText (),
+			post = Main.getInitFrame ().getFormPanel ().getPostField ().getText (),
+			stddiv = Main.getInitFrame ().getFormPanel ().getStdDivField ().getText ();
+
+		Main.getDB ().execute (
+				DatabaseFile.Query.ADD,
+				first_name, last_name, post, stddiv, 0
+		);
 	}
 	
 	/**
 	 * Edit an item in Main.getDB ().
 	 */
 	private static void editItem (int pos) {
-		Main.getDB ().getFields ().getName ().set
-			 (pos,		Main.getInitFrame ().getFormPanel ().getNameField ().getText ());
-		Main.getDB ().getFields ().getSurname ().set
-			 (pos,		Main.getInitFrame ().getFormPanel ().getSurnameField ().getText ());
-		Main.getDB ().getFields ().getPost ().set
-			 (pos,		Main.getInitFrame ().getFormPanel ().getPostField ().getText ());
-		Main.getDB ().getFields ().getStdDiv ().set
-			 (pos,		Main.getInitFrame ().getFormPanel ().getStdDivField ().getText ());
-	}
-	
-	/**
-	 * Adds a vote.
-	 */
-	private static void doVote () {
-		int confirm = JOptionPane.showConfirmDialog (Main.getMainFrame (), "Finalise your vote? You can vote only once.", "CONFIRMATION", JOptionPane.YES_NO_CANCEL_OPTION);
-		if (confirm == JOptionPane.YES_OPTION) {
-			Main.getDB ().getFields ().addVote (getPos (Main.getMainFrame ().getContentTable ()));
-			try {
-				Main.getMainFrame ().setResizable (false);
-				Thread.sleep (2500);
-				Main.getMainFrame ().setResizable (true);
-			} catch (Exception e) {
-				System.err.println ("WE HAVE AN ITERRUPTION!");
-			}					
-		}
-	}
+		String
+			first_name = Main.getInitFrame ().getFormPanel ().getNameField ().getText (),
+			last_name = Main.getInitFrame ().getFormPanel ().getSurnameField ().getText (),
+			post = Main.getInitFrame ().getFormPanel ().getPostField ().getText (),
+			stddiv = Main.getInitFrame ().getFormPanel ().getStdDivField ().getText ();
 
-	/**
-	 * Saves the fields to the database.
-	 */
-	private static void saveDB () {
-		Main.getDB ().save ();
-	}
-
-	/**
-	 * Removes an item from the database.
-	 */
-	private static void removeItem (int itemPos) {
-		try {
-			Main.getDB ().getFields ().removeName	 (itemPos);
-			Main.getDB ().getFields ().removeSurname (itemPos);
-			Main.getDB ().getFields ().removePost	 (itemPos);
-			Main.getDB ().getFields ().removeStdDiv	 (itemPos);
-			Main.getDB ().getFields ().removeVote	 (itemPos);
-		} catch (NullPointerException e) {
-			System.err.println ("\nRemoval canceled.\n");
-		}
+		Main.getDB ().execute (
+				DatabaseFile.Query.EDIT,
+				first_name, last_name, post, stddiv, pos
+		);
 	}
 	
 	/**
 	 * Gets the position of the selected item in the table.
 	 * Reason: Filtering fucks up indexes.
+	 *
+	 * TODO: Use rowid
 	 * 
 	 * @return filtered index.
 	 */
 	public static int getPos (JTable ref) {
 		
-		int namepos = -1, surnamepos = -2, postpos = -3, stddivpos = -4;
+		int pos;
 		
 		String 	name	=	 (String) ref.getValueAt (ref.getSelectedRow (), 0),
 				surname = 	 (String) ref.getValueAt (ref.getSelectedRow (), 1),
 				post	=	 (String) ref.getValueAt (ref.getSelectedRow (), 2),
 				stddiv	=	 (String) ref.getValueAt (ref.getSelectedRow (), 3);
 		
-		aaa: while (namepos != surnamepos) {
-			for (int i = 0; i < Main.getDB ().getFields ().getItemsCount (); i++) {
-				if (Main.getDB ().getFields ().getName ().get (i).equals (name)) {
-					namepos = i;
-				}
-				if (Main.getDB ().getFields ().getSurname ().get (i).equals (surname)) {
-					surnamepos = i;
-				}
-				if (Main.getDB ().getFields ().getPost ().get (i).equals (post)) {
-					postpos = i;
-				}
-				if (Main.getDB ().getFields ().getStdDiv ().get (i).equals (stddiv)) {
-					stddivpos = i;
-				}
-				if (namepos == surnamepos && surnamepos == postpos && postpos == stddivpos && stddivpos == namepos) { // Inefficient but gets the job done.
-					break aaa;
-				}
-			}
-		}
+		pos = Main.getDB ().getID (name, surname, post, stddiv);
 		
-		return namepos;
+		return pos + 1;
 		
 	}
 

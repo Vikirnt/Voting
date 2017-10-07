@@ -4,22 +4,11 @@ import gui.core.Action;
 import gui.core.Command;
 import gui.main.Main;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.ImageIcon;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.RowFilter;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import java.awt.event.*;
 
 /**
  * The main content table.
@@ -56,12 +45,12 @@ public class InitTable extends JTable implements ActionListener {
 		final JPopupMenu popup = new JPopupMenu ();
 		
 		JMenuItem deleteItem = new JMenuItem ("Delete", new ImageIcon (Main.class.getResource ("assets/cross-script.png")));
-		deleteItem.setActionCommand (Command.DELETE);
+		deleteItem.setActionCommand (Command.DELETE.name ());
 		deleteItem.addActionListener (this);
 		popup.add (deleteItem);
 		
 		JMenuItem editItem = new JMenuItem ("Edit", new ImageIcon (Main.class.getResource ("assets/pencil-small.png")));
-		editItem.setActionCommand (Command.EDIT);
+		editItem.setActionCommand (Command.EDIT.name ());
 		editItem.addActionListener (e -> Main.getInitFrame ().getFormPanel ().changeFormState (InitFormPanel.EDIT));
 		popup.add (editItem);
 		
@@ -131,7 +120,7 @@ public class InitTable extends JTable implements ActionListener {
 
 	@Override
 	public void actionPerformed (ActionEvent e) {
-		Action.execute (e.getActionCommand ());
+		Action.execute (Command.valueOf (e.getActionCommand ()));
 	}
 	
 	/** Changes the sorter according to the regex. Case insensitive. */
