@@ -16,27 +16,18 @@ public class DatabaseFile {
     /** Temperory hard-coded password. */
     public static final String password = "cs15";
 
-    /** Table name. */
-    private static final String table = "Candidates";
     /** JDBC connection object. */
     private static Connection conn;
-    /** JDBS statement to execute queries. */
-    private Statement stm;
-    /** ResultSet for the entire object. */
-    private ResultSet rs;
 
     /** Constructor gets the connection and sets ResultSet pointer. */
     public DatabaseFile (String path) {
         /* Location of DB. */
-        String loc = "jdbc:sqlite:" + path + "/Candidates.db";
         try {
+            String loc = "jdbc:sqlite:" + path + "/Candidates.db";
             conn = DriverManager.getConnection (loc);
-            stm = conn.createStatement ();
 
-            Query.CREATE.getStm ().execute ();
-            String initqry =
-                    "SELECT *, rowid FROM "+table+";";
-            rs = stm.executeQuery (initqry);
+            Query.CREATE.getPrepstm ().execute ();
+            Query.SELECT.getPrepstm ().execute ();
         } catch (SQLException e) {
             e.printStackTrace ();
         }
@@ -49,8 +40,8 @@ public class DatabaseFile {
      */
     public int getCount () {
         int cnt = 0;
-        String qry = "SELECT COUNT(*) FROM "+table+";";
-        try (ResultSet temprs = stm.executeQuery (qry)){
+
+        try (ResultSet temprs = Query.COUNT.prepstm.executeQuery ()){
             cnt = temprs.getInt (1);
         } catch (SQLException e) {
             e.printStackTrace ();
@@ -66,24 +57,29 @@ public class DatabaseFile {
         return conn;
     }
 
-    // -----
-
     /**
      * @return data array for JTables.
      */
-    public Object [][] getTableContentArray () {
-
-        Object [][] temp = new Object [getCount ()][5];
+    public Candidate [] getTableContentArray () {
+        Candidate [] temp = new Candidate [getCount ()];
 
         try {
-            rs.first ();
+//            Statement st = conn.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = Query.SELECT.execute ();
+
+            System.out.println ("RESULT SET CREATED: " + rs.getString (1));
+
+            String first_name, last_name, post, stddiv;
+            int rowid, votecount;
             int i = 0;
             while (rs.next ()) {
-                temp [i][0] = rs.getObject ("first_name");
-                temp [i][1] = rs.getObject ("last_name");
-                temp [i][2] = rs.getObject ("post");
-                temp [i][3] = rs.getObject ("class");
-                temp [i][4] = rs.getObject ("rowid");
+                first_name = rs.getString ("first_name");
+                last_name = rs.getString ("last_name");
+                post = rs.getString ("post");
+                stddiv = rs.getString ("class");
+                rowid = rs.getInt ("rowid");
+                votecount = rs.getInt ("votecount");
+                temp [i] = new Candidate (first_name, last_name, post, stddiv, rowid, votecount);
                 i++;
             }
         } catch (SQLException e) {
@@ -91,35 +87,17 @@ public class DatabaseFile {
         }
 
         return temp;
-
-    }
-
-    /** @return Index of a student. */
-    public int getID (String ... params) {
-        String qry = "SELECT *, rowid FROM "+table+" WHERE first_name = ?, last_name = ?, post = ?, class = ?;";
-        int id = 0;
-
-        try (PreparedStatement ps = conn.prepareStatement (qry)) {
-            for (int i = 0; i < params.length; i++)
-                ps.setObject (i+1, params [i]);
-            id = stm.executeQuery (qry).getInt ("rowid");
-        } catch (SQLException e) {
-            e.printStackTrace ();
-        }
-        return  id;
     }
 
     /** @return Specified cell value. */
-    public String get (String col, int row) {
-        String qry = "SELECT * FROM "+table+" WHERE rowid = " + row;
+    public String get (String col, int rowid) {
         String val = null;
-
-        try (ResultSet rs = stm.executeQuery (qry)) {
+        try {
+            ResultSet rs = Query.GET.execute (rowid);
             val = rs.getString (col);
         } catch (SQLException e) {
             e.printStackTrace ();
         }
-
         return val;
     }
 
@@ -129,86 +107,81 @@ public class DatabaseFile {
 
     // INTERACTIONS
 
-    public void execute (Query q, Object... params) {
-        try {
-            for (int i = 0; i < params.length; i++)
-                q.getStm ().setObject (i+1, params[i]);
-
-            q.getStm ().execute ();
-        } catch (SQLException e) {
-            e.printStackTrace ();
-        }
-    }
-
     public enum Query {
 
         CREATE (
-                String.format (
-                        "CREATE TABLE IF NOT EXISTS %s (" +
-                        "first_name varchar(30) NOT NULL," +
-                        "last_name varchar(30) NOT NULL," +
-                        "post varchar(100) NOT NULL," +
-                        "class varchar(10)," +
-                        "votecount int NOT NULL" +
-                        ");",
-                        table)
+                "CREATE TABLE IF NOT EXISTS Candidates (" +
+                "first_name varchar(30) NOT NULL, " +
+                "last_name varchar(30) NOT NULL, " +
+                "post varchar(100) NOT NULL, " +
+                "class varchar(10), " +
+                "votecount int NOT NULL" +
+                ");"
+        ),
+        SELECT (
+                "SELECT *, rowid FROM Candidates;"
         ),
         ADD (
-                String.format (
-                        "INSERT INTO %s VALUES " +
-                        "(?, ?, ?, ?, ?);",
-                        table)
+                "INSERT INTO Candidates VALUES " +
+                "('?', '?', '?', '?', ?);"
         ),
         SUB (
-                String.format (
-                        "DELETE FROM %s WHERE rowid = ? ;",
-                        table)
+                "DELETE FROM Candidates WHERE rowid = ? ;"
         ),
         EDIT (
-                String.format (
-                        "UPDATE %s " +
-                        "SET first_name = ?, " +
-                        "last_name = ?, " +
-                        "post = ?, " +
-                        "class = ? " +
-                        "WHERE rowid = ?" +
-                        ";",
-                        table)
+                "UPDATE Candidates " +
+                "SET first_name = ?, " +
+                "last_name = ?, " +
+                "post = ?, " +
+                "class = ? " +
+                "WHERE rowid = ?" +
+                ";"
         ),
         DELETEDB (
-                String.format (
-                        "DELETE FROM %s;",
-                        table)
+                "DELETE FROM Candidates;"
         ),
         VOTE (
-                String.format (
-                        "UPDATE %s " +
-                        "SET votecount = votecount + 1 " +
-                        "WHERE rowid = ?" +
-                        ";",
-                        table)
+                "UPDATE Candidates " +
+                "SET votecount = votecount + 1 " +
+                "WHERE rowid = ?" +
+                ";"
         ),
-        DEVOTE (
-                String.format (
-                        "UPDATE %s " +
-                                "SET votecount = votecount - 1 " +
-                                "WHERE rowid = ?" +
-                                ";",
-                        table)
+        COUNT (
+                "SELECT COUNT(*) FROM Candidates;"
+        ),
+        GET (
+                "SELECT * FROM Candidates WHERE rowid = ?;"
         );
 
-        protected PreparedStatement stm;
+        protected PreparedStatement prepstm;
+        protected  String qry;
 
         Query (String qry) {
+            this.qry = qry;
             try {
-                stm = getConn ().prepareStatement (qry);
+                prepstm = conn.prepareStatement (qry);
             } catch (SQLException e) {
                 e.printStackTrace ();
             }
         }
 
-        public PreparedStatement getStm () {
-            return stm;
+        public PreparedStatement getPrepstm () {
+            return prepstm;
+        }
+//        public String getQry () {
+//            return qry;
+//        }
+
+        public ResultSet execute (Object ... params) {
+            ResultSet rs;
+            try {
+                for (int i = 0; i < params.length; i++)
+                    prepstm.setObject (i + 1, params[i]);
+                return prepstm.executeQuery ();
+            } catch (Exception e) {
+                e.printStackTrace ();
+            }
+            return null;
         }
     }
 

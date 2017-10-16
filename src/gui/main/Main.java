@@ -125,7 +125,7 @@ public class Main extends JDialog {
 		// Splash screen!
 		final SplashScreen splash = SplashScreen.getSplashScreen ();
 		if (splash == null) {
-			log ("Splash image not found.");
+			System.out.println ("Splash image not found.");
 		} else {
 			try {
 				splash.createGraphics ();
@@ -191,9 +191,5 @@ public class Main extends JDialog {
 		javax.swing.SwingUtilities.invokeLater (Main::new);
 	}
 
-	/** Logging with a tag. */
-	public static void log (String msg) {
-		System.out.println ("LOG -> " + msg);
-	}
 
 }

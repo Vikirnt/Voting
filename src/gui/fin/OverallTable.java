@@ -2,21 +2,17 @@ package gui.fin;
 
 import gui.main.Main;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The results content table for votes.
  * 
- * @author admin
+ * @author vikirnt
  *
  */
 class OverallTable extends JTable {
@@ -65,7 +61,7 @@ class OverallTable extends JTable {
 	    }
 	    @Override
 	    public Object getValueAt (int row, int col) {
-	        return Main.getDB ().getTableContentArray () [row][col];
+	        return Main.getDB ().getTableContentArray () [row].get (col);
 	    }
 	    @Override
 	    public boolean isCellEditable (int row, int col) {

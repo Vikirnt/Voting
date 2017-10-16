@@ -130,7 +130,7 @@ public class InitFormPanel extends JPanel implements ActionListener {
 			add (lblSchoolLogo);
 			
 		} catch (NullPointerException e) {
-			Main.log ("Logo not found. No issues.");
+			System.err.println ("Logo not found. No issues.");
 		}
 		
 	}

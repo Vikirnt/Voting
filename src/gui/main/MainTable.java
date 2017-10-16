@@ -3,17 +3,14 @@ package gui.main;
 import gui.core.Action;
 import gui.core.Command;
 
+import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.RowFilter;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
 /**
  * The main content table.
@@ -69,6 +66,8 @@ public class MainTable extends JTable {
 			}
 		});
 	}
+
+
 	
 	/** Table model class. */
 	private class MainTableModel extends AbstractTableModel {
@@ -86,7 +85,7 @@ public class MainTable extends JTable {
 	    }
 	    @Override
 	    public Object getValueAt (int row, int col) {
-	        return Main.getDB ().getTableContentArray () [row][col];
+	        return Main.getDB ().getTableContentArray () [row].get (col);
 	    }
 	    @Override
 	    public void setValueAt (Object value, int row, int col) {

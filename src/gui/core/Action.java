@@ -29,10 +29,8 @@ public class Action {
 			case VOTE:
 				int confirm = JOptionPane.showConfirmDialog (Main.getMainFrame (), "Finalise your vote? You can vote only once.", "CONFIRMATION", JOptionPane.YES_NO_CANCEL_OPTION);
 				if (confirm == JOptionPane.YES_OPTION) {
-					Main.getDB ().execute (
-							DatabaseFile.Query.VOTE,
-							getPos (Main.getMainFrame ().getContentTable ()))
-					;
+					DatabaseFile.Query.VOTE.execute ( getPos (Main.getMainFrame ().getContentTable ()) );
+
 					try {
 						Main.getMainFrame ().setResizable (false);
 						Thread.sleep (2500);
@@ -53,19 +51,13 @@ public class Action {
 			
 		// edits an item info.
 			case EDIT:
-				Main.getDB ().execute (
-						DatabaseFile.Query.EDIT,
-						getPos (Main.getInitFrame ().getContentTable ())
-				);
+				DatabaseFile.Query.EDIT.execute ( getPos (Main.getInitFrame ().getContentTable ()) );
 				execute (Command.CLEAR);
 			break;
 			
 		// remove an item.
 			case DELETE:
-				Main.getDB ().execute (
-						DatabaseFile.Query.SUB,
-						getPos (Main.getInitFrame ().getContentTable ())
-				);
+				DatabaseFile.Query.SUB.execute ( getPos (Main.getInitFrame ().getContentTable ()) );
 				execute (Command.CLEAR);
 			break;
 			
@@ -83,7 +75,7 @@ public class Action {
 								(Main.getInitFrame (), "Do you want to clear the DB? It will be extremely painful.","CONFIRMATION", JOptionPane.YES_NO_CANCEL_OPTION)
 								== JOptionPane.YES_OPTION
 					)
-					Main.getDB ().execute (DatabaseFile.Query.DELETEDB);
+					DatabaseFile.Query.DELETEDB.execute ();
 			break;
 		
 			default:
@@ -110,10 +102,7 @@ public class Action {
 			post = Main.getInitFrame ().getFormPanel ().getPostField ().getText (),
 			stddiv = Main.getInitFrame ().getFormPanel ().getStdDivField ().getText ();
 
-		Main.getDB ().execute (
-				DatabaseFile.Query.ADD,
-				first_name, last_name, post, stddiv, 0
-		);
+		DatabaseFile.Query.ADD.execute (first_name, last_name, post, stddiv, 0 );
 	}
 	
 	/**
@@ -126,10 +115,7 @@ public class Action {
 			post = Main.getInitFrame ().getFormPanel ().getPostField ().getText (),
 			stddiv = Main.getInitFrame ().getFormPanel ().getStdDivField ().getText ();
 
-		Main.getDB ().execute (
-				DatabaseFile.Query.EDIT,
-				first_name, last_name, post, stddiv, pos
-		);
+		DatabaseFile.Query.EDIT.execute ( first_name, last_name, post, stddiv );
 	}
 	
 	/**
@@ -141,15 +127,16 @@ public class Action {
 	 * @return filtered index.
 	 */
 	public static int getPos (JTable ref) {
-		
-		int pos;
+
+		// TODO: Fix this
+		int pos=0;
 		
 		String 	name	=	 (String) ref.getValueAt (ref.getSelectedRow (), 0),
 				surname = 	 (String) ref.getValueAt (ref.getSelectedRow (), 1),
 				post	=	 (String) ref.getValueAt (ref.getSelectedRow (), 2),
 				stddiv	=	 (String) ref.getValueAt (ref.getSelectedRow (), 3);
 		
-		pos = Main.getDB ().getID (name, surname, post, stddiv);
+		//pos = Main.getDB ().getID (name, surname, post, stddiv);
 		
 		return pos + 1;
 		

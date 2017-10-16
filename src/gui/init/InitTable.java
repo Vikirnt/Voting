@@ -109,8 +109,8 @@ public class InitTable extends JTable implements ActionListener {
 			return columnData.length;
 		}
 		@Override
-		public Object getValueAt (int rowIndex, int columnIndex) {
-			return Main.getDB ().getTableContentArray () [rowIndex][columnIndex];
+		public Object getValueAt (int row, int col) {
+			return Main.getDB ().getTableContentArray () [row].get (col);
 		}
 		@Override
 		public boolean isCellEditable (int rowIndex, int columnIndex) {
