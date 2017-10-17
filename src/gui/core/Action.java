@@ -1,6 +1,6 @@
 package gui.core;
 
-import core.DatabaseFile;
+import core.Candidate;
 import gui.init.InitFormPanel;
 import gui.main.Main;
 
@@ -10,26 +10,24 @@ import javax.swing.table.AbstractTableModel;
 /**
  * A collection of *important* actions.
  *
- * @version 2.0
+ * @version 3.0
  * @author vikirnt
- *
  */
 public class Action {
 	
 	/**
 	 * Checks for a command and functions accordingly.
 	 *
-     * @param command - the command inputted.
+     * @param command: the command inputted.
      */
 	public static void execute (Command command) {
 
 		switch (command) {
 			
-		// add a vote.
 			case VOTE:
 				int confirm = JOptionPane.showConfirmDialog (Main.getMainFrame (), "Finalise your vote? You can vote only once.", "CONFIRMATION", JOptionPane.YES_NO_CANCEL_OPTION);
 				if (confirm == JOptionPane.YES_OPTION) {
-					DatabaseFile.Query.VOTE.execute ( getPos (Main.getMainFrame ().getContentTable ()) );
+					Main.getDB ().vote ( getPos (Main.getMainFrame ().getContentTable ()) );
 
 					try {
 						Main.getMainFrame ().setResizable (false);
@@ -43,39 +41,34 @@ public class Action {
 				Main.getMainFrame ().getContentTable ().setSorter ("");
 			break;
 				
-		// add an item.
 			case ADD:
 				addItem ();
 				execute (Command.CLEAR);
 			break;
-			
-		// edits an item info.
+
 			case EDIT:
-				DatabaseFile.Query.EDIT.execute ( getPos (Main.getInitFrame ().getContentTable ()) );
+				editItem ( getPos (Main.getInitFrame ().getContentTable ()) );
 				execute (Command.CLEAR);
 			break;
 			
-		// remove an item.
 			case DELETE:
-				DatabaseFile.Query.SUB.execute ( getPos (Main.getInitFrame ().getContentTable ()) );
+				Main.getDB ().sub ( getPos (Main.getInitFrame ().getContentTable ()) );
 				execute (Command.CLEAR);
 			break;
 			
-		// clears all fields in editing frame.
 			case CLEAR:
 				Main.getInitFrame ().getFormPanel ().clearFields ();
 				Main.getInitFrame ().getFormPanel ().getNameField ().requestFocusInWindow ();
 				Main.getInitFrame ().getFormPanel ().changeFormState (InitFormPanel.ADD);
 			break;
 			
-		// clears database O.O
 			case CLEANSLATE:
 				if (
 						JOptionPane.showConfirmDialog
 								(Main.getInitFrame (), "Do you want to clear the DB? It will be extremely painful.","CONFIRMATION", JOptionPane.YES_NO_CANCEL_OPTION)
 								== JOptionPane.YES_OPTION
 					)
-					DatabaseFile.Query.DELETEDB.execute ();
+					Main.getDB ().cleanslate ();
 			break;
 		
 			default:
@@ -88,7 +81,7 @@ public class Action {
 			 ( (AbstractTableModel) Main.getMainFrame ().getContentTable ().getModel ()).fireTableDataChanged ();
 			 ( (AbstractTableModel) Main.getInitFrame ().getContentTable ().getModel ()).fireTableDataChanged ();
 		} catch (NullPointerException e) {
-			System.err.println ("Known exception: " + e.getMessage ());
+			System.err.println ("Known exception: " + e.getMessage ()); // <--- What's this? Please someone ask 2015 vikirnt...
 		}
 	}
 
@@ -102,44 +95,33 @@ public class Action {
 			post = Main.getInitFrame ().getFormPanel ().getPostField ().getText (),
 			stddiv = Main.getInitFrame ().getFormPanel ().getStdDivField ().getText ();
 
-		DatabaseFile.Query.ADD.execute (first_name, last_name, post, stddiv, 0 );
+		Main.getDB ().add (new Candidate (first_name, last_name, post, stddiv));
 	}
 	
 	/**
 	 * Edit an item in Main.getDB ().
 	 */
-	private static void editItem (int pos) {
+	private static void editItem (int rowid) {
 		String
 			first_name = Main.getInitFrame ().getFormPanel ().getNameField ().getText (),
 			last_name = Main.getInitFrame ().getFormPanel ().getSurnameField ().getText (),
 			post = Main.getInitFrame ().getFormPanel ().getPostField ().getText (),
 			stddiv = Main.getInitFrame ().getFormPanel ().getStdDivField ().getText ();
 
-		DatabaseFile.Query.EDIT.execute ( first_name, last_name, post, stddiv );
+		Main.getDB ().edit (new Candidate (first_name, last_name, post, stddiv, 0, rowid));
 	}
 	
 	/**
-	 * Gets the position of the selected item in the table.
-	 * Reason: Filtering fucks up indexes.
+	 * Gets the rowid of the selected item in the table.
 	 *
-	 * TODO: Use rowid
-	 * 
-	 * @return filtered index.
+	 * @return rowid.
 	 */
 	public static int getPos (JTable ref) {
-
-		// TODO: Fix this
-		int pos=0;
-		
-		String 	name	=	 (String) ref.getValueAt (ref.getSelectedRow (), 0),
-				surname = 	 (String) ref.getValueAt (ref.getSelectedRow (), 1),
-				post	=	 (String) ref.getValueAt (ref.getSelectedRow (), 2),
-				stddiv	=	 (String) ref.getValueAt (ref.getSelectedRow (), 3);
-		
-		//pos = Main.getDB ().getID (name, surname, post, stddiv);
-		
-		return pos + 1;
-		
+		// View index.
+		int row = ref.getSelectedRow ();
+		// Sorted index.
+		int sot = ref.getRowSorter ().convertRowIndexToModel (row);
+		return (int) ref.getModel ().getValueAt (sot, 0);
 	}
 
 }
