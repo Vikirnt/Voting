@@ -2,24 +2,19 @@ package gui.fin;
 
 import gui.main.Main;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-
-import java.awt.BorderLayout;
+import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
 
 /**
  * Frame which hods the results content table.
  * Tabbed pain for experiments :3
- * 
- * @author admin
  *
+ * @version 1.1
+ * @author vikirnt
+ * @since June 2015
  */
 public class ResultsFrame extends JFrame {
 	
@@ -29,11 +24,8 @@ public class ResultsFrame extends JFrame {
 	/** Overall content table for candidates. */
 	private final JTable overallTable;
 	
-	/**
-	 * Construct results frame.
-	 */
 	public ResultsFrame () {
-		super ("Resuls");
+		super ("Results");
 		
 		// Properties.
 		setIconImage (new ImageIcon (Main.class.getResource ("assets/fin.png")).getImage ());
@@ -59,7 +51,7 @@ public class ResultsFrame extends JFrame {
 			public void windowClosing (WindowEvent e) {
 				super.windowClosing (e);
 				Main.getMainFrame ().setVisible (true);
-				Main.getMainFrame ().getSearchField ().setText ("");
+				Main.getMainFrame ().getSearchField ().setText ("$");
 			}
 		});
 	}

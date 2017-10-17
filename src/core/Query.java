@@ -1,8 +1,16 @@
 package core;
 
-public abstract class Query {
+/**
+ * Class containing constants of SQL statements.
+ * NOTE: Metadata? Hardcode?
+ *
+ * @version 1.0
+ * @author vikirnt
+ * @since October 2017
+ */
+abstract class Query {
 
-    public static final String
+    static final String
     CREATE =
             (
             "CREATE TABLE IF NOT EXISTS Candidates (" +
@@ -41,7 +49,7 @@ public abstract class Query {
                     ";"
             ),
 
-    DELETEDB =
+    CLEANSLATE =
             (
             "DELETE FROM Candidates;"
             ),

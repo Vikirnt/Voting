@@ -12,33 +12,43 @@ import java.sql.*;
  */
 public class DatabaseFile {
 
-    /** Temporary hard-coded password. */
+    /** Temporary hard-coded password for school use only. */
     public static final String password = "cs15";
-
-    /** JDBC connection object. */
-    private static Connection conn;
 
     // ----- PREPARED STATEMENTS -----
 
+    /**
+     * Prepared SQL statements.
+     */
     private PreparedStatement
-            create_stm, select_stm, add_stm, sub_stm, edit_stm, deletedb_stm, vote_stm, count_stm, get_stm;
+            create_stm,
+            select_stm,
+            add_stm,
+            sub_stm,
+            edit_stm,
+            cleanslate_stm,
+            vote_stm,
+            count_stm,
+            get_stm;
 
     /** Constructor gets the connection and sets ResultSet pointer. */
     public DatabaseFile (String path) {
         try {
-            conn = DriverManager.getConnection ("jdbc:sqlite:" + path + "/Candidates.db");
+            /* JDBC connection object. */
+            Connection conn = DriverManager.getConnection ("jdbc:sqlite:" + path + "/Candidates.db");
 
-            create_stm = conn.prepareStatement  (Query.CREATE);
-            select_stm = conn.prepareStatement  (Query.SELECT);
-            add_stm = conn.prepareStatement     (Query.ADD);
-            sub_stm = conn.prepareStatement     (Query.SUB);
-            edit_stm = conn.prepareStatement    (Query.EDIT);
-            deletedb_stm = conn.prepareStatement(Query.DELETEDB);
-            vote_stm = conn.prepareStatement    (Query.VOTE);
-            count_stm = conn.prepareStatement   (Query.COUNT);
-            get_stm = conn.prepareStatement     (Query.GET);
-
+            create_stm = conn.prepareStatement    (Query.CREATE);
             create_stm.executeUpdate ();
+
+            select_stm = conn.prepareStatement    (Query.SELECT);
+            add_stm = conn.prepareStatement       (Query.ADD);
+            sub_stm = conn.prepareStatement       (Query.SUB);
+            edit_stm = conn.prepareStatement      (Query.EDIT);
+            cleanslate_stm = conn.prepareStatement(Query.CLEANSLATE);
+            vote_stm = conn.prepareStatement      (Query.VOTE);
+            count_stm = conn.prepareStatement     (Query.COUNT);
+            get_stm = conn.prepareStatement       (Query.GET);
+
         } catch (SQLException e) {
             e.printStackTrace ();
         }
@@ -56,7 +66,6 @@ public class DatabaseFile {
             add_stm.setString (3, cand.getPost ());
             add_stm.setString (4, cand.getStddiv ());
             add_stm.setInt    (5, cand.getVotecount ());
-            add_stm.setInt    (6, cand.getRowid ());
             add_stm.executeUpdate ();
         } catch (SQLException e) {
             e.printStackTrace ();
@@ -98,7 +107,7 @@ public class DatabaseFile {
      */
     public void cleanslate () {
         try {
-            deletedb_stm.executeUpdate ();
+            cleanslate_stm.executeUpdate ();
             create_stm.executeUpdate ();
         } catch (SQLException e) {
             e.printStackTrace ();
@@ -120,7 +129,7 @@ public class DatabaseFile {
     /**
      * @return data array for JTables.
      */
-    public Candidate [] getCandidateArray () {
+    public Candidate [] getCandidatesArray () {
         Candidate [] temp = new Candidate [getCount ()];
 
         try (ResultSet rs = select_stm.executeQuery ()) {
@@ -147,7 +156,9 @@ public class DatabaseFile {
         return temp;
     }
 
-    /** @return Specified specified candidate. */
+    /**
+     * @return Specified specified candidate.
+     */
     public Candidate getCandidate (int rowid) {
         try {
             get_stm.setInt (1, rowid);

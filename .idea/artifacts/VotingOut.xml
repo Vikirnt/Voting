@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="VotingOut">
+    <output-path>$PROJECT_DIR$/out/artifacts/Final.jar</output-path>
+    <root id="archive" name="Final.jar" />
+  </artifact>
+</component>

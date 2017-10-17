@@ -10,25 +10,24 @@ import java.awt.event.*;
 
 /**
  * Form panel for adding new items.
- * 
- * @author admin
  *
+ * @version 1.1
+ * @author admin
+ * @since June 2015
  */
 public class InitFormPanel extends JPanel implements ActionListener {
-	
+
 	/** Reference constants. */
 	public final static int
-		ADD = 111;
-	final static int EDIT = 222;
+		ADD = 111,
+		EDIT = 222;
 	
-	/** Text fields. */
 	private final JTextField
 		txtName,
 		txtSurname,
 		txtPost,
 		txtStdDiv;
 	
-	/** Buttons. */
 	private final JButton
 		primaryButton,
 		clearButton;
@@ -78,7 +77,7 @@ public class InitFormPanel extends JPanel implements ActionListener {
 			public void keyTyped (KeyEvent e) {
 				super.keyTyped (e);
 				if (e.getKeyChar () == KeyEvent.VK_ENTER) {
-					if (!checkForEmpty ()) {
+					if (checkForEmpty ()) {
 						Action.execute (Command.valueOf (primaryButton.getActionCommand ())); // Primary button has two commands.
 						txtName.requestFocusInWindow ();
 					}
@@ -137,24 +136,24 @@ public class InitFormPanel extends JPanel implements ActionListener {
 	
 	/** Checks if text fields are empty. */
 	private boolean checkForEmpty () {
-		return txtName.getText ().isEmpty () || txtSurname.getText ().isEmpty () || txtPost.getText ().isEmpty () || txtStdDiv.getText ().isEmpty ();
+		return !txtName.getText ().isEmpty () && !txtSurname.getText ().isEmpty () && !txtPost.getText ().isEmpty () && !txtStdDiv.getText ().isEmpty ();
 	}
 	
 	// -----
 	
-	/** @return - Name field reference. */
+	/** @return Name field reference. */
 	public JTextField getNameField () {
 		return txtName;
 	}
-	/** @return - Surname field reference. */
+	/** @return Surname field reference. */
 	public JTextField getSurnameField () {
 		return txtSurname;
 	}
-	/** @return - Post field reference. */
+	/** @return Post field reference. */
 	public JTextField getPostField () {
 		return txtPost;
 	}
-	/** @return - StdDiv field reference. */
+	/** @return StdDiv field reference. */
 	public JTextField getStdDivField () {
 		return txtStdDiv;
 	}
@@ -172,7 +171,7 @@ public class InitFormPanel extends JPanel implements ActionListener {
 	/**
 	 * Changes icons and action commands around.
 	 * 
-	 * @param state - ADD for adding an item, EDIT for editing an item.
+	 * @param state: ADD for adding an item, EDIT for editing an item.
 	 */
 	public void changeFormState (int state) {
 		switch (state) {
@@ -181,13 +180,14 @@ public class InitFormPanel extends JPanel implements ActionListener {
 				primaryButton.setText ("Edit");
 				primaryButton.setIcon (new ImageIcon (Main.class.getResource ("assets/pencil-small.png")));
 				clearButton.setText ("Cancel");
+
 				int selectedRow = Action.getPos (Main.getInitFrame ().getContentTable ());
-				// TODO: GETTER FUCNTIONS IN DATABASEFILE!!
-				txtName.setText (Main.getDB ().get ("first_name", selectedRow+1));
-				txtSurname.setText (Main.getDB ().get ("last_name", selectedRow+1));
-				txtPost.setText (Main.getDB ().get ("post", selectedRow+1));
-				txtStdDiv.setText (Main.getDB ().get ("class", selectedRow+1));
+				txtName.setText 	(Main.getDB ().getCandidate (selectedRow).getFirstName ());
+				txtSurname.setText 	(Main.getDB ().getCandidate (selectedRow).getLastName ());
+				txtPost.setText 	(Main.getDB ().getCandidate (selectedRow).getPost ());
+				txtStdDiv.setText 	(Main.getDB ().getCandidate (selectedRow).getStddiv ());
 			break;
+
 			case ADD:
 			default:
 				primaryButton.setActionCommand (Command.ADD.name ());
@@ -200,7 +200,7 @@ public class InitFormPanel extends JPanel implements ActionListener {
 	
 	@Override
 	public void actionPerformed (ActionEvent e) {
-		if (!checkForEmpty () || Command.valueOf (e.getActionCommand ()) == Command.CLEAR)
+		if (checkForEmpty () || Command.valueOf (e.getActionCommand ()) == Command.CLEAR)
 			Action.execute (Command.valueOf (e.getActionCommand ()));
 	}
 }

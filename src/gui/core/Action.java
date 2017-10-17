@@ -12,6 +12,7 @@ import javax.swing.table.AbstractTableModel;
  *
  * @version 3.0
  * @author vikirnt
+ * @since June 2015
  */
 public class Action {
 	
@@ -107,8 +108,9 @@ public class Action {
 			last_name = Main.getInitFrame ().getFormPanel ().getSurnameField ().getText (),
 			post = Main.getInitFrame ().getFormPanel ().getPostField ().getText (),
 			stddiv = Main.getInitFrame ().getFormPanel ().getStdDivField ().getText ();
+		int votecount = Main.getDB ().getCandidate (rowid).getVotecount ();
 
-		Main.getDB ().edit (new Candidate (first_name, last_name, post, stddiv, 0, rowid));
+		Main.getDB ().edit (new Candidate (first_name, last_name, post, stddiv, votecount, rowid));
 	}
 	
 	/**

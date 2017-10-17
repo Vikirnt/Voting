@@ -9,12 +9,12 @@ import org.junit.Ignore;
  * @author vikirnt
  * @since October 2017
  */
-public class DatabaseFileTest {
+class DatabaseFileTest {
 
     /**
      * Database object.
      */
-    private DatabaseFile db = new DatabaseFile ("/Users/vikirnt/Programming");
+    private final DatabaseFile db = new DatabaseFile ("/Users/vikirnt/Programming");
 
     @Ignore
     public void getCount () {

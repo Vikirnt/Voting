@@ -11,16 +11,15 @@ import java.util.List;
 
 /**
  * The results content table for votes.
- * 
- * @author vikirnt
  *
+ * @version 1.1
+ * @author vikirnt
+ * @since June 2015
  */
 class OverallTable extends JTable {
 	
-	/** Column names. */
-	private final String[] columnData = { "Name", "Surname", "Post", "Class", "Votes" };
+	private final String[] columnData = { "ID", "Name", "Surname", "Post", "Class", "Votes" };
 
-	/** Main constructor. */
 	OverallTable () {
 		// Properties.
 		/* Table model. */
@@ -37,11 +36,9 @@ class OverallTable extends JTable {
 		// Filter any votes.
 		TableRowSorter<TableModel> sorter = new TableRowSorter<> (getModel ());
 		List<RowSorter.SortKey> sortKeys = new ArrayList<> ();
-		 
-		sortKeys.add (new RowSorter.SortKey (4, SortOrder.DESCENDING));
+		sortKeys.add (new RowSorter.SortKey (3, SortOrder.DESCENDING));
 		sorter.setSortKeys (sortKeys);
 		sorter.sort ();
-		 
 		setRowSorter (sorter);
 	}
 	
@@ -61,7 +58,7 @@ class OverallTable extends JTable {
 	    }
 	    @Override
 	    public Object getValueAt (int row, int col) {
-	        return Main.getDB ().getTableContentArray () [row].get (col);
+	        return Main.getDB ().getCandidatesArray () [row].get (col);
 	    }
 	    @Override
 	    public boolean isCellEditable (int row, int col) {

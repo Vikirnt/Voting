@@ -14,14 +14,14 @@ import java.awt.event.MouseEvent;
 
 /**
  * The main content table.
- * 
- * @author admin
  *
+ * @version 1.1
+ * @author vikirnt
+ * @since June 2015
  */
 public class MainTable extends JTable {
 
-	/** Array of column names. */
-	private final String[] columnData = { "Name", "Surname", "Post", "Class" };
+	private final String[] columnData = { "ID", "Name", "Surname", "Post", "Class" };
 
 	/** Table filter. */
 	private TableRowSorter <TableModel> sorter;
@@ -67,35 +67,39 @@ public class MainTable extends JTable {
 		});
 	}
 
-
-	
 	/** Table model class. */
 	private class MainTableModel extends AbstractTableModel {
 		@Override
-	    public String getColumnName (int col) {
-	        return columnData [col];
-	    }
-	    @Override
-	    public int getRowCount () {
-	    	return Main.getDB ().getCount ();
-	    }
-	    @Override
-	    public int getColumnCount () {
-	    	return columnData.length;
-	    }
-	    @Override
-	    public Object getValueAt (int row, int col) {
-	        return Main.getDB ().getTableContentArray () [row].get (col);
-	    }
-	    @Override
-	    public void setValueAt (Object value, int row, int col) {
-	    	super.setValueAt (value, row, col);
-	    	fireTableDataChanged ();
-	    }
-	    @Override
-	    public boolean isCellEditable (int row, int col) {
-	    	return false;
-	    }
+		public String getColumnName (int col) {
+			return columnData[col];
+		}
+
+		@Override
+		public int getRowCount () {
+			return Main.getDB ().getCount ();
+		}
+
+		@Override
+		public int getColumnCount () {
+			return columnData.length;
+		}
+
+		@Override
+		public Object getValueAt (int row, int col) {
+			return Main.getDB ().getCandidatesArray ()[row].get (col);
+		}
+
+		@Override
+		public void setValueAt (Object value, int row, int col) {
+			super.setValueAt (value, row, col);
+			fireTableDataChanged ();
+		}
+
+		@Override
+		public boolean isCellEditable (int row, int col) {
+			return false;
+		}
+
 	}
 	
 	/** Changes the sorter according to the regex. Case insensitive. */

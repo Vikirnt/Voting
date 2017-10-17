@@ -12,14 +12,14 @@ import java.awt.event.*;
 
 /**
  * The main content table.
- * 
- * @author admin
  *
+ * @version 1.1
+ * @author vikirnt
+ * @since June 2015
  */
 public class InitTable extends JTable implements ActionListener {
 	
-	/** Column names */
-	private final String[] columnData = { "Name", "Surname", "Post", "Class" };
+	private final String[] columnData = { "ID", "Name", "Surname", "Post", "Class" };
 
 	/** Table filter. */
 	private TableRowSorter <TableModel> sorter;
@@ -110,7 +110,7 @@ public class InitTable extends JTable implements ActionListener {
 		}
 		@Override
 		public Object getValueAt (int row, int col) {
-			return Main.getDB ().getTableContentArray () [row].get (col);
+			return Main.getDB ().getCandidatesArray () [row].get (col);
 		}
 		@Override
 		public boolean isCellEditable (int rowIndex, int columnIndex) {

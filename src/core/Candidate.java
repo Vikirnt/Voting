@@ -12,16 +12,28 @@ public class Candidate {
     /**
      * String parameters for Candidate.
      */
-    private String first_name, last_name, post, stddiv;
+    private String
+            first_name,
+            last_name,
+            post,
+            stddiv;
     /**
      * Integer parameters for Candidate.
      */
-    private int votecount, rowid;
+    private int
+            votecount,
+            rowid;
 
     /**
      * Constants for get ()
      */
-    public static final int FIRST_NAME = 0, LAST_NAME = 1, POST = 2, STDDIV = 3, VOTECOUNT = 4, ROWID = 5;
+    public static final int
+            ROWID       = 0,
+            FIRST_NAME  = 1,
+            LAST_NAME   = 2,
+            POST        = 3,
+            STDDIV      = 4,
+            VOTECOUNT   = 5;
 
     /**
      * @param first_name: First name of candidate.
@@ -56,10 +68,10 @@ public class Candidate {
      */
     public Candidate (String first_name, String last_name, String post, String stddiv, int votecount) {
         this.first_name = first_name;
-        this.last_name = last_name;
-        this.post = post;
-        this.stddiv = stddiv;
-        this.votecount = votecount;
+        this.last_name  = last_name;
+        this.post       = post;
+        this.stddiv     = stddiv;
+        this.votecount  = votecount;
     }
 
     /**
@@ -67,6 +79,8 @@ public class Candidate {
      */
     public Object get (int key) {
         switch (key) {
+            case ROWID:
+                return rowid;
             case FIRST_NAME:
                 return first_name;
             case LAST_NAME:
@@ -78,7 +92,7 @@ public class Candidate {
             case VOTECOUNT:
                 return votecount;
             default:
-                return "This is an error!";
+                return -1;
         }
     }
 
@@ -94,22 +108,40 @@ public class Candidate {
         );
     }
 
-    public int getVotecount () {
+    /**
+     * @return Vote count of candidate.
+     */
+    public int    getVotecount  () {
         return votecount;
     }
-    public String getFirstName () {
+    /**
+     * @return First name of candidate.
+     */
+    public String getFirstName  () {
         return first_name;
     }
-    public String getLastName () {
+    /**
+     * @return Last name of candidate.
+     */
+    public String getLastName   () {
         return last_name;
     }
-    public String getPost () {
+    /**
+     * @return Post for which candidate is applying.
+     */
+    public String getPost       () {
         return post;
     }
-    public String getStddiv () {
+    /**
+     * @return Standard/ Division of candidate.
+     */
+    public String getStddiv     () {
         return stddiv;
     }
-    public int getRowid () {
+    /**
+     * @return row id of candidate in SQL db.
+     */
+    public int    getRowid      () {
         return rowid;
     }
 }

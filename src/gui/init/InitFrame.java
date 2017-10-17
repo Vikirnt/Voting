@@ -12,9 +12,10 @@ import java.awt.event.WindowEvent;
 
 /**
  * Frame for initialising the database.
- * 
- * @author admin
  *
+ * @version 1.1
+ * @author vikirnt
+ * @since June 2015
  */
 public class InitFrame extends JFrame {
 
@@ -25,9 +26,6 @@ public class InitFrame extends JFrame {
 	/** Search field. */
 	private final JTextField searcher;
 
-	/**
-	 * Create the frame.
-	 */
 	public InitFrame () {
 		super ("Initialise");
 		
@@ -113,16 +111,16 @@ public class InitFrame extends JFrame {
 			public void windowClosing (WindowEvent e) {
 				super.windowClosing (e);
 				Main.getMainFrame ().setVisible (true);
-				Main.getMainFrame ().getSearchField ().setText ("");
+				Main.getMainFrame ().getSearchField ().setText ("$");
 			}
 		});
 	}
 	
-	/** Returns content table reference. */
+	/** @return Content table reference. */
 	public InitTable getContentTable () {
 		return (InitTable) contentTable;
 	}
-	/** Returns form panel reference. */
+	/** @return Form panel reference. */
 	public InitFormPanel getFormPanel () {
 		return (InitFormPanel) formPanel;
 	}

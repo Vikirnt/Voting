@@ -2,6 +2,7 @@ package gui.main;
 
 import core.DatabaseFile;
 import gui.core.Command;
+import gui.fin.ResultsFrame;
 import gui.init.InitFrame;
 
 import javax.swing.*;
@@ -12,8 +13,9 @@ import java.util.Enumeration;
 /**
  * Main dialog which initiates the program.
  *
- * @author Vikrant.
- *
+ * @version 1.1
+ * @author vikirnt
+ * @since June 2015
  */
 public class Main extends JDialog {
 
@@ -23,7 +25,9 @@ public class Main extends JDialog {
 	/** The primary frame. */
 	private static JFrame frame = null;
 	/** The initialising frame. */
-	private static JFrame iframe= null;
+	private static JFrame iframe = null;
+	/** The results frame. */
+	private static JFrame rframe = null;
 
 	/** File chooser. */
 	private static JFileChooser mainChooser = null;
@@ -33,7 +37,7 @@ public class Main extends JDialog {
 	private static JTextField txtPath = null;
 
 	/** Main constructor */
-	public Main () {
+	private Main () {
 		// Properties.
 		setDefaultCloseOperation (JDialog.DISPOSE_ON_CLOSE);
 		setType (Type.UTILITY);
@@ -121,6 +125,7 @@ public class Main extends JDialog {
 
 		frame = new MainFrame ();
 		iframe = new InitFrame ();
+		rframe = new ResultsFrame ();
 
 		// Splash screen!
 		final SplashScreen splash = SplashScreen.getSplashScreen ();
@@ -162,16 +167,20 @@ public class Main extends JDialog {
 
 	// -----
 
-	/** @return - Main frame object. */
+	/** @return Main frame object. */
 	public static MainFrame getMainFrame () {
 		return (MainFrame) frame;
 	}
-	/** @return - Init frame object. */
+	/** @return Init frame object. */
 	public static InitFrame getInitFrame () {
 		return (InitFrame) iframe;
 	}
+	/** @return Fin frame object. */
+	static ResultsFrame getFinFrame () {
+		return (ResultsFrame) rframe;
+	}
 
-	/** @return - DBFile object. */
+	/** @return DatabaseFile object. */
 	public static DatabaseFile getDB () {
 		return db;
 	}

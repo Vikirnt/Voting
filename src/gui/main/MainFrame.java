@@ -2,7 +2,6 @@ package gui.main;
 
 import gui.core.Action;
 import gui.core.Command;
-import gui.fin.ResultsFrame;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -13,9 +12,10 @@ import java.awt.event.KeyEvent;
 
 /**
  * Main frame for the project.
- * 
- * @author admin
  *
+ * @version 1.1
+ * @author vikirnt
+ * @since June 2015
  */
 public class MainFrame extends JFrame {
 
@@ -25,12 +25,6 @@ public class MainFrame extends JFrame {
 	/** Main content table with the list of all candidates. */
 	private final JTable contentTable;
 
-	/** Results frame. */
-	private final ResultsFrame resultsFrame = new ResultsFrame ();
-	
-	/**
-	 * Create the frame.
-	 */
 	MainFrame () {
 		super ("VOTE!");
 		
@@ -98,6 +92,7 @@ public class MainFrame extends JFrame {
 	 *  - results: shows the results frame.
 	 *  - edit: shows the edit frame.
 	 *  - exit: exits the app.
+	 *  - cleanslate: reset db.
 	 * 
 	 */
 	private void checkCommands (String text, KeyEvent e) {
@@ -106,15 +101,18 @@ public class MainFrame extends JFrame {
 			if (text.contains (core.DatabaseFile.password) && e.getKeyChar () == KeyEvent.VK_ENTER) {
 				if (text.startsWith ("$results")) {
 					setVisible (false);
-					resultsFrame.setVisible (true);
+					getContentTable ().setSorter ("");
+					Main.getFinFrame ().setVisible (true);
 				} else
 				if (text.startsWith ("$edit")) {
 					setVisible (false);
 					getContentTable ().setSorter ("");
 					Main.getInitFrame ().setVisible (true);
 				} else
+				if (text.startsWith ("$cleanslate")) {
+					Action.execute (Command.CLEANSLATE);
+				} else
 				if (text.startsWith ("$exit")) {
-					Action.execute (Command.SAVE);
 					System.exit (0);
 				}
 			}
@@ -164,13 +162,13 @@ public class MainFrame extends JFrame {
 	}
 	
 	/**
-	 * @return - Main content table.
+	 * @return Main content table.
 	 */
 	public MainTable getContentTable () {
 		return (MainTable) contentTable;
 	}
 	/**
-	 * @return - Search text field.
+	 * @return Search text field.
 	 */
 	public JTextField getSearchField () {
 		return searcher;
