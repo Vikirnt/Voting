@@ -6,7 +6,9 @@ Download
 -------------
 
 You can download the latest executable *JAR* from my Google Drive:
-[Here.](https://drive.google.com/file/d/0B7odY-IMnoBoTzkzOFNaWDRmcTg/view?usp=sharing)
+[Voting.jar](https://drive.google.com/open?id=0B7odY-IMnoBoSGhMaml6NXFzdzg)
+
+TO CHANGE THE LOGO: Move a new image and replace SchoolLogoAlt.png
 
 How to use
 -------------
