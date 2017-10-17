@@ -1,7 +1,6 @@
 import core.Candidate;
 import core.DatabaseFile;
 import org.junit.Ignore;
-import org.junit.Test;
 
 /**
  * JUnit tests for DatabaseFile.java
@@ -15,11 +14,7 @@ public class DatabaseFileTest {
     /**
      * Database object.
      */
-    DatabaseFile db;
-
-    public DatabaseFileTest () {
-        db = new DatabaseFile ("/Users/vikirnt/Programming");
-    }
+    private DatabaseFile db = new DatabaseFile ("/Users/vikirnt/Programming");
 
     @Ignore
     public void getCount () {
@@ -44,7 +39,7 @@ public class DatabaseFileTest {
 
     @Ignore
     public void getTable () {
-        Candidate [] x = db.getCandidateArray ();
+        Candidate [] x = db.getCandidatesArray ();
         for (Candidate i : x)
             System.out.println (i.toString ());
     }
