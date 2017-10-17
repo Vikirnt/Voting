@@ -18,15 +18,27 @@ public class DatabaseFile {
     /** JDBC connection object. */
     private static Connection conn;
 
+    // ----- PREPARED STATEMENTS -----
+
+    private PreparedStatement
+            create_stm, select_stm, add_stm, sub_stm, edit_stm, deletedb_stm, vote_stm, count_stm, get_stm;
+
     /** Constructor gets the connection and sets ResultSet pointer. */
     public DatabaseFile (String path) {
-        /* Location of DB. */
         try {
-            String loc = "jdbc:sqlite:" + path + "/Candidates.db";
-            conn = DriverManager.getConnection (loc);
+            conn = DriverManager.getConnection ("jdbc:sqlite:" + path + "/Candidates.db");
 
-            Query.CREATE.getPrepstm ().execute ();
-            Query.SELECT.getPrepstm ().execute ();
+            create_stm = conn.prepareStatement  (Query.CREATE);
+            select_stm = conn.prepareStatement  (Query.SELECT);
+            add_stm = conn.prepareStatement     (Query.ADD);
+            sub_stm = conn.prepareStatement     (Query.SUB);
+            edit_stm = conn.prepareStatement    (Query.EDIT);
+            deletedb_stm = conn.prepareStatement(Query.DELETEDB);
+            vote_stm = conn.prepareStatement    (Query.VOTE);
+            count_stm = conn.prepareStatement   (Query.COUNT);
+            get_stm = conn.prepareStatement     (Query.GET);
+
+            create_stm.executeUpdate ();
         } catch (SQLException e) {
             e.printStackTrace ();
         }
@@ -38,14 +50,29 @@ public class DatabaseFile {
      * @param cand: Candidate to add to db.
      */
     public void add (Candidate cand) {
-        Query.ADD.execute (cand.getFirstName (), cand.getLastName (), cand.getPost (), cand.getStddiv (), cand.getVotecount ());
+        try {
+            add_stm.setString (1, cand.getFirstName ());
+            add_stm.setString (2, cand.getLastName ());
+            add_stm.setString (3, cand.getPost ());
+            add_stm.setString (4, cand.getStddiv ());
+            add_stm.setInt    (5, cand.getVotecount ());
+            add_stm.setInt    (6, cand.getRowid ());
+            add_stm.executeUpdate ();
+        } catch (SQLException e) {
+            e.printStackTrace ();
+        }
     }
 
     /**
      * @param rowid: rowid of candidate to remove.
      */
     public void sub (int rowid) {
-        Query.SUB.execute (rowid);
+        try {
+            sub_stm.setInt (1, rowid);
+            sub_stm.executeUpdate ();
+        } catch (SQLException e) {
+            e.printStackTrace ();
+        }
     }
 
     /**
@@ -53,22 +80,41 @@ public class DatabaseFile {
      * @param cand: New candidate data.
      */
     public void edit (Candidate cand) {
-        Query.EDIT.execute (cand.getFirstName (), cand.getLastName (), cand.getPost (), cand.getStddiv (), cand.getVotecount (), cand.getRowid ());
+        try {
+            edit_stm.setString (1, cand.getFirstName ());
+            edit_stm.setString (2, cand.getLastName ());
+            edit_stm.setString (3, cand.getPost ());
+            edit_stm.setString (4, cand.getStddiv ());
+            edit_stm.setInt    (5, cand.getVotecount ());
+            edit_stm.setInt    (6, cand.getRowid ());
+            edit_stm.executeUpdate ();
+        } catch (SQLException e) {
+            e.printStackTrace ();
+        }
     }
 
     /**
      * Deletes entire table and creates a fresh one.
      */
     public void cleanslate () {
-        Query.DELETEDB.execute ();
-        Query.CREATE.execute ();
+        try {
+            deletedb_stm.executeUpdate ();
+            create_stm.executeUpdate ();
+        } catch (SQLException e) {
+            e.printStackTrace ();
+        }
     }
 
     /**
      * @param rowid: rowid of the candidate whose votecount should be increased.
      */
     public void vote (int rowid) {
-        Query.VOTE.execute (rowid);
+        try {
+            vote_stm.setInt (1, rowid);
+            vote_stm.executeUpdate ();
+        } catch (SQLException e) {
+            e.printStackTrace ();
+        }
     }
 
     /**
@@ -77,8 +123,7 @@ public class DatabaseFile {
     public Candidate [] getCandidateArray () {
         Candidate [] temp = new Candidate [getCount ()];
 
-        try {
-            ResultSet rs = Query.SELECT.execute ();
+        try (ResultSet rs = select_stm.executeQuery ()) {
 
             String first_name, last_name, post, stddiv;
             int rowid, votecount;
@@ -86,11 +131,11 @@ public class DatabaseFile {
 
             while (rs.next ()) {
                 first_name = rs.getString ("first_name");
-                last_name = rs.getString ("last_name");
-                post = rs.getString ("post");
-                stddiv = rs.getString ("stddiv");
-                votecount = rs.getInt ("votecount");
-                rowid = rs.getInt ("rowid");
+                last_name = rs.getString  ("last_name");
+                post = rs.getString       ("post");
+                stddiv = rs.getString     ("stddiv");
+                votecount = rs.getInt     ("votecount");
+                rowid = rs.getInt         ("rowid");
 
                 temp [i] = new Candidate (first_name, last_name, post, stddiv, votecount, rowid);
                 i++;
@@ -105,13 +150,14 @@ public class DatabaseFile {
     /** @return Specified specified candidate. */
     public Candidate getCandidate (int rowid) {
         try {
-            ResultSet rs = Query.GET.execute (rowid);
+            get_stm.setInt (1, rowid);
+            ResultSet rs = get_stm.executeQuery ();
 
             String first_name = rs.getString ("first_name");
-            String last_name = rs.getString ("last_name");
-            String post = rs.getString ("post");
-            String stddiv = rs.getString ("stddiv");
-            int votecount = rs.getInt ("votecount");
+            String last_name = rs.getString  ("last_name");
+            String post = rs.getString       ("post");
+            String stddiv = rs.getString     ("stddiv");
+            int votecount = rs.getInt        ("votecount");
 
             return new Candidate (first_name, last_name, post, stddiv, votecount, rowid);
         } catch (SQLException e) {
@@ -126,110 +172,13 @@ public class DatabaseFile {
     public int getCount () {
         int cnt = 0;
 
-        try (ResultSet temprs = Query.COUNT.prepstm.executeQuery ()){
-            cnt = temprs.getInt (1);
+        try (ResultSet rs = count_stm.executeQuery ()){
+            cnt = rs.getInt (1);
         } catch (SQLException e) {
             e.printStackTrace ();
         }
 
         return cnt;
-    }
-
-    // -----
-
-    // ----- QUERIES -----
-    /*
-        TODO: Rework this.
-     */
-
-    public enum Query {
-
-        CREATE (
-                "CREATE TABLE IF NOT EXISTS Candidates (" +
-                "first_name varchar(30) NOT NULL, " +
-                "last_name varchar(30) NOT NULL, " +
-                "post varchar(100) NOT NULL, " +
-                "stddiv varchar(10), " +
-                "votecount int NOT NULL" +
-                ");"
-        ),
-        SELECT (
-                "SELECT *, rowid FROM Candidates;"
-        ),
-        ADD (
-                "INSERT INTO Candidates VALUES " +
-                "(?, ?, ?, ?, ?);",
-                false
-        ),
-        SUB (
-                "DELETE FROM Candidates WHERE rowid = ? ;",
-                false
-        ),
-        EDIT (
-                "UPDATE Candidates " +
-                "SET first_name = ?, " +
-                "last_name = ?, " +
-                "post = ?, " +
-                "stddiv = ?, " +
-                "votecount = ? " +
-                "WHERE rowid = ?" +
-                ";",
-                false
-        ),
-        DELETEDB (
-                "DELETE FROM Candidates;",
-                false
-        ),
-        VOTE (
-                "UPDATE Candidates " +
-                "SET votecount = votecount + 1 " +
-                "WHERE rowid = ?" +
-                ";",
-                false
-        ),
-        COUNT (
-                "SELECT COUNT(*) FROM Candidates;"
-        ),
-        GET (
-                "SELECT * FROM Candidates WHERE rowid = ?;"
-        );
-
-        protected PreparedStatement prepstm;
-        protected boolean results = true;
-        protected String qry;
-
-        Query (String qry) {
-            this.qry = qry;
-            try {
-                prepstm = conn.prepareStatement (qry);
-            } catch (SQLException e) {
-                e.printStackTrace ();
-            }
-        }
-
-        Query (String qry, boolean results) {
-            this (qry);
-            this.results = results;
-        }
-
-        public PreparedStatement getPrepstm () {
-            return prepstm;
-        }
-
-        public ResultSet execute (Object ... params) {
-            ResultSet rs = null;
-            try {
-                for (int i = 0; i < params.length; i++)
-                    prepstm.setObject (i + 1, params [i]);
-                if (results)
-                    rs = prepstm.executeQuery ();
-                else
-                    prepstm.executeUpdate ();
-            } catch (Exception e) {
-                e.printStackTrace ();
-            }
-            return rs;
-        }
     }
 
 }
