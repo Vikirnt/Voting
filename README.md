@@ -5,8 +5,8 @@ Voting application for school.
 Download
 -------------
 
-You can download the latest executable *JAR* from my Google Drive:
-[Voting.jar](https://drive.google.com/open?id=0B7odY-IMnoBoSGhMaml6NXFzdzg)
+You can download the latest executable *JAR*:
+[Voting.jar](https://github.com/Vikirnt/Voting/releases/tag/v2)
 
 TO CHANGE THE LOGO: Move a new image and replace SchoolLogoAlt.png
 
